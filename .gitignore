@@ -1,6 +1,3 @@
-# Root directory
-/node_modules
-
 # Client directory
 /client/node_modules
 

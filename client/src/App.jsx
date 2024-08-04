@@ -12,7 +12,7 @@ import AdminLogin from "./pages/AdminLogin";
 import FormulirPengunjung from "./pages/FormulirPengunjung";
 import Footer from "./components/Footer";
 import ListPengunjungPage from "./pages/ListPengunjungPage";
-import PrivateRoute from "./components/PrivateRoute"; // Import the PrivateRoute component
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   const location = useLocation();

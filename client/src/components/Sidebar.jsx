@@ -23,7 +23,6 @@ import { FaHome, FaListAlt, FaSignOutAlt, FaAdjust } from "react-icons/fa";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { toggleColorMode } = useColorMode();
   const bg = useColorModeValue("gray.100", "gray.900");
   const {
     isOpen: isSignOutOpen,
@@ -72,15 +71,6 @@ const Sidebar = () => {
               Daftar Pengunjung
             </Button>
           </Link>
-          <Button
-            leftIcon={<FaAdjust />}
-            variant="ghost"
-            w="100%"
-            justifyContent="flex-start"
-            onClick={toggleColorMode}
-          >
-            Toggle Theme
-          </Button>
           <Spacer />
           <Button
             leftIcon={<FaSignOutAlt />}

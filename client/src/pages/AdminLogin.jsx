@@ -28,6 +28,15 @@ const AdminLogin = () => {
       const credentials = { username, password };
       const { token } = await adminLogin(credentials);
       localStorage.setItem("token", token);
+
+      toast({
+        title: "Login berhasil!",
+        description: "Anda berhasil masuk sebagai admin.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
       navigate("/admin");
     } catch (error) {
       toast({

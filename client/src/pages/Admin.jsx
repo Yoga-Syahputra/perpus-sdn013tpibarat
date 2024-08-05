@@ -6,7 +6,7 @@ import Statistics from "../components/Statistics";
 import { getVisitors } from "../services/api";
 
 const Admin = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [visitors, setVisitors] = useState([]);
 
   useEffect(() => {

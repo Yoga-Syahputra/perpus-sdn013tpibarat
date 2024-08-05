@@ -23,7 +23,7 @@ import "jspdf-autotable";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-const ListPengunjungPage = ({ isSidebarOpen, toggleSidebar }) => {
+const DaftarPengunjung = ({ isSidebarOpen, toggleSidebar }) => {
   const {
     isOpen: isAddOpen,
     onOpen: onAddOpen,

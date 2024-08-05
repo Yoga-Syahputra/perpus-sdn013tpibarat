@@ -55,6 +55,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               w="100%"
               justifyContent="flex-start"
               color="white"
+              onClick={toggleSidebar}
             >
               Statistik
             </Button>
@@ -68,6 +69,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               w="100%"
               justifyContent="flex-start"
               color="white"
+              onClick={toggleSidebar}
             >
               Daftar Pengunjung
             </Button>

@@ -77,7 +77,7 @@ const FormulirPengunjung = () => {
     try {
       await addVisitor(newVisitor);
       toast({
-        title: "Pengunjung berhasil ditambahkan!",
+        title: "Selamat datang, selamat belajar!",
         status: "success",
         duration: 3000,
         isClosable: true,

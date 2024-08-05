@@ -224,4 +224,4 @@ const ListPengunjungPage = ({ isSidebarOpen, toggleSidebar }) => {
   );
 };
 
-export default ListPengunjungPage;
+export default DaftarPengunjung;

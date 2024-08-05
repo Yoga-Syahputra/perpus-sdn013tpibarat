@@ -30,7 +30,7 @@ const Admin = () => {
           ml={{ base: 0, md: isSidebarOpen ? "250px" : 0 }}
           w="full"
           p={4}
-          transition="margin-left 0.3s"
+          transition="margin-left 0.5s"
         >
           <Container maxW="container.xl" py={10}>
             <Statistics visitors={visitors} />

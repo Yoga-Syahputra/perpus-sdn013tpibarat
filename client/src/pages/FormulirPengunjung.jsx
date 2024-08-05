@@ -128,7 +128,14 @@ const FormulirPengunjung = () => {
             Kembali ke Beranda
           </Button>
         </Flex>
-        <Heading as="h1" size="xl" textAlign="center" mb={6} color="white" fontWeight={"bold"}>
+        <Heading
+          as="h1"
+          size="xl"
+          textAlign="center"
+          mb={6}
+          color="white"
+          fontWeight={"bold"}
+        >
           Formulir Pengunjung
         </Heading>
         <Flex justifyContent="center" mb={6}>
@@ -226,6 +233,9 @@ const FormulirPengunjung = () => {
                     Hapus Tanda Tangan
                   </Button>
                 </FormControl>
+                <Button colorScheme="green" type="submit" w="full" mt={4}>
+                  Tambah Pengunjung
+                </Button>
                 <FormControl display="flex" alignItems="center">
                   <FormLabel htmlFor="sound-toggle" mb="0">
                     Aktifkan Suara Notifikasi
@@ -236,9 +246,6 @@ const FormulirPengunjung = () => {
                     onChange={(e) => setSoundEnabled(e.target.checked)}
                   />
                 </FormControl>
-                <Button colorScheme="green" type="submit" w="full" mt={4}>
-                  Tambah Pengunjung
-                </Button>
               </VStack>
             </Box>
           </Flex>

@@ -11,7 +11,7 @@ import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import FormulirPengunjung from "./pages/FormulirPengunjung";
 import Footer from "./components/Footer";
-import ListPengunjungPage from "./pages/DaftarPengunjung";
+import DaftarPengunjung from "./pages/DaftarPengunjung";
 import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
@@ -36,7 +36,7 @@ const App = () => {
             path="/list"
             element={
               <PrivateRoute>
-                <ListPengunjungPage />
+                <DaftarPengunjung />
               </PrivateRoute>
             }
           />

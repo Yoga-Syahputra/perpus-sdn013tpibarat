@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
 import backgroundImage from "../assets/background.jpg";
 import logo from "../assets/library.png";
-import { EditIcon } from "@chakra-ui/icons";
 
 const Home = () => {
   return (
@@ -22,7 +21,7 @@ const Home = () => {
             <img
               src={logo}
               alt="Perpustakaan Logo"
-              className="mb-1 w-100 h-80 justify-center"
+              className="mb-1 w-100 h-80 justify-center transition-transform transform hover:scale-105"
             />
           </AbsoluteCenter>
         </Box>

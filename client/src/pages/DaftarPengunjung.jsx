@@ -23,7 +23,7 @@ import "jspdf-autotable";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-const DaftarPengunjung = ({ isSidebarOpen, toggleSidebar }) => {
+const DaftarPengunjung = () => {
   const {
     isOpen: isAddOpen,
     onOpen: onAddOpen,
@@ -37,6 +37,11 @@ const DaftarPengunjung = ({ isSidebarOpen, toggleSidebar }) => {
   const [visitors, setVisitors] = useState([]);
   const [selectedVisitor, setSelectedVisitor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+
+   const toggleSidebar = () => {
+     setSidebarOpen(!isSidebarOpen);
+   };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,7 +91,7 @@ const DaftarPengunjung = ({ isSidebarOpen, toggleSidebar }) => {
           visitor.kelas,
           new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID"),
           visitor.keterangan,
-          "", // Tanda tangan akan ditambahkan sebagai gambar
+          "", 
         ];
 
         tableRows.push(visitorData);
@@ -97,12 +102,10 @@ const DaftarPengunjung = ({ isSidebarOpen, toggleSidebar }) => {
       body: tableRows,
       didDrawCell: (data) => {
         if (data.column.index === 4 && visitors[data.row.index].tandaTangan) {
-          // Mengatur ukuran gambar tanda tangan agar lebih kecil
-          const imgWidth = 5; // Lebar gambar
-          const imgHeight = 5; // Tinggi gambar
-          const padding = 3; // Jarak antara gambar dan batas sel
+          const imgWidth = 5; 
+          const imgHeight = 5; 
+          const padding = 3; 
 
-          // Menambahkan gambar tanda tangan dengan ukuran yang lebih kecil
           doc.addImage(
             visitors[data.row.index].tandaTangan,
             "JPEG",

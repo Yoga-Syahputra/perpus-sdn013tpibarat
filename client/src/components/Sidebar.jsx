@@ -11,10 +11,11 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  IconButton,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import { FaHome, FaListAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaListAlt, FaSignOutAlt, FaBars } from "react-icons/fa";
 import logo from "../assets/library.png";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
@@ -37,13 +38,22 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       className={`fixed top-0 left-0 h-full bg-gray-800 p-4 flex flex-col transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform duration-300 ease-in-out`}
-      style={{ width: "250px" }}
+      style={{ width: "250px", zIndex: 1000 }}
     >
-      <div className="my-2 mb-4">
+      <div className="my-2 mb-4 flex items-center justify-between">
         <img
           src={logo}
           alt="Perpustakaan Logo"
-          style={{ width: "100%", height: "auto", maxHeight: "160px" }}
+          style={{ width: "100px", height: "auto", maxHeight: "160px", mb: "20px" }}
+        />
+        <IconButton
+          icon={<FaBars />}
+          variant="outline"
+          onClick={toggleSidebar}
+          aria-label="Toggle Sidebar"
+          color="white"
+          mr="4"
+          mb="20"
         />
       </div>
       <ul className="space-y-2 flex-1">

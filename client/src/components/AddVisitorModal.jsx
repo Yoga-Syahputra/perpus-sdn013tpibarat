@@ -21,8 +21,8 @@ import { addVisitor } from "../services/api";
 const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
   const [nama, setNama] = useState("");
   const [kelas, setKelas] = useState("");
-  const [jenisKelamin, setJenisKelamin] = useState("");
   const [tanggalKehadiran, setTanggalKehadiran] = useState("");
+  const [jamKehadiran, setJamKehadiran] = useState("");
   const [keterangan, setKeterangan] = useState("");
   const sigCanvas = useRef({});
   const toast = useToast();
@@ -31,8 +31,8 @@ const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
     const newVisitor = {
       nama,
       kelas,
-      jenisKelamin,
       tanggalKehadiran,
+      jamKehadiran,
       keterangan,
       tandaTangan: sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"),
     };
@@ -97,6 +97,14 @@ const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
               type="date"
               value={tanggalKehadiran}
               onChange={(e) => setTanggalKehadiran(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="jamKehadiran" isRequired>
+            <FormLabel>Jam Kehadiran</FormLabel>
+            <Input
+              type="time"
+              value={jamKehadiran}
+              onChange={(e) => setJamKehadiran(e.target.value)}
             />
           </FormControl>
           <FormControl id="keterangan">

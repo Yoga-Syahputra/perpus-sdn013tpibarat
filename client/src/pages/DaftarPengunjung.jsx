@@ -15,7 +15,12 @@ import AddVisitorModal from "../components/AddVisitorModal";
 import EditVisitorModal from "../components/EditVisitorModal";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import { getVisitors } from "../services/api";
+import {
+  getVisitors,
+  addVisitor,
+  editVisitor,
+  deleteVisitor,
+} from "../services/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import jsPDF from "jspdf";
@@ -39,28 +44,56 @@ const DaftarPengunjung = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
-   const toggleSidebar = () => {
-     setSidebarOpen(!isSidebarOpen);
-   };
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getVisitors();
-      setVisitors(data);
+      try {
+        const data = await getVisitors();
+        setVisitors(data);
+      } catch (error) {
+        console.error("Error fetching visitors:", error);
+      }
     };
     fetchData();
   }, []);
 
-  const addVisitor = (newVisitor) => {
-    setVisitors([...visitors, newVisitor]);
+  const handleAddVisitor = async (newVisitor) => {
+    try {
+      const addedVisitor = await addVisitor(newVisitor);
+      setVisitors([...visitors, addedVisitor]);
+      onAddClose();
+    } catch (error) {
+      console.error("Error adding visitor:", error);
+    }
   };
 
-  const editVisitor = (updatedVisitor) => {
-    setVisitors(
-      visitors.map((visitor) =>
-        visitor._id === updatedVisitor._id ? updatedVisitor : visitor
-      )
-    );
+  const handleEditVisitor = async (updatedVisitor) => {
+    try {
+      const editedVisitor = await editVisitor(
+        updatedVisitor._id,
+        updatedVisitor
+      );
+      setVisitors(
+        visitors.map((visitor) =>
+          visitor._id === editedVisitor._id ? editedVisitor : visitor
+        )
+      );
+      onEditClose();
+    } catch (error) {
+      console.error("Error editing visitor:", error);
+    }
+  };
+
+  const handleDeleteVisitor = async (id) => {
+    try {
+      await deleteVisitor(id);
+      setVisitors(visitors.filter((visitor) => visitor._id !== id));
+    } catch (error) {
+      console.error("Error deleting visitor:", error);
+    }
   };
 
   const handleEditClick = (visitor) => {
@@ -74,6 +107,7 @@ const DaftarPengunjung = () => {
       "Nama",
       "Kelas",
       "Tanggal Kehadiran",
+      "Jam Kehadiran",
       "Keterangan",
       "Tanda Tangan",
     ];
@@ -90,8 +124,9 @@ const DaftarPengunjung = () => {
           visitor.nama,
           visitor.kelas,
           new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID"),
+          visitor.jamKehadiran,
           visitor.keterangan,
-          "", 
+          "",
         ];
 
         tableRows.push(visitorData);
@@ -101,10 +136,10 @@ const DaftarPengunjung = () => {
       head: [tableColumn],
       body: tableRows,
       didDrawCell: (data) => {
-        if (data.column.index === 4 && visitors[data.row.index].tandaTangan) {
-          const imgWidth = 5; 
-          const imgHeight = 5; 
-          const padding = 3; 
+        if (data.column.index === 5 && visitors[data.row.index].tandaTangan) {
+          const imgWidth = 5;
+          const imgHeight = 5;
+          const padding = 3;
 
           doc.addImage(
             visitors[data.row.index].tandaTangan,
@@ -133,6 +168,7 @@ const DaftarPengunjung = () => {
         "Tanggal Kehadiran": new Date(
           visitor.tanggalKehadiran
         ).toLocaleDateString("id-ID"),
+        "Jam Kehadiran": visitor.jamKehadiran,
         Keterangan: visitor.keterangan,
         "Tanda Tangan": visitor.tandaTangan ? visitor.tandaTangan : "",
       }));
@@ -187,6 +223,7 @@ const DaftarPengunjung = () => {
                 setVisitors={setVisitors}
                 onEditClick={handleEditClick}
                 selectedDate={selectedDate}
+                onDelete={handleDeleteVisitor}
               />
             </Box>
             <VStack spacing={2} mt={4}>
@@ -210,14 +247,14 @@ const DaftarPengunjung = () => {
             <AddVisitorModal
               isOpen={isAddOpen}
               onClose={onAddClose}
-              addVisitor={addVisitor}
+              addVisitor={handleAddVisitor}
             />
             {selectedVisitor && (
               <EditVisitorModal
                 isOpen={isEditOpen}
                 onClose={onEditClose}
                 visitor={selectedVisitor}
-                editVisitor={editVisitor}
+                editVisitor={handleEditVisitor}
               />
             )}
           </Container>

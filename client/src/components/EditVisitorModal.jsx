@@ -72,6 +72,14 @@ const EditVisitorModal = ({ isOpen, onClose, visitor, editVisitor }) => {
               onChange={handleChange}
             />
           </FormControl>
+          <FormControl id="jamKehadiran" mb={4}>
+            <FormLabel>Jam Kehadiran</FormLabel>
+            <Input
+              name="jamKehadiran"
+              value={formData.jamKehadiran}
+              onChange={handleChange}
+            />
+          </FormControl>
           <FormControl id="keterangan" mb={4}>
             <FormLabel>Keterangan</FormLabel>
             <Input

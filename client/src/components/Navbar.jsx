@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, IconButton, Heading, Flex } from "@chakra-ui/react";
-import { FaBars } from "react-icons/fa";
+import { IconButton, Flex, Box, Text } from "@chakra-ui/react";
+import { FaBars, FaUserCircle } from "react-icons/fa";
 
 const Navbar = ({ toggleSidebar }) => {
   return (
@@ -12,16 +12,26 @@ const Navbar = ({ toggleSidebar }) => {
       justifyContent="space-between"
       alignItems="center"
     >
-      <IconButton
-        icon={<FaBars />}
-        variant="outline"
-        onClick={toggleSidebar}
-        aria-label="Toggle Sidebar"
-        color="white"
-      />
-      <Heading as="h1" size="lg" color="white">
-        Dasbor Admin
-      </Heading>
+      <Flex alignItems="center">
+        <IconButton
+          icon={<FaBars />}
+          variant="outline"
+          onClick={toggleSidebar}
+          aria-label="Toggle Sidebar"
+          color="white"
+          mr="4"
+        />
+        <Text fontSize="xl" fontWeight="bold" color="white">
+          Dasbor Perpustakaan SDN 013 TPI Barat
+        </Text>
+      </Flex>
+      <Flex alignItems="center" color="white">
+        <FaUserCircle size="32" />
+        <Box ml="3" textAlign="center">
+          <Text fontSize="md">Halo</Text>
+          <Text fontWeight="bold">Admin</Text>
+        </Box>
+      </Flex>
     </Flex>
   );
 };

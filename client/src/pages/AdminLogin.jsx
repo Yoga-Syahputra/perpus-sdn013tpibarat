@@ -74,7 +74,9 @@ const AdminLogin = () => {
           </Flex>
           <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="md">
             <Flex justifyContent="center" mb={6}>
-              <img src={logo} alt="Perpustakaan Logo" className="w-40 h-40" />
+              <Link to="/">
+                <img src={logo} alt="Perpustakaan Logo" className="w-40 h-40" />
+              </Link>
             </Flex>
             <Heading
               as="h1"

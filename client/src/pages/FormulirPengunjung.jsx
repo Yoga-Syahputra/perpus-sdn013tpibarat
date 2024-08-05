@@ -24,7 +24,7 @@ import {
 import { ArrowBackIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import { addVisitor, getVisitors } from "../services/api";
 import SignatureCanvas from "react-signature-canvas";
-import successSound from "../assets/success.mp3"; // Adjust the path to your mp3 file
+import successSound from "../assets/success.mp3"; 
 
 const FormulirPengunjung = () => {
   const [nama, setNama] = useState("");
@@ -42,6 +42,7 @@ const FormulirPengunjung = () => {
 
   useEffect(() => {
     loadVisitors();
+    setCurrentDateTime();
   }, []);
 
   const loadVisitors = async () => {
@@ -52,6 +53,15 @@ const FormulirPengunjung = () => {
       console.error("There was an error fetching the visitors!", error);
     }
   };
+
+   const setCurrentDateTime = () => {
+     const now = new Date();
+     const formattedDate = now.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+     const formattedTime = now.toTimeString().split(" ")[0]; // Format as HH:MM:SS
+     setTanggalKehadiran(formattedDate);
+     setJamKehadiran(formattedTime.slice(0, 5)); // Format as HH:MM
+   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

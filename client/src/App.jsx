@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -32,7 +32,14 @@ const App = () => {
             }
           />
           <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/list" element={<ListPengunjungPage />} />
+          <Route
+            path="/list"
+            element={
+              <PrivateRoute>
+                <ListPengunjungPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="/visitor-form" element={<FormulirPengunjung />} />
         </Routes>
       </div>

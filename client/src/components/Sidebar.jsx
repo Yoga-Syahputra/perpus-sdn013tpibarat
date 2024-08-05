@@ -1,11 +1,8 @@
 import React, { useRef } from "react";
 import {
   Box,
-  VStack,
   Link,
-  Text,
   Button,
-  useColorMode,
   useColorModeValue,
   useDisclosure,
   AlertDialog,
@@ -14,14 +11,13 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  Flex,
-  Spacer,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import { FaHome, FaListAlt, FaSignOutAlt, FaAdjust } from "react-icons/fa";
+import { FaHome, FaListAlt, FaSignOutAlt } from "react-icons/fa";
+import logo from "../assets/library.png";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const bg = useColorModeValue("gray.100", "gray.900");
   const {
@@ -37,73 +33,80 @@ const Sidebar = () => {
   };
 
   return (
-    <Box
-      w="250px"
-      h="100vh"
-      bg={bg}
-      p={4}
-      borderRight="1px solid"
-      borderColor="gray.200"
-      position="fixed"
+    <div
+      className={`fixed top-0 left-0 h-full bg-gray-800 p-4 flex flex-col transform ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } transition-transform duration-300 ease-in-out`}
+      style={{ width: "250px" }}
     >
-      <Flex direction="column" h="100%">
-        <VStack spacing={4} align="stretch" flex="1">
-          <Text fontSize="2xl" fontWeight="bold">
-            Dasbor Admin
-          </Text>
+      <div className="my-2 mb-4">
+        <img
+          src={logo}
+          alt="Perpustakaan Logo"
+          style={{ width: "100%", height: "auto", maxHeight: "160px" }}
+        />
+      </div>
+      <ul className="space-y-2 flex-1">
+        <li>
           <Link as={RouterLink} to="/admin" _hover={{ textDecoration: "none" }}>
             <Button
               leftIcon={<FaHome />}
               variant="ghost"
               w="100%"
               justifyContent="flex-start"
+              color="white"
             >
               Statistik
             </Button>
           </Link>
+        </li>
+        <li>
           <Link as={RouterLink} to="/list" _hover={{ textDecoration: "none" }}>
             <Button
               leftIcon={<FaListAlt />}
               variant="ghost"
               w="100%"
               justifyContent="flex-start"
+              color="white"
             >
               Daftar Pengunjung
             </Button>
           </Link>
-          <Spacer />
-          <Button
-            leftIcon={<FaSignOutAlt />}
-            colorScheme="red"
-            onClick={onSignOutOpen}
-          >
-            Keluar
-          </Button>
-        </VStack>
-        <AlertDialog
-          isOpen={isSignOutOpen}
-          leastDestructiveRef={cancelRef}
-          onClose={onSignOutClose}
+        </li>
+      </ul>
+      <div className="mt-auto">
+        <Button
+          leftIcon={<FaSignOutAlt />}
+          colorScheme="red"
+          onClick={onSignOutOpen}
+          w="100%"
         >
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                Konfirmasi Keluar
-              </AlertDialogHeader>
-              <AlertDialogBody>Ingin keluar?</AlertDialogBody>
-              <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={onSignOutClose}>
-                  Batal
-                </Button>
-                <Button colorScheme="red" onClick={handleSignOut} ml={3}>
-                  Keluar
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
-      </Flex>
-    </Box>
+          Keluar
+        </Button>
+      </div>
+      <AlertDialog
+        isOpen={isSignOutOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onSignOutClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Konfirmasi Keluar
+            </AlertDialogHeader>
+            <AlertDialogBody>Ingin keluar?</AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onSignOutClose}>
+                Batal
+              </Button>
+              <Button colorScheme="red" onClick={handleSignOut} ml={3}>
+                Keluar
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </div>
   );
 };
 

@@ -12,6 +12,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import logo from "../assets/library.png";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { adminLogin } from "../services/api";
 
@@ -72,16 +73,19 @@ const AdminLogin = () => {
             </Button>
           </Flex>
           <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="md">
+            <Flex justifyContent="center" mb={6}>
+              <img src={logo} alt="Perpustakaan Logo" className="w-40 h-40" />
+            </Flex>
             <Heading
               as="h1"
               size="xl"
               textAlign="center"
-              mb={6}
+              mb={4}
               color="gray.800"
             >
               Login Admin
             </Heading>
-            <p className="text-center text-gray-600 mb-6 font-medium">
+            <p className="text-center text-gray-600 mb={2} font-medium">
               Masuk sebagai admin
             </p>
             <Box as="form" onSubmit={handleSubmit}>

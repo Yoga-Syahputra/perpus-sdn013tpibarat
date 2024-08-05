@@ -14,7 +14,7 @@ import ListPengunjung from "../components/ListPengunjung";
 import AddVisitorModal from "../components/AddVisitorModal";
 import EditVisitorModal from "../components/EditVisitorModal";
 import Sidebar from "../components/Sidebar";
-import Header from "../components/Header"; 
+import Navbar from "../components/Navbar";
 import { getVisitors } from "../services/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -23,7 +23,7 @@ import "jspdf-autotable";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-const ListPengunjungPage = () => {
+const ListPengunjungPage = ({ isSidebarOpen, toggleSidebar }) => {
   const {
     isOpen: isAddOpen,
     onOpen: onAddOpen,
@@ -146,77 +146,80 @@ const ListPengunjungPage = () => {
   };
 
   return (
-    <Flex>
-      <Sidebar />
-      <Box flex="1" ml="250px" p={4}>
-        <Container maxW="container.xl" py={10}>
-          <Flex justifyContent="space-between" mb={4}>
-            <Heading as="h1" size="xl">
-              Daftar Pengunjung
-            </Heading>
-            <HStack spacing={2}>
-              <DatePicker
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                customInput={
-                  <Button leftIcon={<FaCalendarAlt />} colorScheme="teal">
-                    Pilih Tanggal
-                  </Button>
-                }
+    <Flex direction="column" h="100vh">
+      <Navbar toggleSidebar={toggleSidebar} />
+      <Flex flex="1">
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
+          <Container maxW="container.xl" py={10}>
+            <Flex justifyContent="space-between" mb={4}>
+              <Heading as="h1" size="xl">
+                Daftar Pengunjung
+              </Heading>
+              <HStack spacing={2}>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  customInput={
+                    <Button leftIcon={<FaCalendarAlt />} colorScheme="teal">
+                      Pilih Tanggal
+                    </Button>
+                  }
+                />
+                <Button colorScheme="teal" onClick={onAddOpen}>
+                  Tambah Pengunjung
+                </Button>
+              </HStack>
+            </Flex>
+            <Box
+              bg="white"
+              p={4}
+              rounded="lg"
+              shadow="md"
+              overflowY="auto"
+              maxHeight="600px"
+            >
+              <ListPengunjung
+                visitors={visitors}
+                setVisitors={setVisitors}
+                onEditClick={handleEditClick}
+                selectedDate={selectedDate}
               />
-              <Button colorScheme="teal" onClick={onAddOpen}>
-                Tambah Pengunjung
+            </Box>
+            <VStack spacing={2} mt={4}>
+              <Button
+                leftIcon={<FaFilePdf />}
+                colorScheme="red"
+                onClick={handlePrint}
+                width="full"
+              >
+                Cetak PDF
               </Button>
-            </HStack>
-          </Flex>
-          <Box
-            bg="white"
-            p={4}
-            rounded="lg"
-            shadow="md"
-            overflowY="auto"
-            maxHeight="600px"
-          >
-            <ListPengunjung
-              visitors={visitors}
-              setVisitors={setVisitors}
-              onEditClick={handleEditClick}
-              selectedDate={selectedDate}
+              <Button
+                leftIcon={<FaFileExcel />}
+                colorScheme="green"
+                onClick={handleExportExcel}
+                width="full"
+              >
+                Ekspor ke Excel
+              </Button>
+            </VStack>
+            <AddVisitorModal
+              isOpen={isAddOpen}
+              onClose={onAddClose}
+              addVisitor={addVisitor}
             />
-          </Box>
-          <VStack spacing={2} mt={4}>
-            <Button
-              leftIcon={<FaFilePdf />}
-              colorScheme="red"
-              onClick={handlePrint}
-              width="full"
-            >
-              Cetak PDF
-            </Button>
-            <Button
-              leftIcon={<FaFileExcel />}
-              colorScheme="green"
-              onClick={handleExportExcel}
-              width="full"
-            >
-              Ekspor ke Excel
-            </Button>
-          </VStack>
-          <AddVisitorModal
-            isOpen={isAddOpen}
-            onClose={onAddClose}
-            addVisitor={addVisitor}
-          />
-          {selectedVisitor && (
-            <EditVisitorModal
-              isOpen={isEditOpen}
-              onClose={onEditClose}
-              visitor={selectedVisitor}
-              editVisitor={editVisitor}
-            />
-          )}
-        </Container>
-      </Box>
+            {selectedVisitor && (
+              <EditVisitorModal
+                isOpen={isEditOpen}
+                onClose={onEditClose}
+                visitor={selectedVisitor}
+                editVisitor={editVisitor}
+              />
+            )}
+          </Container>
+        </Box>
+      </Flex>
     </Flex>
   );
 };

@@ -41,19 +41,28 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       style={{ width: "250px", zIndex: 1000 }}
     >
       <div className="my-2 mb-4 flex items-center justify-between">
-        <img
-          src={logo}
-          alt="Perpustakaan Logo"
-          style={{ width: "100px", height: "auto", maxHeight: "160px", mb: "20px" }}
-        />
+        <Link to="/">
+          <img
+            src={logo}
+            alt="Perpustakaan Logo"
+            style={{
+              width: "150px",
+              height: "auto",
+              maxHeight: "160px",
+              mb: "100px",
+              mr: "100px",
+            }}
+          />
+        </Link>
         <IconButton
           icon={<FaBars />}
           variant="outline"
           onClick={toggleSidebar}
           aria-label="Toggle Sidebar"
           color="white"
-          mr="4"
-          mb="20"
+          mr="4px"
+          mb="25px"
+          mt="-120px"
         />
       </div>
       <ul className="space-y-2 flex-1">

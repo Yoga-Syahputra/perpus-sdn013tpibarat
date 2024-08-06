@@ -52,18 +52,6 @@ const EditVisitorModal = ({ isOpen, onClose, visitor, editVisitor }) => {
         <ModalHeader>Edit Pengunjung</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FormControl id="nama" mb={4}>
-            <FormLabel>Nama</FormLabel>
-            <Input name="nama" value={formData.nama} onChange={handleChange} />
-          </FormControl>
-          <FormControl id="kelas" mb={4}>
-            <FormLabel>Kelas</FormLabel>
-            <Input
-              name="kelas"
-              value={formData.kelas}
-              onChange={handleChange}
-            />
-          </FormControl>
           <FormControl id="tanggalKehadiran" mb={4}>
             <FormLabel>Tanggal Kehadiran</FormLabel>
             <Input
@@ -77,6 +65,18 @@ const EditVisitorModal = ({ isOpen, onClose, visitor, editVisitor }) => {
             <Input
               name="jamKehadiran"
               value={formData.jamKehadiran}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl id="nama" mb={4}>
+            <FormLabel>Nama</FormLabel>
+            <Input name="nama" value={formData.nama} onChange={handleChange} />
+          </FormControl>
+          <FormControl id="kelas" mb={4}>
+            <FormLabel>Kelas</FormLabel>
+            <Input
+              name="kelas"
+              value={formData.kelas}
               onChange={handleChange}
             />
           </FormControl>

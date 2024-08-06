@@ -123,7 +123,11 @@ const DaftarPengunjung = () => {
         const visitorData = [
           visitor.nama,
           visitor.kelas,
-          new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID"),
+          new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          }),
           visitor.jamKehadiran,
           visitor.keterangan,
           "",
@@ -132,7 +136,27 @@ const DaftarPengunjung = () => {
         tableRows.push(visitorData);
       });
 
+    doc.text(
+      "Daftar Presensi Kunjungan Perpustakaan",
+      doc.internal.pageSize.getWidth() / 2,
+      20,
+      { align: "center" }
+    );
+    doc.setLineWidth(0.5);
+    doc.line(15, 25, doc.internal.pageSize.getWidth() - 15, 25);
+    doc.text(
+      `Hari/Tanggal: ${selectedDate.toLocaleDateString("id-ID", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      })}`,
+      15,
+      30
+    );
+
     doc.autoTable({
+      startY: 35,
       head: [tableColumn],
       body: tableRows,
       didDrawCell: (data) => {
@@ -152,6 +176,32 @@ const DaftarPengunjung = () => {
         }
       },
     });
+
+    const currentDate = new Date().toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+
+    doc.text(
+      `Tanjungpinang, ${currentDate}`,
+      doc.internal.pageSize.getWidth() - 60,
+      doc.internal.pageSize.getHeight() - 40,
+      { align: "center" }
+    );
+    doc.text(
+      "Tertanda,",
+      doc.internal.pageSize.getWidth() - 60,
+      doc.internal.pageSize.getHeight() - 35,
+      { align: "center" }
+    );
+    doc.text(
+      "Pengelola Perpustakaan",
+      doc.internal.pageSize.getWidth() - 60,
+      doc.internal.pageSize.getHeight() - 20,
+      { align: "center" }
+    );
+
     doc.save("visitors.pdf");
   };
 
@@ -167,7 +217,11 @@ const DaftarPengunjung = () => {
         Kelas: visitor.kelas,
         "Tanggal Kehadiran": new Date(
           visitor.tanggalKehadiran
-        ).toLocaleDateString("id-ID"),
+        ).toLocaleDateString("id-ID", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }),
         "Jam Kehadiran": visitor.jamKehadiran,
         Keterangan: visitor.keterangan,
         "Tanda Tangan": visitor.tandaTangan ? visitor.tandaTangan : "",
@@ -200,7 +254,7 @@ const DaftarPengunjung = () => {
                   selected={selectedDate}
                   onChange={(date) => setSelectedDate(date)}
                   customInput={
-                    <Button leftIcon={<FaCalendarAlt />} colorScheme="teal">
+                    <Button leftIcon={<FaCalendarAlt />} colorScheme="blue">
                       Pilih Tanggal
                     </Button>
                   }

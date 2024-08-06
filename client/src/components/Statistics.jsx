@@ -23,7 +23,12 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { Bar } from "react-chartjs-2";
-import { FaUsers, FaChalkboardTeacher } from "react-icons/fa";
+import {
+  FaUsers,
+  FaCalendarAlt,
+  FaCalendarWeek,
+  FaCalendarDay,
+} from "react-icons/fa";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -103,6 +108,15 @@ const Statistics = ({ visitors }) => {
   };
 
   const totalVisitors = visitors.length;
+  const todayVisitors = visitors.filter((visitor) =>
+    moment(visitor.date).isSame(moment(), "day")
+  ).length;
+  const weeklyVisitors = visitors.filter((visitor) =>
+    moment(visitor.date).isSame(moment(), "week")
+  ).length;
+  const monthlyVisitors = visitors.filter((visitor) =>
+    moment(visitor.date).isSame(moment(), "month")
+  ).length;
 
   const classStats = useMemo(
     () =>
@@ -145,30 +159,39 @@ const Statistics = ({ visitors }) => {
         <Heading as="h2" size="lg" mb={5} textAlign="center">
           Statistik Pengunjung Perpustakaan
         </Heading>
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5} w="full">
+        <SimpleGrid columns={{ sm: 1, md: 2, lg: 4 }} spacing={5} w="full">
           <Stat>
             <Flex alignItems="center">
               <Icon as={FaUsers} boxSize={6} mr={2} color="teal.500" />
-              <StatLabel>Jumlah Pengunjung</StatLabel>
+              <StatLabel>Total Pengunjung</StatLabel>
             </Flex>
             <StatNumber>{totalVisitors}</StatNumber>
             <StatHelpText>Total pengunjung perpustakaan</StatHelpText>
           </Stat>
-          {Object.keys(classStats).map((kelas) => (
-            <Stat key={kelas}>
-              <Flex alignItems="center">
-                <Icon
-                  as={FaChalkboardTeacher}
-                  boxSize={6}
-                  mr={2}
-                  color="blue.500"
-                />
-                <StatLabel>Kelas {kelas}</StatLabel>
-              </Flex>
-              <StatNumber>{classStats[kelas]}</StatNumber>
-              <StatHelpText>Jumlah pengunjung dari kelas {kelas}</StatHelpText>
-            </Stat>
-          ))}
+          <Stat>
+            <Flex alignItems="center">
+              <Icon as={FaCalendarAlt} boxSize={6} mr={2} color="purple.500" />
+              <StatLabel>Pengunjung Bulanan</StatLabel>
+            </Flex>
+            <StatNumber>{monthlyVisitors}</StatNumber>
+            <StatHelpText>Pengunjung dalam bulan ini</StatHelpText>
+          </Stat>
+          <Stat>
+            <Flex alignItems="center">
+              <Icon as={FaCalendarWeek} boxSize={6} mr={2} color="blue.500" />
+              <StatLabel>Pengunjung Mingguan</StatLabel>
+            </Flex>
+            <StatNumber>{weeklyVisitors}</StatNumber>
+            <StatHelpText>Pengunjung dalam minggu ini</StatHelpText>
+          </Stat>
+          <Stat>
+            <Flex alignItems="center">
+              <Icon as={FaCalendarDay} boxSize={6} mr={2} color="green.500" />
+              <StatLabel>Pengunjung Hari ini</StatLabel>
+            </Flex>
+            <StatNumber>{todayVisitors}</StatNumber>
+            <StatHelpText>Pengunjung hari ini</StatHelpText>
+          </Stat>
         </SimpleGrid>
         <Box
           w="full"

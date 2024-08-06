@@ -27,9 +27,10 @@ const ListPengunjung = ({
       <Table id="visitor-table" variant="simple" size="sm">
         <Thead>
           <Tr>
+            <Th>Tanggal Kehadiran</Th>
+            <Th>Jam Kehadiran</Th>
             <Th>Nama</Th>
             <Th>Kelas</Th>
-            <Th>Tanggal Kehadiran</Th>
             <Th>Keterangan</Th>
             <Th>Tanda Tangan</Th>
             <Th>Aksi</Th>

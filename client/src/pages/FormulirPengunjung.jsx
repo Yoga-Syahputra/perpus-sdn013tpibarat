@@ -172,6 +172,22 @@ const FormulirPengunjung = () => {
               maxW="lg"
             >
               <VStack spacing={4} align="stretch">
+                <FormControl id="tanggalKehadiran" isRequired>
+                  <FormLabel>Tanggal Kehadiran</FormLabel>
+                  <Input
+                    type="date"
+                    value={tanggalKehadiran}
+                    onChange={(e) => setTanggalKehadiran(e.target.value)}
+                  />
+                </FormControl>
+                <FormControl id="jamKehadiran" isRequired>
+                  <FormLabel>Jam Kehadiran</FormLabel>
+                  <Input
+                    type="time"
+                    value={jamKehadiran}
+                    onChange={(e) => setJamKehadiran(e.target.value)}
+                  />
+                </FormControl>
                 <FormControl id="nama" isRequired>
                   <FormLabel>Nama</FormLabel>
                   <Input
@@ -199,22 +215,6 @@ const FormulirPengunjung = () => {
                     <option value="5B">5B</option>
                     <option value="6A">6A</option>
                   </Select>
-                </FormControl>
-                <FormControl id="tanggalKehadiran" isRequired>
-                  <FormLabel>Tanggal Kehadiran</FormLabel>
-                  <Input
-                    type="date"
-                    value={tanggalKehadiran}
-                    onChange={(e) => setTanggalKehadiran(e.target.value)}
-                  />
-                </FormControl>
-                <FormControl id="jamKehadiran" isRequired>
-                  <FormLabel>Jam Kehadiran</FormLabel>
-                  <Input
-                    type="time"
-                    value={jamKehadiran}
-                    onChange={(e) => setJamKehadiran(e.target.value)}
-                  />
                 </FormControl>
                 <FormControl id="keterangan">
                   <FormLabel>Keterangan</FormLabel>
@@ -262,10 +262,10 @@ const FormulirPengunjung = () => {
             >
               <Thead bg="gray.100">
                 <Tr>
+                  <Th>Tanggal Kehadiran</Th>
+                  <Th>Waktu</Th>
                   <Th>Nama</Th>
                   <Th>Kelas</Th>
-                  <Th>Tanggal Kehadiran</Th>
-                  <Th>Jam Kehadiran</Th>
                   <Th>Keterangan</Th>
                   <Th>Tanda Tangan</Th>
                 </Tr>
@@ -279,14 +279,14 @@ const FormulirPengunjung = () => {
                   )
                   .map((visitor) => (
                     <Tr key={visitor._id}>
-                      <Td>{visitor.nama}</Td>
-                      <Td>{visitor.kelas}</Td>
                       <Td>
                         {new Date(
                           visitor.tanggalKehadiran
                         ).toLocaleDateString()}
                       </Td>
                       <Td>{visitor.jamKehadiran}</Td>
+                      <Td>{visitor.nama}</Td>
+                      <Td>{visitor.kelas}</Td>
                       <Td>{visitor.keterangan}</Td>
                       <Td>
                         <img

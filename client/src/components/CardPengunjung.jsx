@@ -38,7 +38,6 @@ const CardPengunjung = ({ visitor, onEditClick }) => {
     }
   };
 
-  // Format the date to YYYY-MM-DD
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
     return new Date(dateString).toLocaleDateString("en-CA", options);
@@ -46,9 +45,10 @@ const CardPengunjung = ({ visitor, onEditClick }) => {
 
   return (
     <Tr>
+      <Td>{formatDate(visitor.tanggalKehadiran)}</Td>
+      <Td>{visitor.jamKehadiran}</Td>
       <Td>{visitor.nama}</Td>
       <Td>{visitor.kelas}</Td>
-      <Td>{formatDate(visitor.tanggalKehadiran)}</Td>
       <Td>{visitor.keterangan}</Td>
       <Td>
         <Image

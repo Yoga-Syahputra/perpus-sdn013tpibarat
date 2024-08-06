@@ -251,55 +251,57 @@ const FormulirPengunjung = () => {
           </Flex>
         )}
         {activeTab === "list" && (
-          <Box mt={8} overflowX="auto">
-            <Table
-              variant="simple"
-              bg="white"
-              rounded="lg"
-              shadow="lg"
-              w="full"
-              maxW="lg"
-            >
-              <Thead bg="gray.100">
-                <Tr>
-                  <Th>Tanggal Kehadiran</Th>
-                  <Th>Waktu</Th>
-                  <Th>Nama</Th>
-                  <Th>Kelas</Th>
-                  <Th>Keterangan</Th>
-                  <Th>Tanda Tangan</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {visitors
-                  .filter(
-                    (visitor) =>
-                      new Date(visitor.tanggalKehadiran).toDateString() ===
-                      new Date().toDateString()
-                  )
-                  .map((visitor) => (
-                    <Tr key={visitor._id}>
-                      <Td>
-                        {new Date(
-                          visitor.tanggalKehadiran
-                        ).toLocaleDateString()}
-                      </Td>
-                      <Td>{visitor.jamKehadiran}</Td>
-                      <Td>{visitor.nama}</Td>
-                      <Td>{visitor.kelas}</Td>
-                      <Td>{visitor.keterangan}</Td>
-                      <Td>
-                        <img
-                          src={visitor.tandaTangan}
-                          alt="Tanda Tangan"
-                          className="border rounded w-full max-w-sm"
-                        />
-                      </Td>
-                    </Tr>
-                  ))}
-              </Tbody>
-            </Table>
-          </Box>
+          <Flex justifyContent="center" mt={8} overflowX="auto">
+            <Box>
+              <Table
+                variant="simple"
+                bg="white"
+                rounded="lg"
+                shadow="lg"
+                w="full"
+                maxW="lg"
+              >
+                <Thead bg="gray.100">
+                  <Tr>
+                    <Th>Tanggal Kehadiran</Th>
+                    <Th>Waktu</Th>
+                    <Th>Nama</Th>
+                    <Th>Kelas</Th>
+                    <Th>Keterangan</Th>
+                    <Th>Tanda Tangan</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {visitors
+                    .filter(
+                      (visitor) =>
+                        new Date(visitor.tanggalKehadiran).toDateString() ===
+                        new Date().toDateString()
+                    )
+                    .map((visitor) => (
+                      <Tr key={visitor._id}>
+                        <Td>
+                          {new Date(
+                            visitor.tanggalKehadiran
+                          ).toLocaleDateString()}
+                        </Td>
+                        <Td>{visitor.jamKehadiran}</Td>
+                        <Td>{visitor.nama}</Td>
+                        <Td>{visitor.kelas}</Td>
+                        <Td>{visitor.keterangan}</Td>
+                        <Td>
+                          <img
+                            src={visitor.tandaTangan}
+                            alt="Tanda Tangan"
+                            className="border rounded w-full max-w-sm"
+                          />
+                        </Td>
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </Box>
+          </Flex>
         )}
         <audio ref={audioRef} src={successSound} />
       </Container>

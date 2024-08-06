@@ -1,19 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
-import backgroundImage from "../assets/background.jpg";
 import logo from "../assets/library.png";
+import bg1 from "../assets/background.jpg";
+import bg2 from "../assets/background2.jpg";
+import bg3 from "../assets/background3.jpg";
 
 const Home = () => {
+  const backgrounds = [bg1, bg2, bg3];
+  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
+  const [nextBackgroundIndex, setNextBackgroundIndex] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBackgroundIndex(
+        (prevIndex) => (prevIndex + 1) % backgrounds.length
+      );
+      setNextBackgroundIndex(
+        (prevIndex) => (prevIndex + 2) % backgrounds.length
+      );
+    }, 5000); 
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div
-      className="p-6 bg-gray-100 min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+    <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+      <div
+        className="absolute inset-0 transition-opacity duration-1000"
+        style={{
+          backgroundImage: `url(${backgrounds[currentBackgroundIndex]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 1,
+          filter: "blur(4px)",
+        }}
+      ></div>
+      <div
+        className="absolute inset-0 transition-opacity duration-1000"
+        style={{
+          backgroundImage: `url(${backgrounds[nextBackgroundIndex]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0,
+          filter: "blur(4px)",
+        }}
+      ></div>
       <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-60 backdrop-blur-md"></div>
       <div className="relative z-10 text-center">
         <Box position="relative" h="300px">
@@ -28,7 +60,7 @@ const Home = () => {
         <h1 className="text-4xl font-bold mb-4 text-white">
           Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
         </h1>
-        <p className="text-lg mb-8 text-white">
+        <p className="text-lg mb-8 font-bold text-blue-300">
           Selamat datang! Silakan pilih salah satu opsi yang ada di bawah ini!
         </p>
         <div className="space-x-4">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -13,6 +13,8 @@ import FormulirPengunjung from "./pages/FormulirPengunjung";
 import Footer from "./components/Footer";
 import DaftarPengunjung from "./pages/DaftarPengunjung";
 import PrivateRoute from "./components/PrivateRoute";
+import UbahPassword  from "./pages/UbahPassword";
+import KonfigurasiAdmin from "./pages/KonfigurasiAdmin";
 
 const App = () => {
   const location = useLocation();
@@ -37,6 +39,23 @@ const App = () => {
             element={
               <PrivateRoute>
                 <DaftarPengunjung />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route
+            path="/change-password"
+            element={
+              <PrivateRoute>
+                <UbahPassword />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin-config"
+            element={
+              <PrivateRoute>
+                <KonfigurasiAdmin />
               </PrivateRoute>
             }
           />

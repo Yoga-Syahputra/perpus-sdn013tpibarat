@@ -27,6 +27,7 @@ const ListPengunjung = ({
       <Table id="visitor-table" variant="simple" size="sm">
         <Thead>
           <Tr>
+            <Th>NO.</Th> {/* Kolom Nomor Urut */}
             <Th>Tanggal Kehadiran</Th>
             <Th>Jam Kehadiran</Th>
             <Th>Nama</Th>
@@ -37,9 +38,10 @@ const ListPengunjung = ({
           </Tr>
         </Thead>
         <Tbody>
-          {filteredVisitors.map((visitor) => (
+          {filteredVisitors.map((visitor, index) => (
             <CardPengunjung
               key={visitor._id}
+              index={index}
               visitor={visitor}
               onEditClick={onEditClick}
             />

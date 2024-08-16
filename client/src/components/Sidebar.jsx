@@ -1,37 +1,20 @@
 import React, { useRef } from "react";
 import {
-  Box,
   Link,
   Button,
   useColorModeValue,
-  useDisclosure,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
   IconButton,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import { FaHome, FaListAlt, FaSignOutAlt, FaBars } from "react-icons/fa";
-import logo from "../assets/library.png";
+import { FaHome, FaListAlt, FaBars, FaUserCog } from "react-icons/fa";
+import logo from "../assets/img/library.png";
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = ({ isOpen, toggleSidebar, role }) => {
   const navigate = useNavigate();
   const bg = useColorModeValue("gray.100", "gray.900");
-  const {
-    isOpen: isSignOutOpen,
-    onOpen: onSignOutOpen,
-    onClose: onSignOutClose,
-  } = useDisclosure();
-  const cancelRef = useRef();
 
-  const handleSignOut = () => {
-    onSignOutClose();
-    navigate("/admin-login");
-  };
+  console.log("Role passed to Sidebar:", role); 
 
   return (
     <div
@@ -41,19 +24,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       style={{ width: "250px", zIndex: 1000 }}
     >
       <div className="my-2 mb-4 flex items-center justify-between">
-        <Link to="/">
-          <img
-            src={logo}
-            alt="Perpustakaan Logo"
-            style={{
-              width: "150px",
-              height: "auto",
-              maxHeight: "160px",
-              mb: "100px",
-              mr: "100px",
-            }}
-          />
-        </Link>
+        <img
+          src={logo}
+          alt="Perpustakaan Logo"
+          style={{
+            width: "150px",
+            height: "auto",
+            maxHeight: "160px",
+          }}
+          onClick={() => navigate("/admin")}
+          className="cursor-pointer"
+        />
         <IconButton
           icon={<FaBars />}
           variant="outline"
@@ -62,7 +43,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           color="white"
           mr="4px"
           mb="25px"
-          mt="-120px"
+          mt="-90px"
         />
       </div>
       <ul className="space-y-2 flex-1">
@@ -94,39 +75,27 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </Button>
           </Link>
         </li>
+        {role === "admin" && (
+          <li>
+            <Link
+              as={RouterLink}
+              to="/admin-config"
+              _hover={{ textDecoration: "none" }}
+            >
+              <Button
+                leftIcon={<FaUserCog />}
+                variant="ghost"
+                w="100%"
+                justifyContent="flex-start"
+                color="white"
+                onClick={toggleSidebar}
+              >
+                Konfigurasi Admin
+              </Button>
+            </Link>
+          </li>
+        )}
       </ul>
-      <div className="mt-auto">
-        <Button
-          leftIcon={<FaSignOutAlt />}
-          colorScheme="red"
-          onClick={onSignOutOpen}
-          w="100%"
-        >
-          Keluar
-        </Button>
-      </div>
-      <AlertDialog
-        isOpen={isSignOutOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onSignOutClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Konfirmasi Keluar
-            </AlertDialogHeader>
-            <AlertDialogBody>Ingin keluar?</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onSignOutClose}>
-                Batal
-              </Button>
-              <Button colorScheme="red" onClick={handleSignOut} ml={3}>
-                Keluar
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
     </div>
   );
 };

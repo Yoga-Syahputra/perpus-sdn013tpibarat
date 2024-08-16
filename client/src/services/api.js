@@ -4,6 +4,7 @@ const api = axios.create({
   baseURL: "http://localhost:3000/api",
 });
 
+ // visitor api
 export const addVisitor = async (visitor) => {
   try {
     const response = await api.post("/visitors", visitor);
@@ -44,6 +45,7 @@ export const editVisitor = async (id, updatedVisitor) => {
   }
 };
 
+// admin api
 export const adminLogin = async (credentials) => {
   try {
     const response = await api.post("/admin/login", credentials, {
@@ -51,9 +53,90 @@ export const adminLogin = async (credentials) => {
         "Content-Type": "application/json",
       },
     });
+    localStorage.setItem("token", response.data.token);
     return response.data;
   } catch (error) {
     console.error("There was an error logging in!", error);
     throw error;
   }
 };
+
+export const changePassword = async (currentPassword, newPassword) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await api.post(
+      "/admin/change-password",
+      { currentPassword, newPassword },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("There was an error changing the password!", error);
+    throw error;
+  }
+};
+
+// guru api
+export const addGuru = async (guru) => {
+  try {
+    const response = await api.post("/guru", guru);
+    return response.data;
+  } catch (error) {
+    console.error("There was an error adding the guru!", error);
+    throw error;
+  }
+};
+
+export const getGurus = async () => {
+  try {
+    const response = await api.get("/guru");
+    return response.data;
+  } catch (error) {
+    console.error("There was an error fetching the guru!", error);
+    throw error;
+  }
+};
+
+export const deleteGuru = async (id) => {
+  try {
+    const response = await api.delete(`/guru/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("There was an error deleting the guru!", error);
+    throw error;
+  }
+};
+
+export const changePasswordGuru = async (id, password) => {
+  try {
+    const response = await api.put(`/guru/${id}/password`, {
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("There was an error changing the guru's password!", error);
+    throw error;
+  }
+};
+
+export const guruLogin = async (credentials) => {
+  try {
+    const response = await api.post("/guru/login", credentials, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    localStorage.setItem("guruToken", response.data.token);
+    return response.data;
+  } catch (error) {
+    console.error("There was an error logging in!", error);
+    throw error;
+  }
+};
+
+

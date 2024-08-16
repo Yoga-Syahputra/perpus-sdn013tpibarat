@@ -44,6 +44,9 @@ const DaftarPengunjung = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
+  // Get the role from localStorage or other source
+  const userRole = localStorage.getItem("role");
+
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
@@ -104,6 +107,7 @@ const DaftarPengunjung = () => {
   const handlePrint = () => {
     const doc = new jsPDF();
     const tableColumn = [
+      "NO",
       "Nama",
       "Kelas",
       "Tanggal Kehadiran",
@@ -119,8 +123,9 @@ const DaftarPengunjung = () => {
           new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID") ===
           selectedDate.toLocaleDateString("id-ID")
       )
-      .forEach((visitor) => {
+      .forEach((visitor, index) => {
         const visitorData = [
+          index + 1,
           visitor.nama,
           visitor.kelas,
           new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID", {
@@ -137,7 +142,7 @@ const DaftarPengunjung = () => {
       });
 
     doc.text(
-      "Daftar Presensi Kunjungan Perpustakaan",
+      "Daftar Hadir Kunjungan Perpustakaan SDN 013 Tanjungpinang Barat",
       doc.internal.pageSize.getWidth() / 2,
       20,
       { align: "center" }
@@ -160,18 +165,15 @@ const DaftarPengunjung = () => {
       head: [tableColumn],
       body: tableRows,
       didDrawCell: (data) => {
-        if (data.column.index === 5 && visitors[data.row.index].tandaTangan) {
-          const imgWidth = 5;
-          const imgHeight = 5;
-          const padding = 3;
-
+        const tandaTangan = visitors[data.row.index].tandaTangan;
+        if (data.column.index === 6 && tandaTangan) {
           doc.addImage(
-            visitors[data.row.index].tandaTangan,
+            tandaTangan,
             "JPEG",
-            data.cell.x + padding,
-            data.cell.y + padding,
-            imgWidth,
-            imgHeight
+            data.cell.x + 3,
+            data.cell.y + 3,
+            5,
+            5
           );
         }
       },
@@ -198,7 +200,7 @@ const DaftarPengunjung = () => {
     doc.text(
       "Pengelola Perpustakaan",
       doc.internal.pageSize.getWidth() - 60,
-      doc.internal.pageSize.getHeight() - 20,
+      doc.internal.pageSize.getHeight() - 10,
       { align: "center" }
     );
 
@@ -212,7 +214,8 @@ const DaftarPengunjung = () => {
           new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID") ===
           selectedDate.toLocaleDateString("id-ID")
       )
-      .map((visitor) => ({
+      .map((visitor, index) => ({
+        NO: index + 1,
         Nama: visitor.nama,
         Kelas: visitor.kelas,
         "Tanggal Kehadiran": new Date(
@@ -240,9 +243,13 @@ const DaftarPengunjung = () => {
 
   return (
     <Flex direction="column" h="100vh">
-      <Navbar toggleSidebar={toggleSidebar} />
+      <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} role={userRole} />
       <Flex flex="1">
-        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          role={userRole}
+        />
         <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
           <Container maxW="container.xl" py={10}>
             <Flex justifyContent="space-between" mb={4}>
@@ -308,7 +315,7 @@ const DaftarPengunjung = () => {
                 isOpen={isEditOpen}
                 onClose={onEditClose}
                 visitor={selectedVisitor}
-                editVisitor={handleEditVisitor}
+                EditVisitor={handleEditVisitor}
               />
             )}
           </Container>

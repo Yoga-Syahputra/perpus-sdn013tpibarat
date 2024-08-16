@@ -12,11 +12,12 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import logo from "../assets/library.png";
+import logo from "../assets/img/library.png";
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { adminLogin } from "../services/api";
+import { adminLogin, guruLogin } from "../services/api";
 
 const AdminLogin = () => {
+  const [role, setRole] = useState("admin"); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -27,12 +28,15 @@ const AdminLogin = () => {
 
     try {
       const credentials = { username, password };
-      const { token } = await adminLogin(credentials);
+      const loginFunction = role === "admin" ? adminLogin : guruLogin;
+      const { token } = await loginFunction(credentials);
+      
       localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
 
       toast({
         title: "Login berhasil!",
-        description: "Anda berhasil masuk sebagai admin.",
+        description: `Anda berhasil masuk sebagai ${role}.`,
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -88,7 +92,7 @@ const AdminLogin = () => {
               Login Admin
             </Heading>
             <p className="text-center text-gray-600 mb={2} font-medium">
-              Masuk sebagai admin
+              Masuk sebagai admin 
             </p>
             <Box as="form" onSubmit={handleSubmit}>
               <VStack spacing={4} align="stretch">
@@ -107,6 +111,21 @@ const AdminLogin = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                </FormControl>
+                <FormControl id="role" isRequired>
+                  <FormLabel>Role</FormLabel>
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    style={{
+                      padding: "8px",
+                      borderRadius: "4px",
+                      width: "100%",
+                    }}
+                  >
+                    <option value="admin">Administrator</option>
+                    <option value="guru">Guru</option>
+                  </select>
                 </FormControl>
                 <Flex justify="center" w="full">
                   <Button colorScheme="blue" type="submit">

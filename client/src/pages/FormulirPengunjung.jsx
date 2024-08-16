@@ -32,13 +32,12 @@ const FormulirPengunjung = () => {
   const [tanggalKehadiran, setTanggalKehadiran] = useState("");
   const [jamKehadiran, setJamKehadiran] = useState("");
   const [keterangan, setKeterangan] = useState("");
-  const [tandaTangan, setTandaTangan] = useState("");
   const [visitors, setVisitors] = useState([]);
   const [activeTab, setActiveTab] = useState("form");
-  const [soundEnabled, setSoundEnabled] = useState(true); // State for toggling sound
+  const [soundEnabled, setSoundEnabled] = useState(true); 
   const sigCanvas = useRef({});
   const toast = useToast();
-  const audioRef = useRef(null); // Reference to the audio element
+  const audioRef = useRef(null); 
 
   useEffect(() => {
     loadVisitors();
@@ -263,6 +262,7 @@ const FormulirPengunjung = () => {
               >
                 <Thead bg="gray.100">
                   <Tr>
+                    <Th>NO.</Th>
                     <Th>Tanggal Kehadiran</Th>
                     <Th>Waktu</Th>
                     <Th>Nama</Th>
@@ -278,8 +278,9 @@ const FormulirPengunjung = () => {
                         new Date(visitor.tanggalKehadiran).toDateString() ===
                         new Date().toDateString()
                     )
-                    .map((visitor) => (
+                    .map((visitor, index) => (
                       <Tr key={visitor._id}>
+                        <Td>{index + 1}</Td> 
                         <Td>
                           {new Date(
                             visitor.tanggalKehadiran

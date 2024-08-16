@@ -1,21 +1,8 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  Heading,
-  Button,
-  useToast,
-  Flex,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  TableContainer,
-  Image,
-} from "@chakra-ui/react";
+import { Button, useToast, Flex, Tr, Td, Image } from "@chakra-ui/react";
 import { deleteVisitor } from "../services/api";
 
-const CardPengunjung = ({ visitor, onEditClick }) => {
+const CardPengunjung = ({ visitor, onEditClick, index }) => {
   const toast = useToast();
 
   const handleDelete = async () => {
@@ -45,6 +32,7 @@ const CardPengunjung = ({ visitor, onEditClick }) => {
 
   return (
     <Tr>
+      <Td>{index + 1}</Td>
       <Td>{formatDate(visitor.tanggalKehadiran)}</Td>
       <Td>{visitor.jamKehadiran}</Td>
       <Td>{visitor.nama}</Td>

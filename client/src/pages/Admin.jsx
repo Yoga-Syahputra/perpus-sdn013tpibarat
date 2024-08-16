@@ -1,33 +1,19 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Container,
-  Flex,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Statistics from "../components/Statistics";
+import KalenderLiterasi from "../components/KalenderLiterasi";
 import { getVisitors } from "../services/api";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const Admin = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [visitors, setVisitors] = useState([]);
   const [events, setEvents] = useState([]);
-  const [ongoingEvents, setOngoingEvents] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const localizer = momentLocalizer(moment);
+  // Get the role from localStorage or other source
+  const userRole = localStorage.getItem("role");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,13 +33,10 @@ const Admin = () => {
     const ongoing = events.filter(
       (event) => new Date(event.start) <= now && new Date(event.end) >= now
     );
-    setOngoingEvents(ongoing);
     if (ongoing.length > 0) {
       setIsModalOpen(true);
     }
   }, [events]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -61,9 +44,17 @@ const Admin = () => {
 
   return (
     <Flex direction="column" h="100vh">
-      <Navbar toggleSidebar={toggleSidebar} />
+      <Navbar
+        toggleSidebar={toggleSidebar}
+        isSidebarOpen={isSidebarOpen}
+        role={userRole}
+      />
       <Flex flex="1">
-        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          role={userRole}
+        />
         <Box
           ml={{ base: 0, md: isSidebarOpen ? "250px" : 0 }}
           w="full"
@@ -75,27 +66,11 @@ const Admin = () => {
           </Container>
         </Box>
       </Flex>
-      <Modal
+      <KalenderLiterasi
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        isCentered
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Jadwal Literasi</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {ongoingEvents.map((event) => (
-              <Text key={event.id}>{event.title}</Text>
-            ))}
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={() => setIsModalOpen(false)}>
-              Tutup
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+        events={events}
+      />
     </Flex>
   );
 };

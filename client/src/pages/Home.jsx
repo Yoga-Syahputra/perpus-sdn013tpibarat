@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
-import logo from "../assets/library.png";
-import bg1 from "../assets/background.jpg";
-import bg2 from "../assets/background2.jpg";
-import bg3 from "../assets/background3.jpg";
+import logo from "../assets/img/library.png";
+import bg1 from "../assets/img/background.jpg";
+import bg2 from "../assets/img/background2.jpg";
+import bg3 from "../assets/img/background3.jpg";
 
 const Home = () => {
   const backgrounds = [bg1, bg2, bg3];
@@ -42,7 +42,7 @@ const Home = () => {
           backgroundImage: `url(${backgrounds[nextBackgroundIndex]})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0,
+          opacity: 1,
           filter: "blur(4px)",
         }}
       ></div>
@@ -60,7 +60,7 @@ const Home = () => {
         <h1 className="text-4xl font-bold mb-4 text-white">
           Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
         </h1>
-        <p className="text-lg mb-8 font-bold text-blue-300">
+        <p className="text-lg mb-8 font-bold text-blue-300" >
           Selamat datang! Silakan pilih salah satu opsi yang ada di bawah ini!
         </p>
         <div className="space-x-4">

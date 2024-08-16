@@ -21,14 +21,12 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Text,
+  Avatar,
+  HStack,
 } from "@chakra-ui/react";
 import { Bar } from "react-chartjs-2";
-import {
-  FaUsers,
-  FaCalendarAlt,
-  FaCalendarWeek,
-  FaCalendarDay,
-} from "react-icons/fa";
+import { FaUsers, FaTrophy } from "react-icons/fa";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -107,25 +105,33 @@ const Statistics = ({ visitors }) => {
     setCurrentEvent((prevEvent) => ({ ...prevEvent, [field]: value }));
   };
 
-  const totalVisitors = visitors.length;
-  const todayVisitors = visitors.filter((visitor) =>
-    moment(visitor.date).isSame(moment(), "day")
-  ).length;
-  const weeklyVisitors = visitors.filter((visitor) =>
-    moment(visitor.date).isSame(moment(), "week")
-  ).length;
-  const monthlyVisitors = visitors.filter((visitor) =>
-    moment(visitor.date).isSame(moment(), "month")
-  ).length;
+  const uniqueVisitors = useMemo(() => {
+    const visitorMap = new Map();
+    visitors.forEach((visitor) => {
+      const key = `${visitor.nama}-${visitor.kelas}`;
+      if (!visitorMap.has(key)) {
+        visitorMap.set(key, { ...visitor, visitCount: 1 });
+      } else {
+        visitorMap.get(key).visitCount += 1;
+      }
+    });
+    return Array.from(visitorMap.values());
+  }, [visitors]);
+
+  const totalVisitors = uniqueVisitors.length;
 
   const classStats = useMemo(
     () =>
-      visitors.reduce((acc, visitor) => {
+      uniqueVisitors.reduce((acc, visitor) => {
         acc[visitor.kelas] = (acc[visitor.kelas] || 0) + 1;
         return acc;
       }, {}),
-    [visitors]
+    [uniqueVisitors]
   );
+
+  const topVisitors = uniqueVisitors
+    .sort((a, b) => b.visitCount - a.visitCount)
+    .slice(0, 5);
 
   const data = {
     labels: Object.keys(classStats),
@@ -168,30 +174,6 @@ const Statistics = ({ visitors }) => {
             <StatNumber>{totalVisitors}</StatNumber>
             <StatHelpText>Total pengunjung perpustakaan</StatHelpText>
           </Stat>
-          <Stat>
-            <Flex alignItems="center">
-              <Icon as={FaCalendarAlt} boxSize={6} mr={2} color="purple.500" />
-              <StatLabel>Pengunjung Bulanan</StatLabel>
-            </Flex>
-            <StatNumber>{monthlyVisitors}</StatNumber>
-            <StatHelpText>Pengunjung dalam bulan ini</StatHelpText>
-          </Stat>
-          <Stat>
-            <Flex alignItems="center">
-              <Icon as={FaCalendarWeek} boxSize={6} mr={2} color="blue.500" />
-              <StatLabel>Pengunjung Mingguan</StatLabel>
-            </Flex>
-            <StatNumber>{weeklyVisitors}</StatNumber>
-            <StatHelpText>Pengunjung dalam minggu ini</StatHelpText>
-          </Stat>
-          <Stat>
-            <Flex alignItems="center">
-              <Icon as={FaCalendarDay} boxSize={6} mr={2} color="green.500" />
-              <StatLabel>Pengunjung Hari ini</StatLabel>
-            </Flex>
-            <StatNumber>{todayVisitors}</StatNumber>
-            <StatHelpText>Pengunjung hari ini</StatHelpText>
-          </Stat>
         </SimpleGrid>
         <Box
           w="full"
@@ -212,6 +194,45 @@ const Statistics = ({ visitors }) => {
           shadow="md"
         >
           <Heading as="h3" size="md" mb={3}>
+            Top 5 Pengunjung
+          </Heading>
+          <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
+            {topVisitors.map((visitor, index) => (
+              <Box
+                key={index}
+                p={4}
+                borderWidth="1px"
+                borderRadius="lg"
+                bg="gray.50"
+                shadow="md"
+              >
+                <HStack>
+                  <Avatar
+                    size="md"
+                    name={visitor.nama}
+                    bg="teal.500"
+                    color="white"
+                  />
+                  <VStack align="start" spacing={1}>
+                    <Text fontWeight="bold">{visitor.nama}</Text>
+                    <Text>Kelas: {visitor.kelas}</Text>
+                    <Text>Jumlah Kunjungan: {visitor.visitCount}</Text>
+                  </VStack>
+                  <Icon as={FaTrophy} boxSize={6} color="yellow.500" ml="auto"/>
+                </HStack>
+              </Box>
+            ))}
+          </SimpleGrid>
+        </Box>
+        <Box
+          w="full"
+          p={5}
+          borderWidth="1px"
+          borderRadius="lg"
+          bg="white"
+          shadow="md"
+        >
+          <Heading as="h3" size="md" mb={3}>
             Kalender Literasi
           </Heading>
           <Calendar
@@ -220,7 +241,7 @@ const Statistics = ({ visitors }) => {
             startAccessor="start"
             endAccessor="end"
             style={{ height: 500 }}
-            views={["month", "week", "day"]}
+            views={["month", "agenda"]}
             selectable
             onSelectSlot={handleSelectSlot}
             onSelectEvent={handleSelectEvent}
@@ -267,10 +288,9 @@ const Statistics = ({ visitors }) => {
                 Hapus
               </Button>
             )}
-            <Button colorScheme="blue" mr={3} onClick={handleSaveEvent}>
+            <Button colorScheme="blue" onClick={handleSaveEvent}>
               Simpan
             </Button>
-            <Button onClick={() => setModalIsOpen(false)}>Batal</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -15,8 +15,16 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+// API routes for visitors
 app.use("/api/visitors", require("./routes/VisitorRoutes"));
+
+// API routes for admin
 app.use("/api/admin", require("./routes/AdminRoutes"));
+
+// API routes for guru
+const guruRoutes = require("./routes/GuruRoutes");
+app.use("/api", guruRoutes);
+
 
 app.listen(3000, () => {
   console.log("App is running on port 3000");

@@ -16,7 +16,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import SignatureCanvas from "react-signature-canvas";
-import { addVisitor } from "../services/api";
 
 const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
   const [nama, setNama] = useState("");
@@ -65,6 +64,22 @@ const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
         <ModalHeader>Tambah Pengunjung</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <FormControl id="tanggalKehadiran" isRequired>
+            <FormLabel>Tanggal Kehadiran</FormLabel>
+            <Input
+              type="date"
+              value={tanggalKehadiran}
+              onChange={(e) => setTanggalKehadiran(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="jamKehadiran" isRequired>
+            <FormLabel>Jam Kehadiran</FormLabel>
+            <Input
+              type="time"
+              value={jamKehadiran}
+              onChange={(e) => setJamKehadiran(e.target.value)}
+            />
+          </FormControl>
           <FormControl id="nama" isRequired>
             <FormLabel>Nama</FormLabel>
             <Input
@@ -88,24 +103,7 @@ const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
               <option value="5A">5A</option>
               <option value="5B">5B</option>
               <option value="6A">6A</option>
-              <option value="6B">6B</option>
             </Select>
-          </FormControl>
-          <FormControl id="tanggalKehadiran" isRequired>
-            <FormLabel>Tanggal Kehadiran</FormLabel>
-            <Input
-              type="date"
-              value={tanggalKehadiran}
-              onChange={(e) => setTanggalKehadiran(e.target.value)}
-            />
-          </FormControl>
-          <FormControl id="jamKehadiran" isRequired>
-            <FormLabel>Jam Kehadiran</FormLabel>
-            <Input
-              type="time"
-              value={jamKehadiran}
-              onChange={(e) => setJamKehadiran(e.target.value)}
-            />
           </FormControl>
           <FormControl id="keterangan">
             <FormLabel>Keterangan</FormLabel>

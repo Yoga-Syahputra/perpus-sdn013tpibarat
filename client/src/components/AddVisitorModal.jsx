@@ -102,7 +102,7 @@ const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
               <option value="4B">4B</option>
               <option value="5A">5A</option>
               <option value="5B">5B</option>
-              <option value="6A">6A</option>
+              <option value="6">6</option>
             </Select>
           </FormControl>
           <FormControl id="keterangan">
@@ -131,7 +131,7 @@ const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
           <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
             Tambah Pengunjung
           </Button>
-          <Button variant="ghost" onClick={onClose}>
+          <Button onClick={onClose}>
             Batal
           </Button>
         </ModalFooter>

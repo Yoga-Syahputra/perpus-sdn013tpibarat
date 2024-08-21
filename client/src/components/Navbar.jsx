@@ -8,7 +8,6 @@ import {
   MenuList,
   MenuItem,
   Badge,
-  useColorMode,
   Box,
   Button,
   useDisclosure,
@@ -19,19 +18,29 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/react";
-import { FaBars, FaUserCircle, FaSun, FaMoon, FaBell } from "react-icons/fa";
+import {
+  FaBars,
+  FaUserCircle,
+  FaExpand,
+  FaCompress,
+  FaBell,
+} from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
-  const { colorMode, toggleColorMode } = useColorMode();
   const [events, setEvents] = useState([]);
   const [ongoingEvents, setOngoingEvents] = useState([]);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleSignOut = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      setIsFullScreen(false);
+    }
     onClose();
     navigate("/admin-login");
   };
@@ -55,18 +64,15 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
     setOngoingEvents(ongoing);
   }, [events]);
 
-   const handleToggleColorMode = () => {
-  const applicablePages = [
-    "/admin",
-    "/list",
-    "/admin-config",
-    "/change-password",
-  ];
-
-  if (applicablePages.includes(location.pathname)) {
-    toggleColorMode();
-  }
-};
+  const handleToggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setIsFullScreen(true);
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+      setIsFullScreen(false);
+    }
+  };
 
   return (
     <Flex
@@ -100,14 +106,14 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
           Dasbor Perpustakaan SDN 013 TPI Barat
         </Text>
       </Flex>
-     <Flex align="center">
-      <IconButton
-        icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
-        variant="outline"
-        color="white"
-        aria-label="Toggle Color Mode"
-        onClick={handleToggleColorMode}  
-        mr={4}
+      <Flex align="center">
+        <IconButton
+          icon={isFullScreen ? <FaCompress /> : <FaExpand />}
+          variant="outline"
+          color="white"
+          aria-label="Toggle Fullscreen Mode"
+          onClick={handleToggleFullScreen}
+          mr={4}
         />
         <Menu>
           <MenuButton

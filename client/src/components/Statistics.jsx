@@ -194,7 +194,7 @@ const Statistics = ({ visitors }) => {
           shadow="md"
         >
           <Heading as="h3" size="md" mb={3}>
-            Top 5 Pengunjung
+           Lima Pengunjung Teratas
           </Heading>
           <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
             {topVisitors.map((visitor, index) => (

@@ -212,7 +212,7 @@ const FormulirPengunjung = () => {
                     <option value="4B">4B</option>
                     <option value="5A">5A</option>
                     <option value="5B">5B</option>
-                    <option value="6A">6A</option>
+                    <option value="6">6</option>
                   </Select>
                 </FormControl>
                 <FormControl id="keterangan">

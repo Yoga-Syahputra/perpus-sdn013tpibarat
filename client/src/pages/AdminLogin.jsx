@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
@@ -17,11 +17,26 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { adminLogin, guruLogin } from "../services/api";
 
 const AdminLogin = () => {
-  const [role, setRole] = useState("admin"); 
+  const [role, setRole] = useState("admin");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
+
+  useEffect(() => {
+    const currentRole = localStorage.getItem("role");
+    if (currentRole && currentRole !== role) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      toast({
+        title: "Sesi berakhir.",
+        description: `Sesi Anda sebagai ${currentRole} sudah berakhir.`,
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [role, toast]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +45,7 @@ const AdminLogin = () => {
       const credentials = { username, password };
       const loginFunction = role === "admin" ? adminLogin : guruLogin;
       const { token } = await loginFunction(credentials);
-      
+
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
 
@@ -79,7 +94,7 @@ const AdminLogin = () => {
           <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="md">
             <Flex justifyContent="center" mb={6}>
               <Link to="/">
-                <img src={logo} alt="Perpustakaan Logo" className="w-40 h-40" />
+                <img src={logo} alt="Library Logo" className="w-40 h-40" />
               </Link>
             </Flex>
             <Heading
@@ -92,7 +107,7 @@ const AdminLogin = () => {
               Login Admin
             </Heading>
             <p className="text-center text-gray-600 mb={2} font-medium">
-              Masuk sebagai admin 
+              Masuk sebagai admin
             </p>
             <Box as="form" onSubmit={handleSubmit}>
               <VStack spacing={4} align="stretch">

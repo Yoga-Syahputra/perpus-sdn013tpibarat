@@ -19,7 +19,7 @@ const Home = () => {
       setNextBackgroundIndex(
         (prevIndex) => (prevIndex + 2) % backgrounds.length
       );
-    }, 5000); 
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -57,22 +57,22 @@ const Home = () => {
             />
           </AbsoluteCenter>
         </Box>
-        <h1 className="text-4xl font-bold mb-4 text-white">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
           Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
         </h1>
-        <p className="text-lg mb-8 font-bold text-blue-300" >
+        <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-blue-300">
           Selamat datang! Silakan pilih salah satu opsi yang ada di bawah ini!
         </p>
-        <div className="space-x-4">
+        <div className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center justify-center">
           <Link
             to="/visitor-form"
-            className="bg-blue-600 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded transition duration-300"
+            className="bg-blue-600 hover:bg-blue-800 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded transition duration-300 text-sm md:text-base lg:text-lg"
           >
             Formulir Pengunjung
           </Link>
           <Link
             to="/admin-login"
-            className="bg-green-600 hover:bg-green-800 text-white font-semibold px-6 py-3 rounded transition duration-300"
+            className="bg-green-600 hover:bg-green-800 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded transition duration-300 text-sm md:text-base lg:text-lg"
           >
             Login Admin
           </Link>

@@ -1,7 +1,20 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server/index.js"
+    }
+  ],
   "headers": [
     {
-      "source": "/(.*)", 
+      "source": "/api/(.*)",
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",

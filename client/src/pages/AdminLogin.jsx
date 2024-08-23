@@ -143,7 +143,7 @@ const AdminLogin = () => {
                   </select>
                 </FormControl>
                 <Flex justify="center" w="full">
-                  <Button colorScheme="blue" type="submit">
+                  <Button colorScheme="blue" width="full" type="submit">
                     Login
                   </Button>
                 </Flex>

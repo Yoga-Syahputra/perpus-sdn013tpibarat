@@ -12,13 +12,7 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(
-  cors({
-    origin: "https://perpus-sdn013tpibarat.vercel.app", 
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 // API routes for visitors
@@ -31,5 +25,7 @@ app.use("/api/admin", require("./routes/AdminRoutes"));
 const guruRoutes = require("./routes/GuruRoutes");
 app.use("/api", guruRoutes);
 
-// Start the server
-module.exports = app;
+
+app.listen(3000, () => {
+  console.log("App is running on port 3000");
+});

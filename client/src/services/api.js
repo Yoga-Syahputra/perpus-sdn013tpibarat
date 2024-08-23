@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://perpus-sdn013tpibarat-backend.vercel.app/api",
+  baseURL: "https://perpus-backend.vercel.app//api",
 });
 
 // visitor api

@@ -12,7 +12,14 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+// Configure CORS to allow requests only from frontend URL
+app.use(
+  cors({
+    origin: "https://perpus-sdn013tpibarat.vercel.app", 
+    optionsSuccessStatus: 200, 
+  })
+);
+
 app.use(express.json());
 
 // API routes for visitors
@@ -24,7 +31,6 @@ app.use("/api/admin", require("./routes/AdminRoutes"));
 // API routes for guru
 const guruRoutes = require("./routes/GuruRoutes");
 app.use("/api", guruRoutes);
-
 
 app.listen(3000, () => {
   console.log("App is running on port 3000");

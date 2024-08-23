@@ -21,6 +21,11 @@ app.use(
 );
 app.use(express.json());
 
+// Root route 
+app.get("/", (req, res) => {
+  res.send("HUH");
+});
+
 // API routes for visitors
 app.use("/api/visitors", require("./routes/VisitorRoutes"));
 

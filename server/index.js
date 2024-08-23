@@ -14,17 +14,12 @@ connectDB();
 // Middleware
 app.use(
   cors({
-    origin: "https://perpus-sdn013tpibarat.vercel.app/",
+    origin: "https://perpus-sdn013tpibarat.vercel.app", 
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 app.use(express.json());
-
-// Root route 
-app.get("/", (req, res) => {
-  res.send("HUH");
-});
 
 // API routes for visitors
 app.use("/api/visitors", require("./routes/VisitorRoutes"));

@@ -25,7 +25,5 @@ app.use("/api/admin", require("./routes/AdminRoutes"));
 const guruRoutes = require("./routes/GuruRoutes");
 app.use("/api", guruRoutes);
 
-
-app.listen(3000, () => {
-  console.log("App is running on port 3000");
-});
+// Start the server
+module.exports = app;

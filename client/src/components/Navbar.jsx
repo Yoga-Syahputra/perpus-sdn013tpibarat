@@ -17,6 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  HStack,
 } from "@chakra-ui/react";
 import {
   FaBars,
@@ -25,7 +26,8 @@ import {
   FaCompress,
   FaBell,
 } from "react-icons/fa";
-import { useNavigate, useLocation } from "react-router-dom";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
   const [events, setEvents] = useState([]);
@@ -34,7 +36,6 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleSignOut = () => {
     if (document.fullscreenElement) {
@@ -82,7 +83,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
       padding="1.5rem"
       bg="gray.800"
       color="white"
-      position={"sticky"}
+      position="sticky"
       top="0"
       zIndex={1000}
     >
@@ -117,21 +118,22 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
         />
         <Menu>
           <MenuButton
-            as={IconButton}
-            icon={<FaBell />}
-            variant="outline"
-            aria-label="Notifications"
-            color="white"
+            as={Box}
             position="relative"
+            aria-label="Notifications"
+            cursor="pointer"
             mr={4}
           >
+            <FaBell size="24" />
             {ongoingEvents.length > 0 && (
               <Badge
                 colorScheme="red"
                 borderRadius="full"
                 position="absolute"
-                top="0"
-                right="0"
+                top="-1"
+                right="-1"
+                fontSize="0.8em"
+                px={2}
               >
                 {ongoingEvents.length}
               </Badge>
@@ -157,7 +159,10 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
         </Menu>
         <Menu>
           <MenuButton as={Box} ml="4" cursor="pointer">
-            <FaUserCircle size="32" />
+            <HStack>
+              <FaUserCircle size="32" />
+              <ChevronDownIcon boxSize={5} /> {/* Dropdown icon */}
+            </HStack>
           </MenuButton>
           <MenuList bg="gray.700" color="white" borderColor="gray.600">
             {role === "admin" && (

@@ -15,8 +15,8 @@ connectDB();
 // Configure CORS to allow requests only from frontend URL
 app.use(
   cors({
-    origin: "https://perpus-sdn013tpibarat.vercel.app", 
-    optionsSuccessStatus: 200, 
+    origin: "https://perpus-sdn013tpibarat.vercel.app",
+    optionsSuccessStatus: 200,
   })
 );
 

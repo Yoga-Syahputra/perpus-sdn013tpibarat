@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import {
   Link,
   Button,
-  useColorModeValue,
   IconButton,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +11,6 @@ import logo from "../assets/img/library.png";
 
 const Sidebar = ({ isOpen, toggleSidebar, role }) => {
   const navigate = useNavigate();
-  const bg = useColorModeValue("gray.100", "gray.900");
 
   console.log("Role passed to Sidebar:", role); 
 

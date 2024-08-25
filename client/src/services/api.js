@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: "https://perpus-sdn013tpibarat-backend.vercel.app/api",
 });
 
- // visitor api
+// visitor api
 export const addVisitor = async (visitor) => {
   try {
     const response = await api.post("/visitors", visitor);
@@ -70,7 +70,7 @@ export const changePassword = async (currentPassword, newPassword) => {
       { currentPassword, newPassword },
       {
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -138,5 +138,3 @@ export const guruLogin = async (credentials) => {
     throw error;
   }
 };
-
-

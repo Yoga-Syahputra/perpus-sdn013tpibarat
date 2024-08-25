@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
+import VerificationModal from "../components/VerificationModal"; // Import the VerificationModal component
 import logo from "../assets/img/library.png";
 import bg1 from "../assets/img/background.jpg";
 import bg2 from "../assets/img/background2.jpg";
@@ -10,6 +11,10 @@ const Home = () => {
   const backgrounds = [bg1, bg2, bg3];
   const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
   const [nextBackgroundIndex, setNextBackgroundIndex] = useState(1);
+  const [isVerified, setIsVerified] = useState(
+    localStorage.getItem("isVerified") === "true"
+  );
+  const [isModalOpen, setIsModalOpen] = useState(!isVerified);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,8 +29,18 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleVerification = () => {
+    setIsVerified(true);
+    localStorage.setItem("isVerified", "true");
+    setIsModalOpen(false); // Tutup modal setelah verifikasi berhasil
+  };
+
   return (
-    <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+    <div
+      className={`p-6 bg-gray-100 min-h-screen flex flex-col items-center justify-center relative overflow-hidden ${
+        isModalOpen ? "filter blur-sm" : ""
+      }`}
+    >
       <div
         className="absolute inset-0 transition-opacity duration-1000"
         style={{
@@ -78,6 +93,11 @@ const Home = () => {
           </Link>
         </div>
       </div>
+      <VerificationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onVerified={handleVerification}
+      />
     </div>
   );
 };

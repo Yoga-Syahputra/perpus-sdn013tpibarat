@@ -108,9 +108,15 @@ const Statistics = ({ visitors }) => {
   const uniqueVisitors = useMemo(() => {
     const visitorMap = new Map();
     visitors.forEach((visitor) => {
-      const key = `${visitor.nama}-${visitor.kelas}`;
+      const normalizedNama = visitor.nama.toLowerCase();
+      const key = `${normalizedNama}-${visitor.kelas}`;
+
       if (!visitorMap.has(key)) {
-        visitorMap.set(key, { ...visitor, visitCount: 1 });
+        visitorMap.set(key, {
+          ...visitor,
+          nama: normalizedNama,
+          visitCount: 1,
+        });
       } else {
         visitorMap.get(key).visitCount += 1;
       }

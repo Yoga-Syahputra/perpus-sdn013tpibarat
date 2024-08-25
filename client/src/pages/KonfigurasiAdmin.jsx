@@ -21,17 +21,23 @@ import {
   AlertDialogOverlay,
   VStack,
   HStack,
-  useToast, 
+  useToast,
 } from "@chakra-ui/react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import { addGuru, getGurus, deleteGuru, changePasswordGuru } from "../services/api";
+import {
+  addGuru,
+  getGurus,
+  deleteGuru,
+  changePasswordGuru,
+} from "../services/api";
 
 const KonfigurasiAdmin = () => {
   const [gurus, setGurus] = useState([]);
   const [newName, setNewName] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [tempPassword, setTempPassword] = useState(""); // Temporarily store unhashed password
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const [selectedGuru, setSelectedGuru] = useState(null);
@@ -39,7 +45,6 @@ const KonfigurasiAdmin = () => {
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const toast = useToast();
 
-  // Get the role from localStorage or other source
   const userRole = localStorage.getItem("role");
 
   useEffect(() => {
@@ -50,6 +55,7 @@ const KonfigurasiAdmin = () => {
     try {
       const response = await getGurus();
       setGurus(response);
+      setTempPassword(""); // Clear temporary password
     } catch (error) {
       console.error("Error fetching gurus", error);
       toast({
@@ -70,6 +76,7 @@ const KonfigurasiAdmin = () => {
         username: newUsername,
         password: newPassword,
       });
+      setTempPassword(newPassword); // Set the unhashed password temporarily
       fetchGurus();
       setNewName("");
       setNewUsername("");
@@ -208,7 +215,11 @@ const KonfigurasiAdmin = () => {
                       <Tr key={guru._id}>
                         <Td>{guru.nama}</Td>
                         <Td>{guru.username}</Td>
-                        <Td>{guru.password}</Td>
+                        <Td>
+                          {tempPassword && guru.username === newUsername
+                            ? tempPassword
+                            : "******"}
+                        </Td>
                         <Td>
                           <HStack spacing={2}>
                             <Button
@@ -235,7 +246,7 @@ const KonfigurasiAdmin = () => {
                     ))
                   ) : (
                     <Tr>
-                      <Td colSpan="3">Tidak ada data guru.</Td>
+                      <Td colSpan="4">Tidak ada data guru.</Td>
                     </Tr>
                   )}
                 </Tbody>
@@ -304,13 +315,11 @@ const KonfigurasiAdmin = () => {
                 Batal
               </Button>
               <Button
-                colorScheme="blue"
-                onClick={() => {
-                  handleChangePassword(selectedGuru._id);
-                }}
+                colorScheme="green"
+                onClick={() => handleChangePassword(selectedGuru._id)}
                 ml={3}
               >
-                Ubah
+                Ubah Password
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

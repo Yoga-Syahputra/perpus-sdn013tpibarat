@@ -60,7 +60,7 @@ const Home = () => {
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
           Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
         </h1>
-        <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-blue-300">
+        <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-blue-200 textShadow='1px 1px #ff0000'">
           Selamat datang! Silakan pilih salah satu opsi yang ada di bawah ini!
         </p>
         <div className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center justify-center">

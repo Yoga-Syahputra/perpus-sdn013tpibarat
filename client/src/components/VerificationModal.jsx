@@ -12,12 +12,12 @@ import {
   FormLabel,
   useToast,
 } from "@chakra-ui/react";
-import { adminLogin, guruLogin } from "../services/api"; // Import your login functions
+import { adminLogin, guruLogin } from "../services/api"; 
 
 const VerificationModal = ({ isOpen, onVerified }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("admin"); // default role
+  const [role, setRole] = useState("admin"); 
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
@@ -36,7 +36,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
         duration: 3000,
         isClosable: true,
       });
-      onVerified(); // Panggil fungsi onVerified saat verifikasi berhasil
+      onVerified(); 
     } catch (error) {
       toast({
         title: "Verifikasi gagal.",

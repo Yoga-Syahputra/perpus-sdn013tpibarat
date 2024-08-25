@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
-import VerificationModal from "../components/VerificationModal"; // Import the VerificationModal component
+import VerificationModal from "../components/VerificationModal"; 
+import { FaUserEdit, FaSignInAlt } from "react-icons/fa";
 import logo from "../assets/img/library.png";
 import bg1 from "../assets/img/background.jpg";
 import bg2 from "../assets/img/background2.jpg";
@@ -72,23 +73,25 @@ const Home = () => {
             />
           </AbsoluteCenter>
         </Box>
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white">
           Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
         </h1>
-        <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-blue-200 textShadow='1px 1px #ff0000'">
+        <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-blue-600 textShadow='1px 1px #ff0000'">
           Selamat datang! Silakan pilih salah satu opsi yang ada di bawah ini!
         </p>
         <div className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center justify-center">
           <Link
             to="/visitor-form"
-            className="bg-blue-600 hover:bg-blue-800 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded transition duration-300 text-sm md:text-base lg:text-lg"
+            className="bg-blue-600 hover:bg-blue-800 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded transition duration-300 text-sm md:text-base lg:text-lg flex items-center"
           >
+            <FaUserEdit className="mr-2" />
             Formulir Pengunjung
           </Link>
           <Link
             to="/admin-login"
-            className="bg-green-600 hover:bg-green-800 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded transition duration-300 text-sm md:text-base lg:text-lg"
+            className="bg-green-600 hover:bg-green-800 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded transition duration-300 text-sm md:text-base lg:text-lg flex items-center"
           >
+            <FaSignInAlt className="mr-2" />
             Login Admin
           </Link>
         </div>

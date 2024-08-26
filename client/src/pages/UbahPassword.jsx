@@ -62,7 +62,7 @@ const UbahPassword = () => {
   };
 
   return (
-    <Box minH="100vh" bg="gray.100">
+    <Box minH="100vh">
       <Navbar
         toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}

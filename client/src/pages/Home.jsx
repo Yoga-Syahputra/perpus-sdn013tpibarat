@@ -33,7 +33,7 @@ const Home = () => {
   const handleVerification = () => {
     setIsVerified(true);
     localStorage.setItem("isVerified", "true");
-    setIsModalOpen(false); // Tutup modal setelah verifikasi berhasil
+    setIsModalOpen(false); 
   };
 
   return (

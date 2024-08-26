@@ -1,9 +1,5 @@
-import React, { useRef } from "react";
-import {
-  Link,
-  Button,
-  IconButton,
-} from "@chakra-ui/react";
+import React from "react";
+import { Box, Link, Button, IconButton, Image, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import { FaHome, FaListAlt, FaBars, FaUserCog } from "react-icons/fa";
@@ -12,26 +8,30 @@ import logo from "../assets/img/library.png";
 const Sidebar = ({ isOpen, toggleSidebar, role }) => {
   const navigate = useNavigate();
 
-  console.log("Role passed to Sidebar:", role); 
-
   return (
-    <div
-      className={`fixed top-0 left-0 h-full bg-gray-800 p-4 flex flex-col transform ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300 ease-in-out`}
-      style={{ width: "250px", zIndex: 1000 }}
+    <Box
+      position="fixed"
+      top="0"
+      left="0"
+      height="100vh"
+      bg="gray.800"
+      p="4"
+      display="flex"
+      flexDirection="column"
+      transform={isOpen ? "translateX(0)" : "translateX(-100%)"}
+      transition="transform 0.3s ease-in-out"
+      width="250px"
+      zIndex="1000"
     >
-      <div className="my-2 mb-4 flex items-center justify-between">
-        <img
+      <Flex mb="4" alignItems="center" justifyContent="space-between">
+        <Image
           src={logo}
           alt="Perpustakaan Logo"
-          style={{
-            width: "150px",
-            height: "auto",
-            maxHeight: "160px",
-          }}
+          width="150px"
+          height="auto"
+          maxHeight="160px"
+          cursor="pointer"
           onClick={() => navigate("/admin")}
-          className="cursor-pointer"
         />
         <IconButton
           icon={<FaBars />}
@@ -39,18 +39,19 @@ const Sidebar = ({ isOpen, toggleSidebar, role }) => {
           onClick={toggleSidebar}
           aria-label="Toggle Sidebar"
           color="white"
+          size="sm"
           mr="4px"
           mb="25px"
-          mt="-90px"
+          mt="-60px"
         />
-      </div>
-      <ul className="space-y-2 flex-1">
-        <li>
+      </Flex>
+      <Flex as="ul" flex="1" direction="column" spacing="2">
+        <Box as="li">
           <Link as={RouterLink} to="/admin" _hover={{ textDecoration: "none" }}>
             <Button
               leftIcon={<FaHome />}
               variant="ghost"
-              w="100%"
+              width="100%"
               justifyContent="flex-start"
               color="white"
               onClick={toggleSidebar}
@@ -58,13 +59,13 @@ const Sidebar = ({ isOpen, toggleSidebar, role }) => {
               Statistik
             </Button>
           </Link>
-        </li>
-        <li>
+        </Box>
+        <Box as="li">
           <Link as={RouterLink} to="/list" _hover={{ textDecoration: "none" }}>
             <Button
               leftIcon={<FaListAlt />}
               variant="ghost"
-              w="100%"
+              width="100%"
               justifyContent="flex-start"
               color="white"
               onClick={toggleSidebar}
@@ -72,9 +73,9 @@ const Sidebar = ({ isOpen, toggleSidebar, role }) => {
               Daftar Pengunjung
             </Button>
           </Link>
-        </li>
+        </Box>
         {role === "admin" && (
-          <li>
+          <Box as="li">
             <Link
               as={RouterLink}
               to="/admin-config"
@@ -83,7 +84,7 @@ const Sidebar = ({ isOpen, toggleSidebar, role }) => {
               <Button
                 leftIcon={<FaUserCog />}
                 variant="ghost"
-                w="100%"
+                width="100%"
                 justifyContent="flex-start"
                 color="white"
                 onClick={toggleSidebar}
@@ -91,10 +92,10 @@ const Sidebar = ({ isOpen, toggleSidebar, role }) => {
                 Konfigurasi Admin
               </Button>
             </Link>
-          </li>
+          </Box>
         )}
-      </ul>
-    </div>
+      </Flex>
+    </Box>
   );
 };
 

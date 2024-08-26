@@ -78,8 +78,8 @@ const AdminLogin = () => {
         minHeight: "100vh",
       }}
     >
-      <Flex minH="100vh" align="center" justify="center" py={12} px={6}>
-        <Container maxW="lg">
+      <Flex minH="100vh" align="center" justify="center" py={4} px={4}>
+        <Container maxW="lg" maxHeight="100vh" overflowY="auto">
           <Flex justifyContent="flex-start" mb={4}>
             <Button
               as={Link}
@@ -91,26 +91,26 @@ const AdminLogin = () => {
               Kembali ke Beranda
             </Button>
           </Flex>
-          <Box bg="white" p={8} rounded="lg" shadow="lg" w="full" maxW="md">
+          <Box bg="white" p={6} rounded="lg" shadow="lg" w="full" maxW="md">
             <Flex justifyContent="center" mb={6}>
               <Link to="/">
-                <img src={logo} alt="Library Logo" className="w-40 h-40" />
+                <img src={logo} alt="Library Logo" className="w-32 h-32" />
               </Link>
             </Flex>
             <Heading
               as="h1"
-              size="xl"
+              size="lg"
               textAlign="center"
               mb={4}
               color="gray.800"
             >
               Login Admin
             </Heading>
-            <p className="text-center text-gray-600 mb-10 font-medium">
+            <p className="text-center text-gray-600 mb={8} font-medium">
               Masuk sebagai admin
             </p>
             <Box as="form" onSubmit={handleSubmit}>
-              <VStack spacing={4} align="stretch">
+              <VStack spacing={3} align="stretch">
                 <FormControl id="username" isRequired>
                   <FormLabel>Username</FormLabel>
                   <Input

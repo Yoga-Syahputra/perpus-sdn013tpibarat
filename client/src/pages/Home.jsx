@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
-import VerificationModal from "../components/VerificationModal"; 
+import VerificationModal from "../components/VerificationModal";
 import { FaUserEdit, FaSignInAlt } from "react-icons/fa";
 import logo from "../assets/img/library.png";
 import bg1 from "../assets/img/background.jpg";
 import bg2 from "../assets/img/background2.jpg";
 import bg3 from "../assets/img/background3.jpg";
+import { gsap } from "gsap";
 
 const Home = () => {
   const backgrounds = [bg1, bg2, bg3];
@@ -16,6 +17,8 @@ const Home = () => {
     localStorage.getItem("isVerified") === "true"
   );
   const [isModalOpen, setIsModalOpen] = useState(!isVerified);
+
+  const logoRef = useRef(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,10 +33,20 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    gsap.to(logoRef.current, {
+      y: 20, // Move the logo
+      duration: 2, // Duration of the animation
+      ease: "power1.inOut", // Easing function
+      repeat: -1, // Repeat indefinitely
+      yoyo: true, // Move back to the original position
+    });
+  }, []);
+
   const handleVerification = () => {
     setIsVerified(true);
     localStorage.setItem("isVerified", "true");
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
   };
 
   return (
@@ -67,6 +80,7 @@ const Home = () => {
         <Box position="relative" h="300px">
           <AbsoluteCenter>
             <img
+              ref={logoRef}
               src={logo}
               alt="Perpustakaan Logo"
               className="mb-1 w-100 h-80 justify-center transition-transform transform hover:scale-105"

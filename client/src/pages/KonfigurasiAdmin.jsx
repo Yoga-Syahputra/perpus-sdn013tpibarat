@@ -225,7 +225,7 @@ const KonfigurasiAdmin = () => {
                               Hapus
                             </Button>
                             <Button
-                              colorScheme="blue"
+                              colorScheme="green"
                               onClick={() => {
                                 setSelectedGuru(guru);
                                 setPasswordModalOpen(true);
@@ -308,7 +308,7 @@ const KonfigurasiAdmin = () => {
                 Batal
               </Button>
               <Button
-                colorScheme="green"
+                colorScheme="blue"
                 onClick={() => handleChangePassword(selectedGuru._id)}
                 ml={3}
               >

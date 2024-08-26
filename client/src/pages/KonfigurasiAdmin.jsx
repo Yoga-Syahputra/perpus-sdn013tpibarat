@@ -37,7 +37,7 @@ const KonfigurasiAdmin = () => {
   const [newName, setNewName] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [tempPassword, setTempPassword] = useState(""); // Temporarily store unhashed password
+  const [tempPassword, setTempPassword] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const [selectedGuru, setSelectedGuru] = useState(null);
@@ -55,16 +55,9 @@ const KonfigurasiAdmin = () => {
     try {
       const response = await getGurus();
       setGurus(response);
-      setTempPassword(""); // Clear temporary password
+      setTempPassword(""); 
     } catch (error) {
       console.error("Error fetching gurus", error);
-      toast({
-        title: "Error fetching data",
-        description: "Could not fetch gurus. Please try again later.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
       setGurus([]);
     }
   };
@@ -76,7 +69,7 @@ const KonfigurasiAdmin = () => {
         username: newUsername,
         password: newPassword,
       });
-      setTempPassword(newPassword); // Set the unhashed password temporarily
+      setTempPassword(newPassword); 
       fetchGurus();
       setNewName("");
       setNewUsername("");

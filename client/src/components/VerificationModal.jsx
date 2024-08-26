@@ -54,7 +54,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
     <Modal isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader textAlign="center">Verifikasi</ModalHeader>
+        <ModalHeader textAlign="center">Silakan Verifikasi Terlebih Dahulu!</ModalHeader>
         <ModalBody>
           <FormControl id="username" mb={4}>
             <FormLabel>Username</FormLabel>
@@ -95,7 +95,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
             onClick={handleLogin}
             isLoading={loading}
           >
-            Login
+            Verifikasi
           </Button>
         </ModalFooter>
       </ModalContent>

@@ -225,7 +225,7 @@ const KonfigurasiAdmin = () => {
                               Hapus
                             </Button>
                             <Button
-                              colorScheme="green"
+                              colorScheme="blue"
                               onClick={() => {
                                 setSelectedGuru(guru);
                                 setPasswordModalOpen(true);

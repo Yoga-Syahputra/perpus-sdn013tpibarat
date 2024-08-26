@@ -86,6 +86,7 @@ const Footer = () => {
                 src={content.image}
                 alt={content.name}
                 width="100%"
+                height="25rem"
                 borderRadius="5px"
               />
               <Text

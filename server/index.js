@@ -39,7 +39,7 @@ app.post("/api/verify-captcha", async (req, res) => {
       null,
       {
         params: {
-          secret: process.env.SECRET_KEY,
+          secret: process.env.REACT_APP_SECRET_KEY,
           response: captchaValue,
         },
       }

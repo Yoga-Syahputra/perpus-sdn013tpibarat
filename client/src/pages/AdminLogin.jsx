@@ -106,7 +106,7 @@ const AdminLogin = () => {
             >
               Login Admin
             </Heading>
-            <p className="text-center text-gray-600 mb={2} font-medium">
+            <p className="text-center text-gray-600 mb-10 py-1 font-medium">
               Masuk sebagai admin
             </p>
             <Box as="form" onSubmit={handleSubmit}>

@@ -108,7 +108,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
           </FormControl>
           <FormControl id="captcha" mb={4}>
             <ReCAPTCHA
-              sitekey="SITE_KEY"
+              sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
               onChange={handleCaptchaChange}
             />
           </FormControl>

@@ -1,3 +1,4 @@
+// Home.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
@@ -8,6 +9,7 @@ import bg1 from "../assets/img/background.jpg";
 import bg2 from "../assets/img/background2.jpg";
 import bg3 from "../assets/img/background3.jpg";
 import { gsap } from "gsap";
+import Footer from "../components/Footer"; // Import Footer component
 
 const Home = () => {
   const backgrounds = [bg1, bg2, bg3];
@@ -90,7 +92,7 @@ const Home = () => {
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white">
           Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
         </h1>
-        <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-blue-600 textShadow='1px 1px #ff0000'">
+        <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-white textShadow='1px 1px #ff0000'">
           Selamat datang! Silakan pilih salah satu opsi yang ada di bawah ini!
         </p>
         <div className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center justify-center">
@@ -115,6 +117,7 @@ const Home = () => {
         onClose={() => setIsModalOpen(false)}
         onVerified={handleVerification}
       />
+      <Footer /> {/* Add Footer component */}
     </div>
   );
 };

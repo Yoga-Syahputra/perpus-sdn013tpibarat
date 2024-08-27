@@ -44,7 +44,7 @@ const Footer = () => {
         setCurrentMemberIndex((prevIndex) =>
           prevIndex === members.length - 1 ? 0 : prevIndex + 1
         );
-      }, 3000); 
+      }, 3000);
 
       return () => clearInterval(interval);
     }
@@ -58,8 +58,17 @@ const Footer = () => {
 
   return (
     <footer className="text-white text-center p-4 fixed bottom-0 w-full">
-      &copy; {new Date().getFullYear()} SDN 013 Tanjungpinang Barat. Developed
-      by{" "}
+      &copy; {new Date().getFullYear()}{" "}
+      <a
+        href="https://sdn013tpibarat.sch.id/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-bold text-blue-600"
+        style={{ textDecoration: "underline" }}
+      >
+        SDN 013 Tanjungpinang Barat
+      </a>
+      . Developed by{" "}
       <a
         href="/#"
         onClick={handleLinkClick}

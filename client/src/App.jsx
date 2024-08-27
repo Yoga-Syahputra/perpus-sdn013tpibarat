@@ -2,24 +2,19 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Routes,
-  useLocation,
+  Routes
 } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import FormulirPengunjung from "./pages/FormulirPengunjung";
-import Footer from "./components/Footer";
 import DaftarPengunjung from "./pages/DaftarPengunjung";
 import PrivateRoute from "./components/PrivateRoute";
-import UbahPassword  from "./pages/UbahPassword";
+import UbahPassword from "./pages/UbahPassword";
 import KonfigurasiAdmin from "./pages/KonfigurasiAdmin";
 
 const App = () => {
-  const location = useLocation();
-  const showFooter = location.pathname === "/";
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
@@ -42,7 +37,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route path="/admin-login" element={<AdminLogin />} />
           <Route
             path="/change-password"
             element={
@@ -62,7 +56,6 @@ const App = () => {
           <Route path="/visitor-form" element={<FormulirPengunjung />} />
         </Routes>
       </div>
-      {showFooter && <Footer />}
     </div>
   );
 };

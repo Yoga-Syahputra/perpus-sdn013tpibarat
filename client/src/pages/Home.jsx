@@ -116,7 +116,7 @@ const Home = () => {
         onClose={() => setIsModalOpen(false)}
         onVerified={handleVerification}
       />
-      <Footer /> {/* Add Footer component */}
+      <Footer /> 
     </div>
   );
 };

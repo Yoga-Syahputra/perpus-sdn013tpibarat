@@ -166,7 +166,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
           <MenuButton as={Box} ml="4" cursor="pointer">
             <HStack>
               <FaUserCircle size="32" />
-              <ChevronDownIcon boxSize={5} /> {/* Dropdown icon */}
+              <ChevronDownIcon boxSize={5} /> 
             </HStack>
           </MenuButton>
           <MenuList bg="gray.700" color="white" borderColor="gray.600">

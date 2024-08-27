@@ -23,20 +23,22 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  useEffect(() => {
-    const currentRole = localStorage.getItem("role");
-    if (currentRole && currentRole !== role) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      toast({
-        title: "Sesi berakhir.",
-        description: `Sesi Anda sebagai ${currentRole} sudah berakhir.`,
-        status: "info",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }, [role, toast]);
+useEffect(() => {
+  const currentRole = localStorage.getItem("role");
+  if (currentRole && currentRole !== role) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/admin-login"); 
+    toast({
+      title: "Sesi berakhir.",
+      description: `Sesi Anda sebagai ${currentRole} sudah berakhir.`,
+      status: "info",
+      duration: 3000,
+      isClosable: true,
+    });
+  }
+}, [role, toast, navigate]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

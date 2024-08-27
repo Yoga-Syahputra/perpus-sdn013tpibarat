@@ -37,14 +37,19 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
   const cancelRef = useRef();
   const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-      setIsFullScreen(false);
-    }
-    onClose();
-    navigate("/admin-login");
-  };
+ const handleSignOut = () => {
+   if (document.fullscreenElement) {
+     document.exitFullscreen();
+     setIsFullScreen(false);
+   }
+
+   localStorage.removeItem("token");
+   localStorage.removeItem("role");
+
+   onClose();
+   navigate("/admin-login");
+ };
+
 
   const handlePasswordChange = () => {
     navigate("/change-password");

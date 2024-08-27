@@ -27,7 +27,14 @@ const App = () => {
               </VerificationRoute>
             }
           />
-          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route
+            path="/admin-login"
+            element={
+              <VerificationRoute>
+                <AdminLogin />
+              </VerificationRoute>
+            }
+          />
           <Route
             path="/list"
             element={
@@ -58,7 +65,14 @@ const App = () => {
               </VerificationRoute>
             }
           />
-          <Route path="/visitor-form" element={<FormulirPengunjung />} />
+          <Route
+            path="/visitor-form"
+            element={
+              <VerificationRoute>
+                <FormulirPengunjung />
+              </VerificationRoute>
+            }
+          />
         </Routes>
       </div>
     </div>

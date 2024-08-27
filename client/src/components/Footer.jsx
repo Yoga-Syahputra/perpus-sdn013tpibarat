@@ -71,7 +71,6 @@ const Footer = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="font-bold text-blue-600"
-        style={{ textDecoration: "underline" }}
       >
         SDN 013 Tanjungpinang Barat
       </a>
@@ -80,7 +79,6 @@ const Footer = () => {
         href="/#"
         onClick={handleLinkClick}
         className="font-bold text-blue-600"
-        style={{ textDecoration: "underline" }}
       >
         TIM KP TI - FTTK UMRAH
       </a>

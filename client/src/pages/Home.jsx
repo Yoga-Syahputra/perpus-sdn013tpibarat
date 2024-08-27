@@ -88,9 +88,16 @@ const Home = () => {
             />
           </AbsoluteCenter>
         </Box>
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white">
+        <h1
+          className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white"
+          style={{
+            textShadow:
+              "2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 8px rgba(0, 0, 0, 0.2)",
+          }}
+        >
           Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
         </h1>
+
         <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-white textShadow='1px 1px #ff0000'">
           Selamat datang! Silakan pilih salah satu opsi yang ada di bawah ini!
         </p>
@@ -116,7 +123,7 @@ const Home = () => {
         onClose={() => setIsModalOpen(false)}
         onVerified={handleVerification}
       />
-      <Footer /> 
+      <Footer />
     </div>
   );
 };

@@ -57,7 +57,14 @@ const Footer = () => {
   }, [currentMemberIndex, isOpen, members]);
 
   return (
-    <footer className="text-white text-center p-4 fixed bottom-0 w-full">
+    <footer
+      className="text-white text-center p-4 fixed bottom-0 w-full"
+      style={{
+        zIndex: 1000,
+        textShadow:
+          "2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 8px rgba(0, 0, 0, 0.2)",
+      }}
+    >
       &copy; {new Date().getFullYear()}{" "}
       <a
         href="https://sdn013tpibarat.sch.id/"

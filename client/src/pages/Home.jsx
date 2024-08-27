@@ -1,4 +1,3 @@
-// Home.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
@@ -9,7 +8,7 @@ import bg1 from "../assets/img/background.jpg";
 import bg2 from "../assets/img/background2.jpg";
 import bg3 from "../assets/img/background3.jpg";
 import { gsap } from "gsap";
-import Footer from "../components/Footer"; // Import Footer component
+import Footer from "../components/Footer"; 
 
 const Home = () => {
   const backgrounds = [bg1, bg2, bg3];

@@ -57,6 +57,8 @@ const VerificationModal = ({ isOpen, onVerified }) => {
         isClosable: true,
       });
       onVerified();
+
+      setRole("");
     } catch (error) {
       toast({
         title: "Verifikasi gagal.",

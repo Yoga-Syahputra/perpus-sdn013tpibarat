@@ -8,6 +8,7 @@ const ListPengunjung = ({
   setVisitors,
   onEditClick,
   selectedDate,
+  searchTerm,
 }) => {
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +20,12 @@ const ListPengunjung = ({
 
   const filteredVisitors = visitors.filter((visitor) => {
     const visitDate = new Date(visitor.tanggalKehadiran);
-    return visitDate.toDateString() === selectedDate.toDateString();
+    const matchesDate =
+      visitDate.toDateString() === selectedDate.toDateString();
+    const matchesSearch = visitor.nama
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchesDate && matchesSearch;
   });
 
   return (
@@ -27,7 +33,7 @@ const ListPengunjung = ({
       <Table id="visitor-table" variant="simple" size="sm">
         <Thead>
           <Tr>
-            <Th>NO.</Th> {/* Kolom Nomor Urut */}
+            <Th>NO.</Th>
             <Th>Tanggal Kehadiran</Th>
             <Th>Jam Kehadiran</Th>
             <Th>Nama</Th>

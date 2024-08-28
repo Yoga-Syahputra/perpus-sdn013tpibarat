@@ -264,7 +264,7 @@ const FormulirPengunjung = () => {
                   <Tr>
                     <Th>NO.</Th>
                     <Th>Tanggal Kehadiran</Th>
-                    <Th>Waktu</Th>
+                    <Th>Jam Kehadiran</Th>
                     <Th>Nama</Th>
                     <Th>Kelas</Th>
                     <Th>Keterangan</Th>

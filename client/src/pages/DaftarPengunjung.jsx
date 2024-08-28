@@ -8,8 +8,16 @@ import {
   useDisclosure,
   HStack,
   VStack,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
-import { FaFilePdf, FaFileExcel, FaCalendarAlt } from "react-icons/fa";
+import {
+  FaFilePdf,
+  FaFileExcel,
+  FaCalendarAlt,
+  FaSearch,
+} from "react-icons/fa";
 import ListPengunjung from "../components/ListPengunjung";
 import AddVisitorModal from "../components/AddVisitorModal";
 import EditVisitorModal from "../components/EditVisitorModal";
@@ -43,6 +51,8 @@ const DaftarPengunjung = () => {
   const [selectedVisitor, setSelectedVisitor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
 
   // Get the role from localStorage or other source
   const userRole = localStorage.getItem("role");
@@ -243,7 +253,11 @@ const DaftarPengunjung = () => {
 
   return (
     <Flex direction="column" h="100vh">
-      <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} role={userRole} />
+      <Navbar
+        toggleSidebar={toggleSidebar}
+        isSidebarOpen={isSidebarOpen}
+        role={userRole}
+      />
       <Flex flex="1">
         <Sidebar
           isOpen={isSidebarOpen}
@@ -257,6 +271,18 @@ const DaftarPengunjung = () => {
                 Daftar Pengunjung
               </Heading>
               <HStack spacing={2}>
+                <HStack spacing={2}>
+                  <InputGroup width="250px">
+                    <InputLeftElement pointerEvents="none">
+                      <FaSearch color="gray.300" />
+                    </InputLeftElement>
+                    <Input
+                      placeholder="Cari nama pengunjung..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </InputGroup>
+                </HStack>
                 <DatePicker
                   selected={selectedDate}
                   onChange={(date) => setSelectedDate(date)}
@@ -284,6 +310,7 @@ const DaftarPengunjung = () => {
                 setVisitors={setVisitors}
                 onEditClick={handleEditClick}
                 selectedDate={selectedDate}
+                searchTerm={searchTerm}
                 onDelete={handleDeleteVisitor}
               />
             </Box>

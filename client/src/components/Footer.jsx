@@ -65,12 +65,21 @@ const Footer = () => {
           "2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 8px rgba(0, 0, 0, 0.2)",
       }}
     >
+      <style jsx>{`
+        .glowing-red:hover {
+          text-shadow: 0 0 8px red;
+        }
+
+        .glowing-orange:hover {
+          text-shadow: 0 0 8px orange;
+        }
+      `}</style>
       &copy; {new Date().getFullYear()}{" "}
       <a
         href="https://sdn013tpibarat.sch.id/"
         target="_blank"
         rel="noopener noreferrer"
-        className="font-bold text-blue-600"
+        className="font-bold text-blue-600 glowing-red"
       >
         SDN 013 Tanjungpinang Barat
       </a>
@@ -78,7 +87,7 @@ const Footer = () => {
       <a
         href="/#"
         onClick={handleLinkClick}
-        className="font-bold text-blue-600"
+        className="font-bold text-blue-600 glowing-orange"
       >
         TIM KP TI - FTTK UMRAH
       </a>

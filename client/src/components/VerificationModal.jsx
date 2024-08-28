@@ -11,7 +11,10 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  Tooltip,
+  IconButton,
 } from "@chakra-ui/react";
+import { InfoIcon } from "@chakra-ui/icons";
 import { adminLogin, guruLogin } from "../services/api";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -71,8 +74,24 @@ const VerificationModal = ({ isOpen, onVerified }) => {
     <Modal isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader textAlign="center">
+        <ModalHeader textAlign="center" position="relative">
           Silakan Verifikasi Terlebih Dahulu!
+          <Tooltip
+            label="Verifikasi diperlukan untuk mencegah akses dari pihak yang tidak bertanggungjawab dan meminimalisir kejahatan cyber."
+            fontSize="sm"
+            placement="top"
+          >
+            <IconButton
+              aria-label="Informasi verifikasi"
+              icon={<InfoIcon />}
+              variant="ghost"
+              size="sm"
+              position="absolute"
+              top="50%"
+              transform="translateY(-50%)"
+              right="10px" 
+            />
+          </Tooltip>
         </ModalHeader>
         <ModalBody>
           <FormControl id="username" mb={4}>

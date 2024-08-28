@@ -20,11 +20,9 @@ const App = () => {
           <Route
             path="/admin"
             element={
-              <VerificationRoute>
                 <PrivateRoute>
                   <Admin />
                 </PrivateRoute>
-              </VerificationRoute>
             }
           />
           <Route
@@ -38,31 +36,25 @@ const App = () => {
           <Route
             path="/list"
             element={
-              <VerificationRoute>
                 <PrivateRoute>
                   <DaftarPengunjung />
                 </PrivateRoute>
-              </VerificationRoute>
             }
           />
           <Route
             path="/change-password"
             element={
-              <VerificationRoute>
                 <PrivateRoute>
                   <UbahPassword />
                 </PrivateRoute>
-              </VerificationRoute>
             }
           />
           <Route
             path="/admin-config"
             element={
-              <VerificationRoute>
                 <PrivateRoute>
                   <KonfigurasiAdmin />
                 </PrivateRoute>
-              </VerificationRoute>
             }
           />
           <Route

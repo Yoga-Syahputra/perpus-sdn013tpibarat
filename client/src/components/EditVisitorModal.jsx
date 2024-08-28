@@ -42,7 +42,7 @@ const EditVisitorModal = ({ isOpen, onClose, visitor, EditVisitor }) => {
      const updatedVisitor = await updateVisitor(visitor._id, formData);
      EditVisitor(updatedVisitor); 
      toast({
-       title: "Pengunjung berhasil diupdate.",
+       title: "Pengunjung berhasil diperbarui.",
        status: "success",
        duration: 3000,
        isClosable: true,

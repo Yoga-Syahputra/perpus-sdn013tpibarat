@@ -13,14 +13,17 @@ import {
   useToast,
   Tooltip,
   IconButton,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
-import { InfoIcon } from "@chakra-ui/icons";
+import { InfoIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { adminLogin, guruLogin } from "../services/api";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const VerificationModal = ({ isOpen, onVerified }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State untuk visibility toggle
   const [role, setRole] = useState("admin");
   const [loading, setLoading] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
@@ -91,7 +94,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
               position="absolute"
               top="50%"
               transform="translateY(-50%)"
-              right="10px" 
+              right="10px"
             />
           </Tooltip>
         </ModalHeader>
@@ -106,11 +109,22 @@ const VerificationModal = ({ isOpen, onVerified }) => {
           </FormControl>
           <FormControl id="password" mb={4}>
             <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <InputGroup>
+              <Input
+                type={showPassword ? "text" : "password"} // Kontrol tipe input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement>
+                <IconButton
+                  icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  onClick={() => setShowPassword(!showPassword)}
+                  variant="ghost"
+                  size="sm"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <FormControl id="role" mb={4}>
             <FormLabel>Masuk sebagai</FormLabel>

@@ -109,7 +109,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
           cursor="pointer"
           onClick={() => navigate("/admin")}
         >
-          Dasbor Perpustakaan SDN 013 TPI Barat
+          Dasbor DIGI-PenPus
         </Text>
       </Flex>
       <Flex align="center">

@@ -11,15 +11,19 @@ import {
   Input,
   useToast,
   VStack,
+  InputGroup,
+  InputRightElement,
+  IconButton
 } from "@chakra-ui/react";
 import logo from "../assets/img/library.png";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ViewIcon, ViiewOffIcon } from "@chakra-ui/icons";
 import { adminLogin, guruLogin } from "../services/api";
 
 const AdminLogin = () => {
   const [role, setRole] = useState("admin");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -123,11 +127,22 @@ useEffect(() => {
                 </FormControl>
                 <FormControl id="password" isRequired>
                   <FormLabel>Password</FormLabel>
-                  <Input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <InputGroup>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <InputRightElement>
+                      <IconButton
+                      icon={showPassword ? <viewOffIcon /> : <viewIcon />}
+                      onClick={() => setShowPassword(!showPassword)}
+                      variant="ghost"
+                      size="sm"
+                      aria-label={showPassword ? "Hide password" : "Show password"} 
+                      />
+                    </InputRightElement>
+                  </InputGroup>
                 </FormControl>
                 <FormControl id="role" isRequired>
                   <FormLabel>Role</FormLabel>

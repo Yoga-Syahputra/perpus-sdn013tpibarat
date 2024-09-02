@@ -111,7 +111,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
-                type={showPassword ? "text" : "password"} // Kontrol tipe input
+                type={showPassword ? "text" : "password"} 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

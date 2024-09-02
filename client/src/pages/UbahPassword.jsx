@@ -7,8 +7,12 @@ import {
   Input,
   Heading,
   useToast,
+  IconButton,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { InfoIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { changePassword } from "../services/api"; 
@@ -18,6 +22,7 @@ const UbahPassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -77,27 +82,60 @@ const UbahPassword = () => {
         <Heading mb={6}>Ubah Password</Heading>
         <FormControl mb={4}>
           <FormLabel>Password Lama</FormLabel>
+          <InputGroup>
           <Input
             type="password"
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
           />
+          <InputRightElement>
+          <IconButton 
+            icon={setShowPassword ? <ViewOffIcon /> : <ViewIcon />}
+            onClick={() => setShowPassword(!showPassword)}
+            variant="ghost"
+            size="sm"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          />
+          </InputRightElement>
+          </InputGroup>
         </FormControl>
         <FormControl mb={4}>
           <FormLabel>Password Baru</FormLabel>
+          <InputGroup>
           <Input
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
+          <InputRightElement>
+          <IconButton
+            icon={showPassword ? <ViewOffIcon /> : <ViewIcon/>}
+            onClick={() => setShowPassword(!showPassword)}
+            variant="ghost"
+            size="sm"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            />
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
         <FormControl mb={4}>
           <FormLabel>Konfirmasi Password Baru</FormLabel>
+          <InputGroup>
           <Input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <InputRightElement>
+          <IconButton
+            icon={showPassword ? <ViewOffIcon /> : <ViewIcon/>}
+            onClick={() => setShowPassword(!showPassword)}
+            variant="ghost"
+            size="sm"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            />
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
         <Button colorScheme="blue" onClick={handlePasswordChange}>
           Simpan

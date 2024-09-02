@@ -16,7 +16,7 @@ import {
   IconButton
 } from "@chakra-ui/react";
 import logo from "../assets/img/library.png";
-import { ArrowBackIcon, ViewIcon, ViiewOffIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { adminLogin, guruLogin } from "../services/api";
 
 const AdminLogin = () => {
@@ -135,7 +135,7 @@ useEffect(() => {
                     />
                     <InputRightElement>
                       <IconButton
-                      icon={showPassword ? <viewOffIcon /> : <viewIcon />}
+                      icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                       onClick={() => setShowPassword(!showPassword)}
                       variant="ghost"
                       size="sm"

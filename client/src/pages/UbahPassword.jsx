@@ -96,7 +96,7 @@ const UbahPassword = () => {
                 onClick={() => setShowOldPassword(!showOldPassword)}
                 variant="ghost"
                 size="sm"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={showOldPassword ? "Hide password" : "Show password"}
               />
             </InputRightElement>
           </InputGroup>

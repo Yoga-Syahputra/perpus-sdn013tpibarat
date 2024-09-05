@@ -111,7 +111,7 @@ const UbahPassword = () => {
             />
             <InputRightElement>
               <IconButton
-                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                icon={showNewPassword ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={() => setShowNewPassword(!showNewPassword)}
                 variant="ghost"
                 size="sm"

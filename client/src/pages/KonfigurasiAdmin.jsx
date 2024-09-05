@@ -309,12 +309,23 @@ const KonfigurasiAdmin = () => {
               Ubah Password
             </AlertDialogHeader>
             <AlertDialogBody>
+            <InputGroup>
               <Input
+                type={showPassword ? "text" : "password"}
                 placeholder="Password Baru"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                type="password"
               />
+              <InputRightElement>
+                <IconButton
+                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                onClick={() => setShowPassword(!showPassword)}
+                variant="ghost"
+                size="sm"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                />
+              </InputRightElement>
+            </InputGroup>
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button

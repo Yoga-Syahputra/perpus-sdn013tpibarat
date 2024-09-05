@@ -22,7 +22,11 @@ import {
   VStack,
   HStack,
   useToast,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import {
@@ -38,6 +42,7 @@ const KonfigurasiAdmin = () => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [tempPassword, setTempPassword] = useState("");
+  const [showPassword, setShowPassword] = useState("")
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const [selectedGuru, setSelectedGuru] = useState(null);
@@ -183,12 +188,23 @@ const KonfigurasiAdmin = () => {
                   onChange={(e) => setNewUsername(e.target.value)}
                   placeholder="Username Guru (Admin Baru)"
                 />
+                <InputGroup>
                 <Input
+                  type={showPassword ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Password Guru (Admin Baru)"
-                  type="password"
                 />
+                <InputRightElement> 
+                  <IconButton
+                  icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  onClick={() => setShowPassword(!showPassword)}
+                  variant="ghost"
+                  size="sm"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  />
+                </InputRightElement>
+                </InputGroup>
                 <Button onClick={handleAddGuru} colorScheme="blue">
                   Tambah Admin
                 </Button>

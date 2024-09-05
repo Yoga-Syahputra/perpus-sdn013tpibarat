@@ -22,7 +22,9 @@ const UbahPassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState("false");
+  const [showConfirmPassword, setShowConfirmPassword] = useState("false");
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -84,14 +86,14 @@ const UbahPassword = () => {
           <FormLabel>Password Lama</FormLabel>
           <InputGroup>
             <Input
-              type={showPassword ? "text" : "password"}
+              type={showOldPassword ? "text" : "password"}
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
             />
             <InputRightElement>
               <IconButton
-                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowPassword(!showPassword)}
+                icon={showOldPassword ? <ViewOffIcon /> : <ViewIcon />}
+                onClick={() => setShowOldPassword(!showOldPassword)}
                 variant="ghost"
                 size="sm"
                 aria-label={showPassword ? "Hide password" : "Show password"}
@@ -103,17 +105,17 @@ const UbahPassword = () => {
           <FormLabel>Password Baru</FormLabel>
           <InputGroup>
             <Input
-              type={showPassword ? "text" : "password"}
+              type={showNewPassword ? "text" : "password"}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <InputRightElement>
               <IconButton
                 icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowNewassword(!showNewPassword)}
                 variant="ghost"
                 size="sm"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={showNewPassword ? "Hide password" : "Show password"}
               />
             </InputRightElement>
           </InputGroup>
@@ -122,17 +124,17 @@ const UbahPassword = () => {
           <FormLabel>Konfirmasi Password Baru</FormLabel>
           <InputGroup>
             <Input
-              type={showPassword ? "text" : "password"}
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <InputRightElement>
               <IconButton
-                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowPassword(!showPassword)}
+                icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 variant="ghost"
                 size="sm"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
               />
             </InputRightElement>
           </InputGroup>

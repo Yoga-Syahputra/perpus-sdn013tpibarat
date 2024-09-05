@@ -112,7 +112,7 @@ const UbahPassword = () => {
             <InputRightElement>
               <IconButton
                 icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowNewassword(!showNewPassword)}
+                onClick={() => setShowNewPassword(!showNewPassword)}
                 variant="ghost"
                 size="sm"
                 aria-label={showNewPassword ? "Hide password" : "Show password"}

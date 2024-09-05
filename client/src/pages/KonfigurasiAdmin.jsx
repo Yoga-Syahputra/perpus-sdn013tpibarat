@@ -164,11 +164,14 @@ const KonfigurasiAdmin = () => {
         />
         <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
           <Container maxW="container.xl" py={10}>
-            <Flex justifyContent="space-between" mb={4}>
+            <VStack spacing={4} align="flex-start" mb={4}>
               <Heading as="h1" size="xl">
                 Konfigurasi Admin
               </Heading>
-            </Flex>
+              <Heading as="h2" size="sm" mt={0} textColor={"gray.500"}>
+                Kelola guru piket sebagai admin
+              </Heading>
+            </VStack>
             <Box
               bg="white"
               p={4}
@@ -189,21 +192,23 @@ const KonfigurasiAdmin = () => {
                   placeholder="Username Guru (Admin Baru)"
                 />
                 <InputGroup>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Password Guru (Admin Baru)"
-                />
-                <InputRightElement> 
-                  <IconButton
-                  icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                  onClick={() => setShowPassword(!showPassword)}
-                  variant="ghost"
-                  size="sm"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Password Guru (Admin Baru)"
                   />
-                </InputRightElement>
+                  <InputRightElement>
+                    <IconButton
+                      icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                      onClick={() => setShowPassword(!showPassword)}
+                      variant="ghost"
+                      size="sm"
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                    />
+                  </InputRightElement>
                 </InputGroup>
                 <Button onClick={handleAddGuru} colorScheme="blue">
                   Tambah Admin
@@ -309,23 +314,25 @@ const KonfigurasiAdmin = () => {
               Ubah Password
             </AlertDialogHeader>
             <AlertDialogBody>
-            <InputGroup>
-              <Input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password Baru"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-              <InputRightElement>
-                <IconButton
-                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowPassword(!showPassword)}
-                variant="ghost"
-                size="sm"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+              <InputGroup>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password Baru"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
                 />
-              </InputRightElement>
-            </InputGroup>
+                <InputRightElement>
+                  <IconButton
+                    icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                    onClick={() => setShowPassword(!showPassword)}
+                    variant="ghost"
+                    size="sm"
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                  />
+                </InputRightElement>
+              </InputGroup>
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button

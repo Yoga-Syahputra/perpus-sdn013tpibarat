@@ -76,12 +76,12 @@ const Footer = () => {
       `}</style>
       &copy; {new Date().getFullYear()}{" "}
       <a
-        href="https://sdn013tpibarat.sch.id/"
+        href="/#"
         target="_blank"
         rel="noopener noreferrer"
         className="font-bold text-blue-600 glowing-red"
       >
-        SDN 013 Tanjungpinang Barat
+        SMP Negeri 2 Bintan
       </a>
       . Developed by{" "}
       <a

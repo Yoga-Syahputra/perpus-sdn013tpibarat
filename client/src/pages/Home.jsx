@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, AbsoluteCenter } from "@chakra-ui/react";
 import VerificationModal from "../components/VerificationModal";
 import { FaUserEdit, FaSignInAlt } from "react-icons/fa";
-import logo from "../assets/img/library.png";
+import logo from "../assets/img/SMPN 2 Bintan Logo.png";
 import bg1 from "../assets/img/background.jpg";
 import bg2 from "../assets/img/background2.jpg";
 import bg3 from "../assets/img/background3.jpg";
@@ -36,7 +36,7 @@ const Home = () => {
 
   useEffect(() => {
     gsap.to(logoRef.current, {
-      y: 20, // Move the logo
+      y: 30, // Move the logo
       duration: 2, // Duration of the animation
       ease: "power1.inOut", // Easing function
       repeat: -1, // Repeat indefinitely
@@ -84,7 +84,7 @@ const Home = () => {
               ref={logoRef}
               src={logo}
               alt="Perpustakaan Logo"
-              className="mb-1 w-100 h-80 justify-center transition-transform transform hover:scale-105"
+              className="mb-20 w-100 h-80 justify-center transition-transform transform hover:scale-105"
             />
           </AbsoluteCenter>
         </Box>
@@ -95,7 +95,7 @@ const Home = () => {
               "2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 8px rgba(0, 0, 0, 0.2)",
           }}
         >
-          Aplikasi Pengunjung Perpustakaan SDN 013 Tanjungpinang Barat
+          Aplikasi Pengunjung Perpustakaan SMPN 2 Bintan
         </h1>
 
         <p className="text-base md:text-lg lg:text-xl mb-8 font-bold text-white textShadow='1px 1px #ff0000'">

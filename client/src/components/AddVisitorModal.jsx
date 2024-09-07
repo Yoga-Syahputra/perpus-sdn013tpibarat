@@ -105,14 +105,14 @@ const AddVisitorModal = ({ isOpen, onClose, addVisitor }) => {
               <option value="6">6</option>
             </Select>
           </FormControl>
-          <FormControl id="keterangan">
+          <FormControl id="keterangan" isRequired>
             <FormLabel>Keterangan</FormLabel>
             <Textarea
               value={keterangan}
               onChange={(e) => setKeterangan(e.target.value)}
             />
           </FormControl>
-          <FormControl id="tandaTangan">
+          <FormControl id="tandaTangan" isRequired>
             <FormLabel>Tanda Tangan</FormLabel>
             <SignatureCanvas
               ref={sigCanvas}

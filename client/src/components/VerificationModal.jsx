@@ -17,13 +17,13 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { InfoIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { adminLogin, guruLogin } from "../services/api"; 
+import { adminLogin, guruLogin } from "../services/api";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const VerificationModal = ({ isOpen, onVerified, userType }) => {
+const VerificationModal = ({ isOpen, onVerified }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
   const [loading, setLoading] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
   const toast = useToast();
@@ -46,9 +46,9 @@ const VerificationModal = ({ isOpen, onVerified, userType }) => {
 
     setLoading(true);
     try {
-      if (userType === "admin") {
+      if (role === "admin") {
         await adminLogin({ username, password });
-      } else if (userType === "guru") {
+      } else if (role === "guru") {
         await guruLogin({ username, password });
       }
       toast({
@@ -59,6 +59,8 @@ const VerificationModal = ({ isOpen, onVerified, userType }) => {
         isClosable: true,
       });
       onVerified();
+
+      setRole("");
     } catch (error) {
       toast({
         title: "Verifikasi gagal.",
@@ -108,7 +110,7 @@ const VerificationModal = ({ isOpen, onVerified, userType }) => {
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? "text" : "password"} 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

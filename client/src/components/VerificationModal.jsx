@@ -23,8 +23,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 const VerificationModal = ({ isOpen, onVerified }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); 
-  const [role, setRole] = useState("admin");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
   const toast = useToast();
@@ -47,11 +46,20 @@ const VerificationModal = ({ isOpen, onVerified }) => {
 
     setLoading(true);
     try {
-      if (role === "admin") {
+      // First attempt admin login
+      try {
         await adminLogin({ username, password });
-      } else if (role === "guru") {
-        await guruLogin({ username, password });
+        localStorage.setItem("role", "admin");
+      } catch (adminError) {
+        // If admin login fails, attempt guru login
+        try {
+          await guruLogin({ username, password });
+          localStorage.setItem("role", "guru");
+        } catch (guruError) {
+          throw new Error("Login failed for both roles.");
+        }
       }
+
       toast({
         title: "Verifikasi berhasil.",
         description: "Selamat datang :)",
@@ -59,9 +67,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
         duration: 3000,
         isClosable: true,
       });
-      onVerified();
-
-      setRole("");
+      onVerified(); // Proceed if login is successful
     } catch (error) {
       toast({
         title: "Verifikasi gagal.",
@@ -111,7 +117,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
-                type={showPassword ? "text" : "password"} 
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

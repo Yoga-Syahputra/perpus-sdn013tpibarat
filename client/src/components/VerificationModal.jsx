@@ -24,6 +24,7 @@ const VerificationModal = ({ isOpen, onVerified }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); 
+  const [role, setRole] = useState("admin");
   const [loading, setLoading] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
   const toast = useToast();

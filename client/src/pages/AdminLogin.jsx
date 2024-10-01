@@ -110,8 +110,11 @@ const AdminLogin = () => {
               mb={4}
               color="gray.800"
             >
-              Login Admin / Guru
+              Login Admin
             </Heading>
+            <p className="text-center text-gray-600 mb={8} font-medium">
+              Masuk sebagai admin
+            </p>
             <Box as="form" onSubmit={handleSubmit}>
               <VStack spacing={3} align="stretch">
                 <FormControl id="username" isRequired>
@@ -132,8 +135,13 @@ const AdminLogin = () => {
                     />
                     <InputRightElement>
                       <IconButton
-                        onClick={() => setShowPassword(!showPassword)}
                         icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                        onClick={() => setShowPassword(!showPassword)}
+                        variant="ghost"
+                        size="sm"
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
                       />
                     </InputRightElement>
                   </InputGroup>

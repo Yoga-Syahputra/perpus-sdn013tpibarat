@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
@@ -20,58 +20,58 @@ import { ArrowBackIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { adminLogin, guruLogin } from "../services/api";
 
 const AdminLogin = () => {
-  const [role, setRole] = useState("admin");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
-
-useEffect(() => {
-  const currentRole = localStorage.getItem("role");
-  if (currentRole && currentRole !== role) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    navigate("/admin-login"); 
-    toast({
-      title: "Sesi berakhir.",
-      description: `Sesi Anda sebagai ${currentRole} sudah berakhir.`,
-      status: "info",
-      duration: 3000,
-      isClosable: true,
-    });
-  }
-}, [role, toast, navigate]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const credentials = { username, password };
-      const loginFunction = role === "admin" ? adminLogin : guruLogin;
-      const { token } = await loginFunction(credentials);
+    const credentials = { username, password };
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", role);
+    try {
+      // Try admin login first
+      const { token: adminToken } = await adminLogin(credentials);
+      localStorage.setItem("token", adminToken);
+      localStorage.setItem("role", "admin");
 
       toast({
         title: "Login berhasil!",
-        description: `Anda berhasil masuk sebagai ${role}.`,
+        description: "Anda berhasil masuk sebagai admin.",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
 
       navigate("/admin");
-    } catch (error) {
-      toast({
-        title: "Login gagal.",
-        description: "Username atau password salah.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+    } catch (adminError) {
+      try {
+        // If admin login fails, try guru login
+        const { token: guruToken } = await guruLogin(credentials);
+        localStorage.setItem("token", guruToken);
+        localStorage.setItem("role", "guru");
+
+        toast({
+          title: "Login berhasil!",
+          description: "Anda berhasil masuk sebagai guru.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        navigate("/admin");
+      } catch (guruError) {
+        // If both logins fail, show error
+        toast({
+          title: "Login gagal.",
+          description: "Username atau password salah.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     }
   };
 
@@ -110,11 +110,8 @@ useEffect(() => {
               mb={4}
               color="gray.800"
             >
-              Login Admin
+              Login Admin / Guru
             </Heading>
-            <p className="text-center text-gray-600 mb={8} font-medium">
-              Masuk sebagai admin
-            </p>
             <Box as="form" onSubmit={handleSubmit}>
               <VStack spacing={3} align="stretch">
                 <FormControl id="username" isRequired>
@@ -135,35 +132,15 @@ useEffect(() => {
                     />
                     <InputRightElement>
                       <IconButton
-                      icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                      onClick={() => setShowPassword(!showPassword)}
-                      variant="ghost"
-                      size="sm"
-                      aria-label={showPassword ? "Hide password" : "Show password"} 
+                        onClick={() => setShowPassword(!showPassword)}
+                        icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                       />
                     </InputRightElement>
                   </InputGroup>
                 </FormControl>
-                <FormControl id="role" isRequired>
-                  <FormLabel>Role</FormLabel>
-                  <select
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    style={{
-                      padding: "8px",
-                      borderRadius: "4px",
-                      width: "100%",
-                    }}
-                  >
-                    <option value="admin">Administrator</option>
-                    <option value="guru">Guru</option>
-                  </select>
-                </FormControl>
-                <Flex justify="center" w="full">
-                  <Button colorScheme="blue" width="full" type="submit">
-                    Login
-                  </Button>
-                </Flex>
+                <Button type="submit" colorScheme="blue" w="full">
+                  Login
+                </Button>
               </VStack>
             </Box>
           </Box>

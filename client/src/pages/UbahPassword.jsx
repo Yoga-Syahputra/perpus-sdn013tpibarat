@@ -76,7 +76,7 @@ const UbahPassword = () => {
   };
 
   return (
-    <Box minH="100vh">
+   <Flex direction="column" h="100vh">
       <Navbar
         toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}
@@ -176,7 +176,7 @@ const UbahPassword = () => {
           Simpan
         </Button>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

@@ -6,7 +6,11 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbSeparator,
+  Icon,
 } from "@chakra-ui/react";
+import { ChevronRightIcon } from "@chakra-ui/icons";
+import { FaHome } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Statistics from "../components/Statistics";
@@ -19,7 +23,6 @@ const Admin = () => {
   const [events, setEvents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Get the role from localStorage or other source
   const userRole = localStorage.getItem("role");
 
   useEffect(() => {
@@ -68,11 +71,25 @@ const Admin = () => {
           p={4}
           transition="margin-left 0.5s"
         >
-          <Breadcrumb mfontWeight="medium" fontSize="s">
-            <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink href="#">Dasbor</BreadcrumbLink>
-            </BreadcrumbItem>
+          <Breadcrumb
+            fontWeight="medium"
+            fontSize="lg"
+            separator={
+              <BreadcrumbSeparator>
+                <ChevronRightIcon />
+              </BreadcrumbSeparator>
+            }
+            spacing="8px"
+            color="gray.600"
+            mb={4}
+          >
             <BreadcrumbItem>
+              <BreadcrumbLink href="#">
+                <Icon as={FaHome} mr={2} />
+                Dasbor
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink href="/admin">Statistik</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

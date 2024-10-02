@@ -286,8 +286,10 @@ const DaftarPengunjung = () => {
           >
             <BreadcrumbItem>
               <BreadcrumbLink href="/admin">
-                <Icon as={FaHome} mr={2} />
-                Dasbor
+                <Flex alignItems="center">
+                  <Icon as={FaHome} mr={2} />
+                  Dasbor
+                </Flex>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem>

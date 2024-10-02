@@ -23,6 +23,7 @@ import {
   FaFileExcel,
   FaCalendarAlt,
   FaSearch,
+  FaHome,
 } from "react-icons/fa";
 import ListPengunjung from "../components/ListPengunjung";
 import AddVisitorModal from "../components/AddVisitorModal";

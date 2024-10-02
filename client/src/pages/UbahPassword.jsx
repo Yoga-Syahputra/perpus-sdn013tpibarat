@@ -10,9 +10,15 @@ import {
   IconButton,
   InputGroup,
   InputRightElement,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  Icon,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { FaHome } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { changePassword } from "../services/api";
@@ -81,6 +87,30 @@ const UbahPassword = () => {
         role={userRole}
       />
       <Box p={8} maxW="500px" mx="auto" mt="10">
+        <Breadcrumb
+          fontWeight="medium"
+          fontSize="lg"
+          separator={
+            <BreadcrumbSeparator>
+              <ChevronRightIcon />
+            </BreadcrumbSeparator>
+          }
+          spacing="8px"
+          color="gray.600"
+          mb={4}
+        >
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/admin">
+              <Flex alignItems="center">
+                <Icon as={FaHome} mr={2} />
+                Dasbor
+              </Flex>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/change-password">Ubah Password</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
         <Heading mb={6}>Ubah Password</Heading>
         <FormControl mb={4}>
           <FormLabel>Password Lama</FormLabel>
@@ -134,7 +164,9 @@ const UbahPassword = () => {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 variant="ghost"
                 size="sm"
-                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showConfirmPassword ? "Hide password" : "Show password"
+                }
               />
             </InputRightElement>
           </InputGroup>

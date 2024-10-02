@@ -25,8 +25,13 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  Icon,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { ViewIcon, ViewOffIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import {
@@ -42,7 +47,7 @@ const KonfigurasiAdmin = () => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [tempPassword, setTempPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("")
+  const [showPassword, setShowPassword] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const [selectedGuru, setSelectedGuru] = useState(null);
@@ -60,7 +65,7 @@ const KonfigurasiAdmin = () => {
     try {
       const response = await getGurus();
       setGurus(response);
-      setTempPassword(""); 
+      setTempPassword("");
     } catch (error) {
       console.error("Error fetching gurus", error);
       setGurus([]);
@@ -74,7 +79,7 @@ const KonfigurasiAdmin = () => {
         username: newUsername,
         password: newPassword,
       });
-      setTempPassword(newPassword); 
+      setTempPassword(newPassword);
       fetchGurus();
       setNewName("");
       setNewUsername("");
@@ -163,6 +168,30 @@ const KonfigurasiAdmin = () => {
           role={userRole}
         />
         <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
+          <Breadcrumb
+            fontWeight="medium"
+            fontSize="lg"
+            separator={
+              <BreadcrumbSeparator>
+                <ChevronRightIcon />
+              </BreadcrumbSeparator>
+            }
+            spacing="8px"
+            color="gray.600"
+            mb={4}
+          >
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/admin">
+                <Flex alignItems="center">
+                  <Icon as={FaHome} mr={2} />
+                  Dasbor
+                </Flex>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/admin-config">Konfigurasi Admin</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Container maxW="container.xl" py={10}>
             <VStack spacing={4} align="flex-start" mb={4}>
               <Heading as="h1" size="xl">

@@ -6,7 +6,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
 } from "@chakra-ui/react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
@@ -69,7 +68,7 @@ const Admin = () => {
           p={4}
           transition="margin-left 0.5s"
         >
-          <Breadcrumb>
+          <Breadcrumb mfontWeight="medium" fontSize="s">
             <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink href="#">Dasbor</BreadcrumbLink>
             </BreadcrumbItem>

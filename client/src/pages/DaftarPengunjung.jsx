@@ -11,6 +11,11 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  Icon,
 } from "@chakra-ui/react";
 import {
   FaFilePdf,
@@ -265,6 +270,28 @@ const DaftarPengunjung = () => {
           role={userRole}
         />
         <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
+          <Breadcrumb
+            fontWeight="medium"
+            fontSize="lg"
+            separator={
+              <BreadcrumbSeparator>
+                <ChevronRightIcon />
+              </BreadcrumbSeparator>
+            }
+            spacing="8px"
+            color="gray.600"
+            mb={4}
+          >
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/admin">
+                <Icon as={FaHome} mr={2} />
+                Dasbor
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/list">Daftar Pengunjung</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Container maxW="container.xl" py={10}>
             <Flex justifyContent="space-between" mb={4}>
               <Heading as="h1" size="xl">

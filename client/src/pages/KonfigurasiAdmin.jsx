@@ -32,6 +32,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { FaHome } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import {

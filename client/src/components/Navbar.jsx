@@ -25,7 +25,9 @@ import {
   FaExpand,
   FaCompress,
   FaBell,
-} from "react-icons/fa";
+  FaSignOutAlt,
+  FaLock,
+} from "react-icons/fa"; 
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -37,19 +39,18 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
   const cancelRef = useRef();
   const navigate = useNavigate();
 
- const handleSignOut = () => {
-   if (document.fullscreenElement) {
-     document.exitFullscreen();
-     setIsFullScreen(false);
-   }
+  const handleSignOut = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      setIsFullScreen(false);
+    }
 
-   localStorage.removeItem("token");
-   localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
 
-   onClose();
-   navigate("/admin-login");
- };
-
+    onClose();
+    navigate("/admin-login");
+  };
 
   const handlePasswordChange = () => {
     navigate("/change-password");
@@ -166,7 +167,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
           <MenuButton as={Box} ml="4" cursor="pointer">
             <HStack>
               <FaUserCircle size="32" />
-              <ChevronDownIcon boxSize={5} /> 
+              <ChevronDownIcon boxSize={5} />
             </HStack>
           </MenuButton>
           <MenuList bg="gray.700" color="white" borderColor="gray.600">
@@ -174,6 +175,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
               <MenuItem
                 bg="gray.700"
                 _hover={{ bg: "gray.600" }}
+                icon={<FaLock />} 
                 onClick={handlePasswordChange}
               >
                 Ubah Password
@@ -182,6 +184,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen, role }) => {
             <MenuItem
               bg="gray.700"
               _hover={{ bg: "gray.600" }}
+              icon={<FaSignOutAlt />} 
               onClick={onOpen}
             >
               Keluar

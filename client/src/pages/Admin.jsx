@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Box, Container, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@chakra-ui/react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Statistics from "../components/Statistics";
@@ -61,6 +69,14 @@ const Admin = () => {
           p={4}
           transition="margin-left 0.5s"
         >
+          <Breadcrumb>
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href="#">Dasbor</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/admin">Statistik</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Container maxW="container.xl" py={10}>
             <Statistics visitors={visitors} />
           </Container>

@@ -83,13 +83,13 @@ const Admin = () => {
             color="gray.600"
             mb={4}
           >
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href="/admin">
                 <Icon as={FaHome} mr={2} />
                 Dasbor
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbItem isCurrentPage>
+            <BreadcrumbItem>
               <BreadcrumbLink href="/admin">Statistik</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

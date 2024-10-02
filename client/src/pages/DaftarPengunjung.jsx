@@ -17,6 +17,7 @@ import {
   BreadcrumbSeparator,
   Icon,
 } from "@chakra-ui/react";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
   FaFilePdf,
   FaFileExcel,

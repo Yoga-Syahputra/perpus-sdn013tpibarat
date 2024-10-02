@@ -35,7 +35,6 @@ const UbahPassword = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  // Get the role from localStorage or other source
   const userRole = localStorage.getItem("role");
 
   const handlePasswordChange = async () => {
@@ -76,106 +75,137 @@ const UbahPassword = () => {
   };
 
   return (
-   <Flex direction="column" h="100vh">
+    <Flex direction="column" h="100vh">
       <Navbar
         toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}
         role={userRole}
       />
-      <Sidebar
-        isOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar}
-        role={userRole}
-      />
-      <Box p={8} maxW="500px" mx="auto" mt="10">
-        <Breadcrumb
-          fontWeight="medium"
-          fontSize="lg"
-          separator={
-            <BreadcrumbSeparator>
-              <ChevronRightIcon />
-            </BreadcrumbSeparator>
-          }
-          spacing="8px"
-          color="gray.600"
-          mb={4}
+      <Flex flex="1">
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          role={userRole}
+        />
+        <Box
+          ml={{ base: 0, md: isSidebarOpen ? "250px" : 0 }}
+          w="full"
+          p={4}
+          transition="margin-left 0.5s"
         >
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/admin">
-              <Flex alignItems="center">
-                <Icon as={FaHome} mr={2} />
-                Dasbor
-              </Flex>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/change-password">Ubah Password</BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-        <Heading mb={6}>Ubah Password</Heading>
-        <FormControl mb={4}>
-          <FormLabel>Password Lama</FormLabel>
-          <InputGroup>
-            <Input
-              type={showOldPassword ? "text" : "password"}
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-            />
-            <InputRightElement>
-              <IconButton
-                icon={showOldPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowOldPassword(!showOldPassword)}
-                variant="ghost"
-                size="sm"
-                aria-label={showOldPassword ? "Hide password" : "Show password"}
-              />
-            </InputRightElement>
-          </InputGroup>
-        </FormControl>
-        <FormControl mb={4}>
-          <FormLabel>Password Baru</FormLabel>
-          <InputGroup>
-            <Input
-              type={showNewPassword ? "text" : "password"}
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-            <InputRightElement>
-              <IconButton
-                icon={showNewPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowNewPassword(!showNewPassword)}
-                variant="ghost"
-                size="sm"
-                aria-label={showNewPassword ? "Hide password" : "Show password"}
-              />
-            </InputRightElement>
-          </InputGroup>
-        </FormControl>
-        <FormControl mb={4}>
-          <FormLabel>Konfirmasi Password Baru</FormLabel>
-          <InputGroup>
-            <Input
-              type={showConfirmPassword ? "text" : "password"}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            <InputRightElement>
-              <IconButton
-                icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                variant="ghost"
-                size="sm"
-                aria-label={
-                  showConfirmPassword ? "Hide password" : "Show password"
-                }
-              />
-            </InputRightElement>
-          </InputGroup>
-        </FormControl>
-        <Button colorScheme="blue" onClick={handlePasswordChange}>
-          Simpan
-        </Button>
-      </Box>
+          <Breadcrumb
+            fontWeight="medium"
+            fontSize="lg"
+            separator={<ChevronRightIcon />}
+            spacing="8px"
+            color="gray.600"
+            mb={4}
+          >
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/admin">
+                <Flex alignItems="center">
+                  <Icon as={FaHome} mr={2} />
+                  Dasbor
+                </Flex>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/change-password">
+                Ubah Password
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+
+          <Box
+            maxW="500px"
+            mx="auto"
+            p={6}
+            boxShadow="lg"
+            borderRadius="md"
+            bg="white"
+          >
+            <Heading mb={6} fontSize="2xl" textAlign="center">
+              Ubah Password
+            </Heading>
+            <FormControl mb={4}>
+              <FormLabel>Password Lama</FormLabel>
+              <InputGroup>
+                <Input
+                  type={showOldPassword ? "text" : "password"}
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  placeholder="Masukkan password lama"
+                />
+                <InputRightElement>
+                  <IconButton
+                    icon={showOldPassword ? <ViewOffIcon /> : <ViewIcon />}
+                    onClick={() => setShowOldPassword(!showOldPassword)}
+                    variant="ghost"
+                    size="sm"
+                    aria-label={
+                      showOldPassword ? "Hide password" : "Show password"
+                    }
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <FormControl mb={4}>
+              <FormLabel>Password Baru</FormLabel>
+              <InputGroup>
+                <Input
+                  type={showNewPassword ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Masukkan password baru"
+                />
+                <InputRightElement>
+                  <IconButton
+                    icon={showNewPassword ? <ViewOffIcon /> : <ViewIcon />}
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    variant="ghost"
+                    size="sm"
+                    aria-label={
+                      showNewPassword ? "Hide password" : "Show password"
+                    }
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <FormControl mb={4}>
+              <FormLabel>Konfirmasi Password Baru</FormLabel>
+              <InputGroup>
+                <Input
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Konfirmasi password baru"
+                />
+                <InputRightElement>
+                  <IconButton
+                    icon={showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    variant="ghost"
+                    size="sm"
+                    aria-label={
+                      showConfirmPassword ? "Hide password" : "Show password"
+                    }
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <Button
+              colorScheme="blue"
+              width="full"
+              onClick={handlePasswordChange}
+            >
+              Simpan
+            </Button>
+          </Box>
+        </Box>
+      </Flex>
     </Flex>
   );
 };

@@ -17,7 +17,7 @@ const ListPengunjung = ({
   selectedDate,
 }) => {
   return (
-    <Table variant="striped" colorScheme="teal">
+    <Table Table id="visitor-table" variant="simple" size="sm">
       <Thead>
         <Tr>
           <Th>No</Th>
@@ -39,7 +39,7 @@ const ListPengunjung = ({
           )
           .map((visitor, index) => (
             <Tr key={visitor._id}>
-              <Td>{index + 1}</Td> 
+              <Td>{index + 1}</Td>
               <Td>{visitor.nama}</Td>
               <Td>{visitor.kelas}</Td>
               <Td>

@@ -20,9 +20,9 @@ const App = () => {
           <Route
             path="/admin"
             element={
-                <PrivateRoute>
-                  <Admin />
-                </PrivateRoute>
+              <PrivateRoute>
+                <Admin />
+              </PrivateRoute>
             }
           />
           <Route
@@ -36,25 +36,25 @@ const App = () => {
           <Route
             path="/list"
             element={
-                <PrivateRoute>
-                  <DaftarPengunjung />
-                </PrivateRoute>
+              <PrivateRoute>
+                <DaftarPengunjung />
+              </PrivateRoute>
             }
           />
           <Route
             path="/change-password"
             element={
-                <PrivateRoute>
-                  <UbahPassword />
-                </PrivateRoute>
+              <PrivateRoute>
+                <UbahPassword />
+              </PrivateRoute>
             }
           />
           <Route
             path="/admin-config"
             element={
-             
-                  <KonfigurasiAdmin />
-             
+              <PrivateRoute>
+                <KonfigurasiAdmin />
+              </PrivateRoute>
             }
           />
           <Route

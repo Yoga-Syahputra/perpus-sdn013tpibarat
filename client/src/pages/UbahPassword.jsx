@@ -49,14 +49,12 @@ const UbahPassword = () => {
 
     try {
       await changePassword(oldPassword, newPassword);
-
       toast({
         title: "Password berhasil diubah.",
         status: "success",
         duration: 5000,
         isClosable: true,
       });
-
       navigate("/admin");
     } catch (error) {
       toast({
@@ -74,7 +72,7 @@ const UbahPassword = () => {
   };
 
   return (
-    <Flex direction="column" h="100vh">
+    <Flex direction="column" h="100vh" bg="gray.50">
       <Navbar
         toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}
@@ -89,8 +87,8 @@ const UbahPassword = () => {
         <Box
           ml={{ base: 0, md: isSidebarOpen ? "250px" : 0 }}
           w="full"
-          p={4}
-          transition="margin-left 0.5s"
+          p={6}
+          transition="margin-left 0.3s ease"
         >
           <Breadcrumb
             fontWeight="medium"
@@ -118,9 +116,9 @@ const UbahPassword = () => {
           <Box
             maxW="500px"
             mx="auto"
-            p={6}
-            boxShadow="lg"
-            borderRadius="md"
+            p={8}
+            boxShadow="xl"
+            borderRadius="lg"
             bg="white"
           >
             <Heading mb={6} fontSize="2xl" textAlign="center">
@@ -134,6 +132,7 @@ const UbahPassword = () => {
                   value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
                   placeholder="Masukkan password lama"
+                  focusBorderColor="blue.500"
                 />
                 <InputRightElement>
                   <IconButton
@@ -157,6 +156,7 @@ const UbahPassword = () => {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Masukkan password baru"
+                  focusBorderColor="blue.500"
                 />
                 <InputRightElement>
                   <IconButton
@@ -172,7 +172,7 @@ const UbahPassword = () => {
               </InputGroup>
             </FormControl>
 
-            <FormControl mb={4}>
+            <FormControl mb={6}>
               <FormLabel>Konfirmasi Password Baru</FormLabel>
               <InputGroup>
                 <Input
@@ -180,6 +180,7 @@ const UbahPassword = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Konfirmasi password baru"
+                  focusBorderColor="blue.500"
                 />
                 <InputRightElement>
                   <IconButton
@@ -199,6 +200,8 @@ const UbahPassword = () => {
               colorScheme="blue"
               width="full"
               onClick={handlePasswordChange}
+              _hover={{ bg: "blue.600" }}
+              transition="background-color 0.3s"
             >
               Simpan
             </Button>

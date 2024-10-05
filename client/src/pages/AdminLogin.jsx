@@ -123,6 +123,7 @@ const AdminLogin = () => {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Masukkan username Anda"
                   />
                 </FormControl>
                 <FormControl id="password" isRequired>
@@ -132,6 +133,7 @@ const AdminLogin = () => {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Masukkan password Anda"
                     />
                     <InputRightElement>
                       <IconButton

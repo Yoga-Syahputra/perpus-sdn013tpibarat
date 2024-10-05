@@ -13,7 +13,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 const ListPengunjung = ({
   visitors,
   onEditClick,
-  onDeleteClick,
+  onDelete,
   selectedDate,
 }) => {
   return (
@@ -75,7 +75,7 @@ const ListPengunjung = ({
                 <IconButton
                   aria-label="Delete Visitor"
                   icon={<FaTrash />}
-                  onClick={() => onDeleteClick(visitor._id)}
+                  onClick={() => onDelete(visitor._id)}
                 />
               </Td>
             </Tr>

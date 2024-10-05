@@ -11,6 +11,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Tooltip,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -347,17 +348,21 @@ const DaftarPengunjung = () => {
                   )}
                 </Td>
                 <Td>
-                  <IconButton
-                    aria-label="Edit Visitor"
-                    icon={<FaEdit />}
-                    onClick={() => onEditClick(visitor)}
-                    mr={2}
-                  />
-                  <IconButton
-                    aria-label="Delete Visitor"
-                    icon={<FaTrash />}
-                    onClick={() => onDeleteClick(visitor)}
-                  />
+                  <Tooltip label="Edit Pengunjung" placement="top">
+                    <IconButton
+                      aria-label="Edit Visitor"
+                      icon={<FaEdit />}
+                      onClick={() => onEditClick(visitor)}
+                      mr={2}
+                    />
+                  </Tooltip>
+                  <Tooltip label="Hapus Pengunjung" placement="top">
+                    <IconButton
+                      aria-label="Delete Visitor"
+                      icon={<FaTrash />}
+                      onClick={() => onDeleteClick(visitor)}
+                    />
+                  </Tooltip>
                 </Td>
               </Tr>
             ))}

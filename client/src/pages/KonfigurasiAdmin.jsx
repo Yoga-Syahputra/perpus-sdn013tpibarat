@@ -295,7 +295,7 @@ const KonfigurasiAdmin = () => {
                         <Th>Nama Guru</Th>
                         <Th>Username</Th>
                         <Th>Password</Th>
-                        <Th isNumeric>Aksi</Th>
+                        <Th>Aksi</Th>
                       </Tr>
                     </Thead>
                     <Tbody>

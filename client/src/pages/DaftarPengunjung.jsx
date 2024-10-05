@@ -16,6 +16,19 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
   Icon,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  IconButton,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
@@ -24,8 +37,9 @@ import {
   FaCalendarAlt,
   FaSearch,
   FaHome,
+  FaEdit,
+  FaTrash,
 } from "react-icons/fa";
-import ListPengunjung from "../components/ListPengunjung";
 import AddVisitorModal from "../components/AddVisitorModal";
 import EditVisitorModal from "../components/EditVisitorModal";
 import Sidebar from "../components/Sidebar";
@@ -54,14 +68,20 @@ const DaftarPengunjung = () => {
     onOpen: onEditOpen,
     onClose: onEditClose,
   } = useDisclosure();
+  const {
+    isOpen: isDeleteAlertOpen,
+    onOpen: onDeleteAlertOpen,
+    onClose: onDeleteAlertClose,
+  } = useDisclosure();
   const [visitors, setVisitors] = useState([]);
   const [selectedVisitor, setSelectedVisitor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [visitorToDelete, setVisitorToDelete] = useState(null);
 
+  const cancelRef = React.useRef();
 
-  // Get the role from localStorage or other source
   const userRole = localStorage.getItem("role");
 
   const toggleSidebar = () => {
@@ -107,12 +127,22 @@ const DaftarPengunjung = () => {
     }
   };
 
-  const handleDeleteVisitor = async (id) => {
-    try {
-      await deleteVisitor(id);
-      setVisitors(visitors.filter((visitor) => visitor._id !== id));
-    } catch (error) {
-      console.error("Error deleting visitor:", error);
+  const handleDeleteClick = (visitor) => {
+    setVisitorToDelete(visitor);
+    onDeleteAlertOpen();
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (visitorToDelete) {
+      try {
+        await deleteVisitor(visitorToDelete._id);
+        setVisitors(
+          visitors.filter((visitor) => visitor._id !== visitorToDelete._id)
+        );
+        onDeleteAlertClose();
+      } catch (error) {
+        console.error("Error deleting visitor:", error);
+      }
     }
   };
 
@@ -258,6 +288,84 @@ const DaftarPengunjung = () => {
     saveAs(data, "visitors.xlsx");
   };
 
+  const ListPengunjung = ({
+    visitors,
+    onEditClick,
+    onDeleteClick,
+    selectedDate,
+    searchTerm,
+  }) => {
+    return (
+      <Table id="visitor-table" variant="simple" size="sm">
+        <Thead>
+          <Tr>
+            <Th>No</Th>
+            <Th>Nama</Th>
+            <Th>Kelas</Th>
+            <Th>Tanggal Kehadiran</Th>
+            <Th>Jam Kehadiran</Th>
+            <Th>Keterangan</Th>
+            <Th>Tanda Tangan</Th>
+            <Th>Aksi</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {visitors
+            .filter(
+              (visitor) =>
+                new Date(visitor.tanggalKehadiran).toLocaleDateString(
+                  "id-ID"
+                ) === selectedDate.toLocaleDateString("id-ID") &&
+                visitor.nama.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((visitor, index) => (
+              <Tr key={visitor._id}>
+                <Td>{index + 1}</Td>
+                <Td>{visitor.nama}</Td>
+                <Td>{visitor.kelas}</Td>
+                <Td>
+                  {new Date(visitor.tanggalKehadiran).toLocaleDateString(
+                    "id-ID",
+                    {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    }
+                  )}
+                </Td>
+                <Td>{visitor.jamKehadiran}</Td>
+                <Td>{visitor.keterangan}</Td>
+                <Td>
+                  {visitor.tandaTangan ? (
+                    <img
+                      src={visitor.tandaTangan}
+                      alt="Tanda Tangan"
+                      width="50"
+                    />
+                  ) : (
+                    "Belum Tanda Tangan"
+                  )}
+                </Td>
+                <Td>
+                  <IconButton
+                    aria-label="Edit Visitor"
+                    icon={<FaEdit />}
+                    onClick={() => onEditClick(visitor)}
+                    mr={2}
+                  />
+                  <IconButton
+                    aria-label="Delete Visitor"
+                    icon={<FaTrash />}
+                    onClick={() => onDeleteClick(visitor)}
+                  />
+                </Td>
+              </Tr>
+            ))}
+        </Tbody>
+      </Table>
+    );
+  };
+
   return (
     <Flex direction="column" h="100vh">
       <Navbar
@@ -338,11 +446,10 @@ const DaftarPengunjung = () => {
             >
               <ListPengunjung
                 visitors={visitors}
-                setVisitors={setVisitors}
                 onEditClick={handleEditClick}
+                onDeleteClick={handleDeleteClick}
                 selectedDate={selectedDate}
                 searchTerm={searchTerm}
-                onDelete={handleDeleteVisitor}
               />
             </Box>
             <VStack spacing={2} mt={4}>
@@ -376,6 +483,37 @@ const DaftarPengunjung = () => {
                 EditVisitor={handleEditVisitor}
               />
             )}
+            <AlertDialog
+              isOpen={isDeleteAlertOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onDeleteAlertClose}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                    Konfirmasi Penghapusan
+                  </AlertDialogHeader>
+
+                  <AlertDialogBody>
+                    Apakah Anda yakin ingin menghapus pengunjung{" "}
+                    {visitorToDelete?.nama}?
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onDeleteAlertClose}>
+                      Batal
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={handleDeleteConfirm}
+                      ml={3}
+                    >
+                      Hapus
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
           </Container>
         </Box>
       </Flex>

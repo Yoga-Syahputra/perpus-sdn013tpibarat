@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Button,
+  useDisclosure,
   HStack,
   VStack,
   Input,
@@ -13,16 +14,8 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbSeparator,
   Icon,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Select,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
@@ -37,18 +30,18 @@ import AddVisitorModal from "../components/AddVisitorModal";
 import EditVisitorModal from "../components/EditVisitorModal";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
 import {
   getVisitors,
   addVisitor,
   editVisitor,
   deleteVisitor,
 } from "../services/api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const DaftarPengunjung = () => {
   const {
@@ -61,13 +54,19 @@ const DaftarPengunjung = () => {
     onOpen: onEditOpen,
     onClose: onEditClose,
   } = useDisclosure();
-
   const [visitors, setVisitors] = useState([]);
   const [selectedVisitor, setSelectedVisitor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [visitorsPerPage] = useState(10); // Set number of visitors per page
+
+
+  // Get the role from localStorage or other source
+  const userRole = localStorage.getItem("role");
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,21 +79,6 @@ const DaftarPengunjung = () => {
     };
     fetchData();
   }, []);
-
-  // Pagination Logic
-  const indexOfLastVisitor = currentPage * visitorsPerPage;
-  const indexOfFirstVisitor = indexOfLastVisitor - visitorsPerPage;
-  const currentVisitors = visitors.slice(
-    indexOfFirstVisitor,
-    indexOfLastVisitor
-  );
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // Filter and search functionality
-  const filteredVisitors = currentVisitors.filter((visitor) =>
-    visitor.nama.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const handleAddVisitor = async (newVisitor) => {
     try {
@@ -131,6 +115,7 @@ const DaftarPengunjung = () => {
       console.error("Error deleting visitor:", error);
     }
   };
+
   const handleEditClick = (visitor) => {
     setSelectedVisitor(visitor);
     onEditOpen();
@@ -275,38 +260,60 @@ const DaftarPengunjung = () => {
 
   return (
     <Flex direction="column" h="100vh">
-      <Navbar />
+      <Navbar
+        toggleSidebar={toggleSidebar}
+        isSidebarOpen={isSidebarOpen}
+        role={userRole}
+      />
       <Flex flex="1">
-        <Sidebar />
-        <Box flex="1" p={4}>
-          <Breadcrumb separator={<ChevronRightIcon />} spacing="8px" mb={4}>
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          role={userRole}
+        />
+        <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
+          <Breadcrumb
+            fontWeight="medium"
+            fontSize="lg"
+            separator={
+              <BreadcrumbSeparator>
+                <ChevronRightIcon />
+              </BreadcrumbSeparator>
+            }
+            spacing="8px"
+            color="gray.600"
+            mb={4}
+          >
             <BreadcrumbItem>
               <BreadcrumbLink href="/admin">
-                <Icon as={FaHome} mr={2} />
-                Dasbor
+                <Flex alignItems="center">
+                  <Icon as={FaHome} mr={2} />
+                  Dasbor
+                </Flex>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink href="/list">Daftar Pengunjung</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-
           <Container maxW="container.xl" py={10}>
             <Flex justifyContent="space-between" mb={4}>
               <Heading as="h1" size="xl">
                 Daftar Pengunjung
               </Heading>
               <HStack spacing={2}>
-                <InputGroup width="250px">
-                  <InputLeftElement pointerEvents="none">
-                    <FaSearch color="gray.300" />
-                  </InputLeftElement>
-                  <Input
-                    placeholder="Cari nama pengunjung..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </InputGroup>
+                <HStack spacing={2}>
+                  <InputGroup width="250px">
+                    <InputLeftElement pointerEvents="none">
+                      <FaSearch color="gray.300" />
+                    </InputLeftElement>
+                    <Input
+                      placeholder="Cari nama pengunjung..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </InputGroup>
+                </HStack>
                 <DatePicker
                   selected={selectedDate}
                   onChange={(date) => setSelectedDate(date)}
@@ -321,66 +328,23 @@ const DaftarPengunjung = () => {
                 </Button>
               </HStack>
             </Flex>
-
-            {/* Table with Pagination */}
-            <TableContainer>
-              <Table variant="striped" colorScheme="gray">
-                <Thead>
-                  <Tr>
-                    <Th>No</Th>
-                    <Th>Nama</Th>
-                    <Th>Kelas</Th>
-                    <Th>Tanggal Kehadiran</Th>
-                    <Th>Jam Kehadiran</Th>
-                    <Th>Keterangan</Th>
-                    <Th>Aksi</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {filteredVisitors.map((visitor, index) => (
-                    <Tr key={visitor._id}>
-                      <Td>{index + 1 + (currentPage - 1) * visitorsPerPage}</Td>
-                      <Td>{visitor.nama}</Td>
-                      <Td>{visitor.kelas}</Td>
-                      <Td>
-                        {new Date(visitor.tanggalKehadiran).toLocaleDateString(
-                          "id-ID"
-                        )}
-                      </Td>
-                      <Td>{visitor.jamKehadiran}</Td>
-                      <Td>{visitor.keterangan}</Td>
-                      <Td>
-                        <Button
-                          colorScheme="yellow"
-                          onClick={() => handleEditClick(visitor)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          colorScheme="red"
-                          ml={2}
-                          onClick={() => handleDeleteVisitor(visitor._id)}
-                        >
-                          Hapus
-                        </Button>
-                      </Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            </TableContainer>
-
-            {/* Pagination */}
-            <HStack mt={4} justifyContent="center">
-              {Array.from({
-                length: Math.ceil(visitors.length / visitorsPerPage),
-              }).map((_, i) => (
-                <Button key={i + 1} onClick={() => paginate(i + 1)}>
-                  {i + 1}
-                </Button>
-              ))}
-            </HStack>
-
+            <Box
+              bg="white"
+              p={4}
+              rounded="lg"
+              shadow="md"
+              overflowY="auto"
+              maxHeight="600px"
+            >
+              <ListPengunjung
+                visitors={visitors}
+                setVisitors={setVisitors}
+                onEditClick={handleEditClick}
+                selectedDate={selectedDate}
+                searchTerm={searchTerm}
+                onDelete={handleDeleteVisitor}
+              />
+            </Box>
             <VStack spacing={2} mt={4}>
               <Button
                 leftIcon={<FaFilePdf />}
@@ -399,7 +363,6 @@ const DaftarPengunjung = () => {
                 Ekspor ke Excel
               </Button>
             </VStack>
-
             <AddVisitorModal
               isOpen={isAddOpen}
               onClose={onAddClose}

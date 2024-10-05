@@ -1,60 +1,87 @@
-import React, { useEffect } from "react";
-import { Table, Tbody, Th, Thead, Tr, TableContainer } from "@chakra-ui/react";
-import { getVisitors } from "../services/api";
-import CardPengunjung from "./CardPengunjung";
+import React from "react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  IconButton,
+} from "@chakra-ui/react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const ListPengunjung = ({
   visitors,
-  setVisitors,
   onEditClick,
+  onDeleteClick,
   selectedDate,
-  searchTerm,
 }) => {
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getVisitors();
-      setVisitors(data);
-    };
-    fetchData();
-  }, [setVisitors]);
-
-  const filteredVisitors = visitors.filter((visitor) => {
-    const visitDate = new Date(visitor.tanggalKehadiran);
-    const matchesDate =
-      visitDate.toDateString() === selectedDate.toDateString();
-    const matchesSearch = visitor.nama
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    return matchesDate && matchesSearch;
-  });
-
   return (
-    <TableContainer>
-      <Table id="visitor-table" variant="simple" size="sm">
-        <Thead>
-          <Tr>
-            <Th>NO.</Th>
-            <Th>Tanggal Kehadiran</Th>
-            <Th>Jam Kehadiran</Th>
-            <Th>Nama</Th>
-            <Th>Kelas</Th>
-            <Th>Keterangan</Th>
-            <Th>Tanda Tangan</Th>
-            <Th>Aksi</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {filteredVisitors.map((visitor, index) => (
-            <CardPengunjung
-              key={visitor._id}
-              index={index}
-              visitor={visitor}
-              onEditClick={onEditClick}
-            />
+    <Table variant="striped" colorScheme="teal">
+      <Thead>
+        <Tr>
+          <Th>No</Th>
+          <Th>Nama</Th>
+          <Th>Kelas</Th>
+          <Th>Tanggal Kehadiran</Th>
+          <Th>Jam Kehadiran</Th>
+          <Th>Keterangan</Th>
+          <Th>Tanda Tangan</Th>
+          <Th>Aksi</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {visitors
+          .filter(
+            (visitor) =>
+              new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID") ===
+              selectedDate.toLocaleDateString("id-ID")
+          )
+          .map((visitor, index) => (
+            <Tr key={visitor._id}>
+              <Td>{index + 1}</Td> 
+              <Td>{visitor.nama}</Td>
+              <Td>{visitor.kelas}</Td>
+              <Td>
+                {new Date(visitor.tanggalKehadiran).toLocaleDateString(
+                  "id-ID",
+                  {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  }
+                )}
+              </Td>
+              <Td>{visitor.jamKehadiran}</Td>
+              <Td>{visitor.keterangan}</Td>
+              <Td>
+                {visitor.tandaTangan ? (
+                  <img
+                    src={visitor.tandaTangan}
+                    alt="Tanda Tangan"
+                    width="50"
+                  />
+                ) : (
+                  "Belum Tanda Tangan"
+                )}
+              </Td>
+              <Td>
+                <IconButton
+                  aria-label="Edit Visitor"
+                  icon={<FaEdit />}
+                  onClick={() => onEditClick(visitor)}
+                  mr={2}
+                />
+                <IconButton
+                  aria-label="Delete Visitor"
+                  icon={<FaTrash />}
+                  onClick={() => onDeleteClick(visitor._id)}
+                />
+              </Td>
+            </Tr>
           ))}
-        </Tbody>
-      </Table>
-    </TableContainer>
+      </Tbody>
+    </Table>
   );
 };
 

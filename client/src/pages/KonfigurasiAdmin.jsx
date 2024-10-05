@@ -309,7 +309,7 @@ const KonfigurasiAdmin = () => {
                                 ? tempPassword
                                 : "******"}
                             </Td>
-                            <Td isNumeric>
+                            <Td>
                               <Tooltip label="Ubah Password" placement="top">
                                 <IconButton
                                   icon={<LockIcon />}

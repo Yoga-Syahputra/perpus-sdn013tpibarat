@@ -91,7 +91,7 @@ const Admin = () => {
                 </Flex>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink href="/admin">Statistik</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

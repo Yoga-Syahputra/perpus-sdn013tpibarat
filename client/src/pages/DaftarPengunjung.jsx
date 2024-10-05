@@ -292,7 +292,7 @@ const DaftarPengunjung = () => {
                 </Flex>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink href="/list">Daftar Pengunjung</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

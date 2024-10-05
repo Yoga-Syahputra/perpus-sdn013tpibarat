@@ -14,7 +14,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbSeparator,
   Icon,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -109,7 +108,7 @@ const UbahPassword = () => {
                 </Flex>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink href="/change-password">
                 Ubah Password
               </BreadcrumbLink>

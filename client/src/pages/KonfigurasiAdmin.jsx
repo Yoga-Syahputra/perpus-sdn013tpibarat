@@ -189,7 +189,7 @@ const KonfigurasiAdmin = () => {
                 </Flex>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink href="/admin-config">Konfigurasi Admin</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

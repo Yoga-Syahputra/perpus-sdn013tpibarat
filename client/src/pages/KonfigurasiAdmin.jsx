@@ -183,22 +183,28 @@ const KonfigurasiAdmin = () => {
   return (
     <Flex direction="column" h="100vh">
       <Navbar
-        toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
+        toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}
         role={userRole}
       />
       <Flex flex="1">
-        <Sidebar isOpen={isSidebarOpen} role={userRole} />
-        <Box
-          flex="1"
-          ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }}
-          p={6}
-          bg="gray.50"
-        >
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+          role={userRole}
+        />
+        <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
           <Breadcrumb
+            fontWeight="medium"
+            fontSize="lg"
+            separator={
+              <BreadcrumbSeparator>
+                <ChevronRightIcon />
+              </BreadcrumbSeparator>
+            }
             spacing="8px"
-            separator={<ChevronRightIcon color="gray.500" />}
-            mb={6}
+            color="gray.600"
+            mb={4}
           >
             <BreadcrumbItem>
               <BreadcrumbLink href="/admin">

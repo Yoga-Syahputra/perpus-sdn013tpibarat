@@ -20,7 +20,6 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   VStack,
-  HStack,
   useToast,
   InputGroup,
   InputRightElement,
@@ -30,8 +29,19 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
   Icon,
+  Tooltip,
+  Card,
+  CardHeader,
+  CardBody,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  ViewIcon,
+  ViewOffIcon,
+  ChevronRightIcon,
+  DeleteIcon,
+  LockIcon,
+  AddIcon,
+} from "@chakra-ui/icons";
 import { FaHome } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
@@ -48,7 +58,7 @@ const KonfigurasiAdmin = () => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [tempPassword, setTempPassword] = useState("");
-  const [showPassword, setShowPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const [selectedGuru, setSelectedGuru] = useState(null);
@@ -74,6 +84,17 @@ const KonfigurasiAdmin = () => {
   };
 
   const handleAddGuru = async () => {
+    if (!newName || !newUsername || !newPassword) {
+      toast({
+        title: "Form tidak lengkap",
+        description: "Mohon isi semua field yang diperlukan.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       await addGuru({
         nama: newName,
@@ -93,7 +114,6 @@ const KonfigurasiAdmin = () => {
         isClosable: true,
       });
     } catch (error) {
-      console.error("Error adding guru", error);
       toast({
         title: "Gagal menambahkan admin",
         description: "Tidak bisa menambah admin baru. Coba lagi nanti.",
@@ -116,7 +136,6 @@ const KonfigurasiAdmin = () => {
         isClosable: true,
       });
     } catch (error) {
-      console.error("Error deleting guru", error);
       toast({
         title: "Gagal menghapus admin",
         description: "Tidak bisa menghapus admin. Coba lagi nanti.",
@@ -128,6 +147,17 @@ const KonfigurasiAdmin = () => {
   };
 
   const handleChangePassword = async (id) => {
+    if (!newPassword) {
+      toast({
+        title: "Password kosong",
+        description: "Mohon masukkan password baru.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       await changePasswordGuru(id, newPassword);
       setPasswordModalOpen(false);
@@ -140,7 +170,6 @@ const KonfigurasiAdmin = () => {
         isClosable: true,
       });
     } catch (error) {
-      console.error("Error updating password", error);
       toast({
         title: "Gagal memperbarui password",
         description: "Tidak bisa memperbarui password. Coba lagi nanti.",
@@ -151,35 +180,25 @@ const KonfigurasiAdmin = () => {
     }
   };
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <Flex direction="column" h="100vh">
       <Navbar
-        toggleSidebar={toggleSidebar}
+        toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
         isSidebarOpen={isSidebarOpen}
         role={userRole}
       />
       <Flex flex="1">
-        <Sidebar
-          isOpen={isSidebarOpen}
-          toggleSidebar={toggleSidebar}
-          role={userRole}
-        />
-        <Box flex="1" ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }} p={4}>
+        <Sidebar isOpen={isSidebarOpen} role={userRole} />
+        <Box
+          flex="1"
+          ml={{ base: 0, md: isSidebarOpen ? "250px" : "0" }}
+          p={6}
+          bg="gray.50"
+        >
           <Breadcrumb
-            fontWeight="medium"
-            fontSize="lg"
-            separator={
-              <BreadcrumbSeparator>
-                <ChevronRightIcon />
-              </BreadcrumbSeparator>
-            }
             spacing="8px"
-            color="gray.600"
-            mb={4}
+            separator={<ChevronRightIcon color="gray.500" />}
+            mb={6}
           >
             <BreadcrumbItem>
               <BreadcrumbLink href="/admin">
@@ -190,113 +209,138 @@ const KonfigurasiAdmin = () => {
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink href="/admin-config">Konfigurasi Admin</BreadcrumbLink>
+              <BreadcrumbLink>Konfigurasi Admin</BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-          <Container maxW="container.xl" py={10}>
-            <VStack spacing={4} align="flex-start" mb={4}>
-              <Heading as="h1" size="xl">
+
+          <VStack spacing={6} align="stretch">
+            <Box>
+              <Heading as="h1" size="xl" mb={2}>
                 Konfigurasi Admin
               </Heading>
-              <Heading as="h2" size="sm" mt={0} textColor={"gray.500"}>
+              <Heading as="h2" size="sm" color="gray.500">
                 Kelola guru piket sebagai admin
               </Heading>
-            </VStack>
-            <Box
-              bg="white"
-              p={4}
-              rounded="lg"
-              shadow="md"
-              overflowY="auto"
-              maxHeight="600px"
-            >
-              <VStack spacing={4} mb={4}>
-                <Input
-                  value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
-                  placeholder="Nama Guru (Admin Baru)"
-                />
-                <Input
-                  value={newUsername}
-                  onChange={(e) => setNewUsername(e.target.value)}
-                  placeholder="Username Guru (Admin Baru)"
-                />
-                <InputGroup>
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Password Guru (Admin Baru)"
-                  />
-                  <InputRightElement>
-                    <IconButton
-                      icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                      onClick={() => setShowPassword(!showPassword)}
-                      variant="ghost"
-                      size="sm"
-                      aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                      }
-                    />
-                  </InputRightElement>
-                </InputGroup>
-                <Button onClick={handleAddGuru} colorScheme="blue">
-                  Tambah Admin
-                </Button>
-              </VStack>
-              <Table variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th>Nama Guru (Admin)</Th>
-                    <Th>Username</Th>
-                    <Th>Password</Th>
-                    <Th>Aksi</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {gurus.length > 0 ? (
-                    gurus.map((guru) => (
-                      <Tr key={guru._id}>
-                        <Td>{guru.nama}</Td>
-                        <Td>{guru.username}</Td>
-                        <Td>
-                          {tempPassword && guru.username === newUsername
-                            ? tempPassword
-                            : "******"}
-                        </Td>
-                        <Td>
-                          <HStack spacing={2}>
-                            <Button
-                              colorScheme="red"
-                              onClick={() => {
-                                setSelectedGuru(guru);
-                                onOpen();
-                              }}
-                            >
-                              Hapus
-                            </Button>
-                            <Button
-                              colorScheme="green"
-                              onClick={() => {
-                                setSelectedGuru(guru);
-                                setPasswordModalOpen(true);
-                              }}
-                            >
-                              Ubah Password
-                            </Button>
-                          </HStack>
-                        </Td>
-                      </Tr>
-                    ))
-                  ) : (
-                    <Tr>
-                      <Td colSpan="4">Tidak ada data guru.</Td>
-                    </Tr>
-                  )}
-                </Tbody>
-              </Table>
             </Box>
-          </Container>
+
+            <Card>
+              <CardHeader>
+                <Heading size="md">Tambah Admin Baru</Heading>
+              </CardHeader>
+              <CardBody>
+                <VStack spacing={4}>
+                  <InputGroup>
+                    <Input
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                      placeholder="Nama Guru"
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <Input
+                      value={newUsername}
+                      onChange={(e) => setNewUsername(e.target.value)}
+                      placeholder="Username"
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Password"
+                    />
+                    <InputRightElement>
+                      <IconButton
+                        icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                        onClick={() => setShowPassword(!showPassword)}
+                        variant="ghost"
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
+                      />
+                    </InputRightElement>
+                  </InputGroup>
+                  <Button
+                    leftIcon={<AddIcon />}
+                    onClick={handleAddGuru}
+                    colorScheme="blue"
+                    width="full"
+                  >
+                    Tambah Admin
+                  </Button>
+                </VStack>
+              </CardBody>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Heading size="md">Daftar Admin</Heading>
+              </CardHeader>
+              <CardBody>
+                <Box overflowX="auto">
+                  <Table variant="simple">
+                    <Thead>
+                      <Tr>
+                        <Th>Nama Guru</Th>
+                        <Th>Username</Th>
+                        <Th>Password</Th>
+                        <Th isNumeric>Aksi</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {gurus.length > 0 ? (
+                        gurus.map((guru) => (
+                          <Tr key={guru._id}>
+                            <Td>{guru.nama}</Td>
+                            <Td>{guru.username}</Td>
+                            <Td>
+                              {tempPassword && guru.username === newUsername
+                                ? tempPassword
+                                : "******"}
+                            </Td>
+                            <Td isNumeric>
+                              <Tooltip label="Ubah Password" placement="top">
+                                <IconButton
+                                  icon={<LockIcon />}
+                                  colorScheme="blue"
+                                  variant="ghost"
+                                  mr={2}
+                                  onClick={() => {
+                                    setSelectedGuru(guru);
+                                    setPasswordModalOpen(true);
+                                  }}
+                                  aria-label="Ubah password"
+                                />
+                              </Tooltip>
+                              <Tooltip label="Hapus Admin" placement="top">
+                                <IconButton
+                                  icon={<DeleteIcon />}
+                                  colorScheme="red"
+                                  variant="ghost"
+                                  onClick={() => {
+                                    setSelectedGuru(guru);
+                                    onOpen();
+                                  }}
+                                  aria-label="Hapus admin"
+                                />
+                              </Tooltip>
+                            </Td>
+                          </Tr>
+                        ))
+                      ) : (
+                        <Tr>
+                          <Td colSpan="4" textAlign="center">
+                            Tidak ada data guru.
+                          </Td>
+                        </Tr>
+                      )}
+                    </Tbody>
+                  </Table>
+                </Box>
+              </CardBody>
+            </Card>
+          </VStack>
         </Box>
       </Flex>
 
@@ -312,7 +356,7 @@ const KonfigurasiAdmin = () => {
             </AlertDialogHeader>
             <AlertDialogBody>
               Apakah Anda yakin ingin menghapus admin{" "}
-              {selectedGuru && selectedGuru.username}?
+              {selectedGuru && selectedGuru.nama}?
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
@@ -356,7 +400,6 @@ const KonfigurasiAdmin = () => {
                     icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                     onClick={() => setShowPassword(!showPassword)}
                     variant="ghost"
-                    size="sm"
                     aria-label={
                       showPassword ? "Hide password" : "Show password"
                     }

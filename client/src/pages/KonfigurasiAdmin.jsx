@@ -179,6 +179,10 @@ const KonfigurasiAdmin = () => {
       });
     }
   };
+  
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <Flex direction="column" h="100vh">

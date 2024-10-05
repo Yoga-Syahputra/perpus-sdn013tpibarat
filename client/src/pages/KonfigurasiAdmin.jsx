@@ -38,11 +38,9 @@ import {
   ViewIcon,
   ViewOffIcon,
   ChevronRightIcon,
-  DeleteIcon,
-  LockIcon,
   AddIcon,
 } from "@chakra-ui/icons";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaLock, FaTrash } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import {
@@ -312,9 +310,7 @@ const KonfigurasiAdmin = () => {
                             <Td>
                               <Tooltip label="Ubah Password" placement="top">
                                 <IconButton
-                                  icon={<LockIcon />}
-                                  colorScheme="blue"
-                                  variant="ghost"
+                                  icon={<FaLock />}
                                   mr={2}
                                   onClick={() => {
                                     setSelectedGuru(guru);
@@ -325,9 +321,7 @@ const KonfigurasiAdmin = () => {
                               </Tooltip>
                               <Tooltip label="Hapus Admin" placement="top">
                                 <IconButton
-                                  icon={<DeleteIcon />}
-                                  colorScheme="red"
-                                  variant="ghost"
+                                  icon={<FaTrash />}
                                   onClick={() => {
                                     setSelectedGuru(guru);
                                     onOpen();

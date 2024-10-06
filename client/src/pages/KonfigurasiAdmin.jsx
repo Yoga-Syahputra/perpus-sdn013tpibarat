@@ -323,7 +323,11 @@ const KonfigurasiAdmin = () => {
                                       ? "text"
                                       : "password"
                                   }
-                                  value={visiblePasswords[guru._id] || "******"}
+                                  value={
+                                    visiblePasswords[guru._id]
+                                      ? guru.password
+                                      : "******"
+                                  }
                                   isReadOnly
                                 />
                                 <InputRightElement>
@@ -356,6 +360,7 @@ const KonfigurasiAdmin = () => {
                                   onClick={() => {
                                     setSelectedGuru(guru);
                                     setPasswordModalOpen(true);
+                                    setUpdatePassword("");
                                   }}
                                   aria-label="Ubah password"
                                 />

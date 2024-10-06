@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Container,
   Flex,
   Heading,
   Button,
@@ -55,7 +54,6 @@ const KonfigurasiAdmin = () => {
   const [newName, setNewName] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [tempPassword, setTempPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [updatePassword, setUpdatePassword] = useState(false);
@@ -131,9 +129,10 @@ const KonfigurasiAdmin = () => {
   const togglePasswordVisibility = (guruId) => {
     setVisiblePasswords((prev) => ({
       ...prev,
-      [guruId]: prev[guruId] ? null : tempPassword,
+      [guruId]: !prev[guruId], 
     }));
   };
+
 
   const handleDeleteGuru = async (id) => {
     try {
@@ -323,11 +322,7 @@ const KonfigurasiAdmin = () => {
                                       ? "text"
                                       : "password"
                                   }
-                                  value={
-                                    visiblePasswords[guru._id]
-                                      ? guru.password
-                                      : "******"
-                                  }
+                                  value={guru.password}
                                   isReadOnly
                                 />
                                 <InputRightElement>

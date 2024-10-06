@@ -75,7 +75,6 @@ const KonfigurasiAdmin = () => {
     try {
       const response = await getGurus();
       setGurus(response);
-      setTempPassword("");
     } catch (error) {
       console.error("Error fetching gurus", error);
       setGurus([]);

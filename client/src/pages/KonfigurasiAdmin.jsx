@@ -304,7 +304,7 @@ const KonfigurasiAdmin = () => {
                         <Th>Nama Guru</Th>
                         <Th>Username</Th>
                         <Th>Password</Th>
-                        <Th isNumeric>Aksi</Th>
+                        <Th>Aksi</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -346,7 +346,7 @@ const KonfigurasiAdmin = () => {
                                 </InputRightElement>
                               </InputGroup>
                             </Td>
-                            <Td isNumeric>
+                            <Td>
                               <Tooltip label="Ubah Password" placement="top">
                                 <IconButton
                                   icon={<FaLock />}

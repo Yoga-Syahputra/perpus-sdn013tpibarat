@@ -57,6 +57,7 @@ const KonfigurasiAdmin = () => {
   const [newPassword, setNewPassword] = useState("");
   const [tempPassword, setTempPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const [selectedGuru, setSelectedGuru] = useState(null);
@@ -402,7 +403,7 @@ const KonfigurasiAdmin = () => {
                 <InputRightElement>
                   <IconButton
                     icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => setShowNewPassword(!showNewPassword)}
                     variant="ghost"
                     aria-label={
                       showPassword ? "Hide password" : "Show password"

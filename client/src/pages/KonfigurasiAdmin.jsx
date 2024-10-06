@@ -57,6 +57,7 @@ const KonfigurasiAdmin = () => {
   const [newPassword, setNewPassword] = useState("");
   const [tempPassword, setTempPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [updatePassword , setUpdatePassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
@@ -160,7 +161,7 @@ const KonfigurasiAdmin = () => {
     try {
       await changePasswordGuru(id, newPassword);
       setPasswordModalOpen(false);
-      setNewPassword("");
+      setUpdatePassword("");
       toast({
         title: "Password diperbarui",
         description: "Password berhasil diperbarui.",
@@ -395,18 +396,18 @@ const KonfigurasiAdmin = () => {
             <AlertDialogBody>
               <InputGroup>
                 <Input
-                  type={showPassword ? "text" : "password"}
+                  type={showNewPassword ? "text" : "password"}
                   placeholder="Password Baru"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  value={updatePassword}
+                  onChange={(e) => setUpdatePassword(e.target.value)}
                 />
                 <InputRightElement>
                   <IconButton
-                    icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                    icon={showNewPassword ? <ViewOffIcon /> : <ViewIcon />}
                     onClick={() => setShowNewPassword(!showNewPassword)}
                     variant="ghost"
                     aria-label={
-                      showPassword ? "Hide password" : "Show password"
+                      showNewPassword ? "Hide password" : "Show password"
                     }
                   />
                 </InputRightElement>

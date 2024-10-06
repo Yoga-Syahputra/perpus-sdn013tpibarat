@@ -57,7 +57,8 @@ const KonfigurasiAdmin = () => {
   const [newPassword, setNewPassword] = useState("");
   const [tempPassword, setTempPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [updatePassword , setUpdatePassword] = useState(false);
+  const [visiblePasswords, setVisiblePasswords] = useState({});
+  const [updatePassword, setUpdatePassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
@@ -101,7 +102,10 @@ const KonfigurasiAdmin = () => {
         username: newUsername,
         password: newPassword,
       });
-      setTempPassword(newPassword);
+      setVisiblePasswords((prev) => ({
+        ...prev,
+        [response._id]: newPassword,
+      }));
       fetchGurus();
       setNewName("");
       setNewUsername("");
@@ -122,6 +126,13 @@ const KonfigurasiAdmin = () => {
         isClosable: true,
       });
     }
+  };
+
+  const togglePasswordVisibility = (guruId) => {
+    setVisiblePasswords((prev) => ({
+      ...prev,
+      [guruId]: prev[guruId] ? null : tempPassword,
+    }));
   };
 
   const handleDeleteGuru = async (id) => {
@@ -179,7 +190,7 @@ const KonfigurasiAdmin = () => {
       });
     }
   };
-  
+
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
@@ -305,9 +316,37 @@ const KonfigurasiAdmin = () => {
                             <Td>{guru.nama}</Td>
                             <Td>{guru.username}</Td>
                             <Td>
-                              {tempPassword && guru.username === newUsername
-                                ? tempPassword
-                                : "******"}
+                              <InputGroup size="md">
+                                <Input
+                                  type={
+                                    visiblePasswords[guru._id]
+                                      ? "text"
+                                      : "password"
+                                  }
+                                  value={visiblePasswords[guru._id] || "******"}
+                                  isReadOnly
+                                />
+                                <InputRightElement>
+                                  <IconButton
+                                    icon={
+                                      visiblePasswords[guru._id] ? (
+                                        <ViewOffIcon />
+                                      ) : (
+                                        <ViewIcon />
+                                      )
+                                    }
+                                    onClick={() =>
+                                      togglePasswordVisibility(guru._id)
+                                    }
+                                    variant="ghost"
+                                    aria-label={
+                                      visiblePasswords[guru._id]
+                                        ? "Hide password"
+                                        : "Show password"
+                                    }
+                                  />
+                                </InputRightElement>
+                              </InputGroup>
                             </Td>
                             <Td isNumeric>
                               <Tooltip label="Ubah Password" placement="top">

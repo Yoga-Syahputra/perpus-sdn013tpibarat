@@ -65,6 +65,7 @@ const KonfigurasiAdmin = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
 
   const userRole = localStorage.getItem("role");
@@ -174,42 +175,48 @@ const KonfigurasiAdmin = () => {
       setCaptchaValue(value);
     };
 
-  const handleChangePassword = async (id) => {
-    const isCaptchaVerified = await handleCaptcha();
-    if (!isCaptchaVerified) return;
+ const handleChangePassword = async (id) => {
+   const isCaptchaVerified = await handleCaptcha();
+   if (!isCaptchaVerified) return;
 
-    if (!newPassword) {
-      toast({
-        title: "Password kosong",
-        description: "Mohon masukkan password baru.",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-      });
-      return;
-    }
+   if (!updatePassword) {
+     // Use updatePassword instead of newPassword here
+     toast({
+       title: "Password kosong",
+       description: "Mohon masukkan password baru.",
+       status: "warning",
+       duration: 5000,
+       isClosable: true,
+     });
+     return;
+   }
 
-    try {
-      await changePasswordGuru(id, newPassword);
-      setPasswordModalOpen(false);
-      setUpdatePassword("");
-      toast({
-        title: "Password diperbarui",
-        description: "Password berhasil diperbarui.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (error) {
-      toast({
-        title: "Gagal memperbarui password",
-        description: "Tidak bisa memperbarui password. Coba lagi nanti.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
+   setLoading(true); 
+   try {
+     await changePasswordGuru(id, updatePassword); 
+     setPasswordModalOpen(false);
+     setUpdatePassword(""); 
+
+     toast({
+       title: "Password diperbarui",
+       description: "Password berhasil diperbarui.",
+       status: "success",
+       duration: 5000,
+       isClosable: true,
+     });
+   } catch (error) {
+     toast({
+       title: "Gagal memperbarui password",
+       description: "Tidak bisa memperbarui password. Coba lagi nanti.",
+       status: "error",
+       duration: 5000,
+       isClosable: true,
+     });
+   } finally {
+     setLoading(false); 
+   }
+ };
+
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -472,10 +479,12 @@ const KonfigurasiAdmin = () => {
                   />
                 </InputRightElement>
               </InputGroup>
+              <Box mb={4}>
               <ReCAPTCHA
                 sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
                 onChange={handleCaptchaChange}
               />
+              </Box>
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button

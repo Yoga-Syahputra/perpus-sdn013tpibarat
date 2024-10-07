@@ -48,6 +48,7 @@ import {
   deleteGuru,
   changePasswordGuru,
 } from "../services/api";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const KonfigurasiAdmin = () => {
   const [gurus, setGurus] = useState([]);
@@ -63,6 +64,7 @@ const KonfigurasiAdmin = () => {
   const [selectedGuru, setSelectedGuru] = useState(null);
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState(null);
   const toast = useToast();
 
   const userRole = localStorage.getItem("role");
@@ -128,10 +130,9 @@ const KonfigurasiAdmin = () => {
   const togglePasswordVisibility = (guruId) => {
     setVisiblePasswords((prev) => ({
       ...prev,
-      [guruId]: !prev[guruId], 
+      [guruId]: !prev[guruId],
     }));
   };
-
 
   const handleDeleteGuru = async (id) => {
     try {
@@ -155,7 +156,28 @@ const KonfigurasiAdmin = () => {
     }
   };
 
+  const handleCaptcha = async () => {
+    if (!captchaValue) {
+      toast({
+        title: "Ubah password gagal",
+        description: "Harap selesaikan CAPTCHA.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return false;
+    }
+    return true;
+  };
+
+    const handleCaptchaChange = (value) => {
+      setCaptchaValue(value);
+    };
+
   const handleChangePassword = async (id) => {
+    const isCaptchaVerified = await handleCaptcha();
+    if (!isCaptchaVerified) return;
+
     if (!newPassword) {
       toast({
         title: "Password kosong",
@@ -449,6 +471,12 @@ const KonfigurasiAdmin = () => {
                     }
                   />
                 </InputRightElement>
+                <FormControl id="captcha" mb={4}>
+                  <ReCAPTCHA
+                    sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
+                    onChange={handleCaptchaChange}
+                  />
+                </FormControl>
               </InputGroup>
             </AlertDialogBody>
             <AlertDialogFooter>

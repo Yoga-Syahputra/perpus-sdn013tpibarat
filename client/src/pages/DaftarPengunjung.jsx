@@ -78,6 +78,9 @@ const DaftarPengunjung = () => {
   const [visitors, setVisitors] = useState([]);
   const [selectedVisitor, setSelectedVisitor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedClass, setSelectedClass] = useState("all");
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [visitorToDelete, setVisitorToDelete] = useState(null);
@@ -160,7 +163,6 @@ const DaftarPengunjung = () => {
           status: "error",
           duration: 5000,
           isClosable: true,
-
         });
       }
     }
@@ -308,39 +310,83 @@ const DaftarPengunjung = () => {
     saveAs(data, "visitors.xlsx");
   };
 
+  const getUniqueClasses = () => {
+    const classes = visitors.map((visitor) => visitor.kelas);
+    return ["all", ...new Set(classes)].filter(Boolean);
+  };
+
   const ListPengunjung = ({
     visitors,
     onEditClick,
     onDeleteClick,
     selectedDate,
     searchTerm,
+    entriesPerPage,
+    currentPage,
+    selectedClass,
   }) => {
+    // Filter visitors based on date, search term, and class
+    const filteredVisitors = visitors.filter(
+      (visitor) =>
+        new Date(visitor.tanggalKehadiran).toLocaleDateString("id-ID") ===
+          selectedDate.toLocaleDateString("id-ID") &&
+        visitor.nama.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedClass === "all" || visitor.kelas === selectedClass)
+    );
+
+    // Calculate pagination
+    const indexOfLastEntry = currentPage * entriesPerPage;
+    const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+    const currentEntries = filteredVisitors.slice(
+      indexOfFirstEntry,
+      indexOfLastEntry
+    );
+    const totalPages = Math.ceil(filteredVisitors.length / entriesPerPage);
     return (
-      <Table id="visitor-table" variant="simple" size="sm">
-        <Thead>
-          <Tr>
-            <Th>No</Th>
-            <Th>Nama</Th>
-            <Th>Kelas</Th>
-            <Th>Tanggal Kehadiran</Th>
-            <Th>Jam Kehadiran</Th>
-            <Th>Keterangan</Th>
-            <Th>Tanda Tangan</Th>
-            <Th>Aksi</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {visitors
-            .filter(
-              (visitor) =>
-                new Date(visitor.tanggalKehadiran).toLocaleDateString(
-                  "id-ID"
-                ) === selectedDate.toLocaleDateString("id-ID") &&
-                visitor.nama.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map((visitor, index) => (
+      <Box>
+        <Flex justifyContent="space-between" mb={4}>
+          <HStack>
+            <Select
+              value={entriesPerPage}
+              onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+              width="100px"
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+            </Select>
+            <Box>entries per page</Box>
+          </HStack>
+          <Select
+            value={selectedClass}
+            onChange={(e) => setSelectedClass(e.target.value)}
+            width="150px"
+          >
+            {getUniqueClasses().map((kelas) => (
+              <option key={kelas} value={kelas}>
+                {kelas === "all" ? "Semua Kelas" : kelas}
+              </option>
+            ))}
+          </Select>
+        </Flex>
+        <Table id="visitor-table" variant="simple" size="sm">
+          <Thead>
+            <Tr>
+              <Th>No</Th>
+              <Th>Nama</Th>
+              <Th>Kelas</Th>
+              <Th>Tanggal Kehadiran</Th>
+              <Th>Jam Kehadiran</Th>
+              <Th>Keterangan</Th>
+              <Th>Tanda Tangan</Th>
+              <Th>Aksi</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {currentEntries.map((visitor, index) => (
               <Tr key={visitor._id}>
-                <Td>{index + 1}</Td>
+                <Td>{indexOfFirstEntry + index + 1}</Td>
                 <Td>{visitor.nama}</Td>
                 <Td>{visitor.kelas}</Td>
                 <Td>
@@ -385,8 +431,35 @@ const DaftarPengunjung = () => {
                 </Td>
               </Tr>
             ))}
-        </Tbody>
-      </Table>
+          </Tbody>
+        </Table>
+        <Flex justifyContent="space-between" mt={4}>
+          <Box>
+            Showing {indexOfFirstEntry + 1} to{" "}
+            {Math.min(indexOfLastEntry, filteredVisitors.length)} of{" "}
+            {filteredVisitors.length} entries
+          </Box>
+          <HStack>
+            <Button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            <Box>
+              {currentPage} of {totalPages}
+            </Box>
+            <Button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </HStack>
+        </Flex>
+      </Box>
     );
   };
 
@@ -474,6 +547,9 @@ const DaftarPengunjung = () => {
                 onDeleteClick={handleDeleteClick}
                 selectedDate={selectedDate}
                 searchTerm={searchTerm}
+                entriesPerPage={entriesPerPage}
+                currentPage={currentPage}
+                selectedClass={selectedClass}
               />
             </Box>
             <VStack spacing={2} mt={4}>

@@ -471,13 +471,11 @@ const KonfigurasiAdmin = () => {
                     }
                   />
                 </InputRightElement>
-                <FormControl id="captcha" mb={4}>
-                  <ReCAPTCHA
-                    sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
-                    onChange={handleCaptchaChange}
-                  />
-                </FormControl>
               </InputGroup>
+              <ReCAPTCHA
+                sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
+                onChange={handleCaptchaChange}
+              />
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button

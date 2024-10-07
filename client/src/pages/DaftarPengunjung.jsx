@@ -8,6 +8,7 @@ import {
   useDisclosure,
   HStack,
   VStack,
+  useToast,
   Input,
   InputGroup,
   InputLeftElement,
@@ -80,6 +81,7 @@ const DaftarPengunjung = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [visitorToDelete, setVisitorToDelete] = useState(null);
+  const toast = useToast();
 
   const cancelRef = React.useRef();
 
@@ -141,8 +143,25 @@ const DaftarPengunjung = () => {
           visitors.filter((visitor) => visitor._id !== visitorToDelete._id)
         );
         onDeleteAlertClose();
+
+        toast({
+          title: "Pengunjung dihapus.",
+          description: `${visitorToDelete.nama} telah berhasil dihapus.`,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
       } catch (error) {
         console.error("Error deleting visitor:", error);
+
+        toast({
+          title: "Gagal menghapus pengunjung.",
+          description: "Terjadi kesalahan saat menghapus pengunjung.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+
+        });
       }
     }
   };

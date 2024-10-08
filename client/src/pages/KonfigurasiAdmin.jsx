@@ -12,6 +12,7 @@ import {
   Td,
   Input,
   useDisclosure,
+  HStack,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -331,21 +332,22 @@ const KonfigurasiAdmin = () => {
                 <Heading size="md">Daftar Admin</Heading>
               </CardHeader>
               <CardBody>
-                {/* Pilihan jumlah entri per halaman */}
                 <Flex justifyContent="flex-end" mb={4}>
-                  <Select
-                    width="fit-content"
-                    value={entriesPerPage}
-                    onChange={(e) => {
-                      setEntriesPerPage(Number(e.target.value));
-                      setCurrentPage(1);
-                    }}
-                  >
-                    <option value={5}>5 entri per halaman</option>
-                    <option value={10}>10 entri per halaman</option>
-                    <option value={25}>25 entri per halaman</option>
-                    <option value={50}>50 entri per halaman</option>
-                  </Select>
+                  <HStack>
+                    <Select
+                      value={entriesPerPage}
+                      onChange={(e) =>
+                        setEntriesPerPage(Number(e.target.value))
+                      }
+                      width="100px"
+                    >
+                      <option value={5}>5</option>
+                      <option value={10}>10</option>
+                      <option value={25}>25</option>
+                      <option value={50}>50</option>
+                    </Select>
+                    <Box>entries per page</Box>
+                  </HStack>
                 </Flex>
                 <Box overflowX="auto">
                   <Table variant="simple">
@@ -398,8 +400,7 @@ const KonfigurasiAdmin = () => {
                     </Tbody>
                   </Table>
                 </Box>
-                {/* Kontrol Pagination */}
-                <Flex justifyContent="center" alignItems="center" mt={4}>
+                <Flex justifyContent="space-between" mt={4}>
                   <Button
                     onClick={() =>
                       setCurrentPage((prev) => Math.max(prev - 1, 1))
@@ -419,6 +420,7 @@ const KonfigurasiAdmin = () => {
                       {number}
                     </Button>
                   ))}
+                  {currentPage} of {totalPages}
                   <Button
                     onClick={() =>
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))

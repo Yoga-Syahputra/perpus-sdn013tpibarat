@@ -499,7 +499,7 @@ const KonfigurasiAdmin = () => {
                 />
               </InputRightElement>
             </InputGroup>
-            <Box mb={10}>
+            <Box mt={4}>
               <ReCAPTCHA
                 sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
                 onChange={handleCaptchaChange}

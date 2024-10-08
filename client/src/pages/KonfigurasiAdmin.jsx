@@ -349,54 +349,57 @@ const KonfigurasiAdmin = () => {
                     <Box>entries per page</Box>
                   </HStack>
                 </Flex>
-                  <Table variant="simple" size="sm">
-                    <Thead>
-                      <Tr>
-                        <Th>Nama Guru</Th>
-                        <Th>Username</Th>
-                        <Th>Aksi</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {currentEntries.length > 0 ? (
-                        currentEntries.map((guru) => (
-                          <Tr key={guru._id}>
-                            <Td>{guru.nama}</Td>
-                            <Td>{guru.username}</Td>
-                            <Td>
-                              <Tooltip label="Ubah Password" placement="top">
-                                <IconButton
-                                  icon={<FaLock />}
-                                  onClick={() => {
-                                    setSelectedGuru(guru);
-                                    setPasswordModalOpen(true);
-                                    setUpdatePassword("");
-                                  }}
-                                  aria-label="Ubah password"
-                                />
-                              </Tooltip>
-                              <Tooltip label="Hapus Admin" placement="top">
-                                <IconButton
-                                  icon={<FaTrash />}
-                                  onClick={() => {
-                                    setSelectedGuru(guru);
-                                    onOpen();
-                                  }}
-                                  aria-label="Hapus admin"
-                                />
-                              </Tooltip>
-                            </Td>
-                          </Tr>
-                        ))
-                      ) : (
-                        <Tr>
-                          <Td colSpan="4" textAlign="center">
-                            Tidak ada data guru.
+                <Table variant="simple" size="sm">
+                  <Thead>
+                    <Tr>
+                      <Th width="40%">Nama Guru</Th>
+                      <Th width="40%">Username</Th>
+                      <Th width="20%" textAlign="center">
+                        Aksi
+                      </Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {currentEntries.length > 0 ? (
+                      currentEntries.map((guru) => (
+                        <Tr key={guru._id}>
+                          <Td>{guru.nama}</Td>
+                          <Td>{guru.username}</Td>
+                          <Td textAlign="center">
+                            <Tooltip label="Ubah Password" placement="top">
+                              <IconButton
+                                icon={<FaLock />}
+                                mr={2}
+                                onClick={() => {
+                                  setSelectedGuru(guru);
+                                  setPasswordModalOpen(true);
+                                  setUpdatePassword("");
+                                }}
+                                aria-label="Ubah password"
+                              />
+                            </Tooltip>
+                            <Tooltip label="Hapus Admin" placement="top">
+                              <IconButton
+                                icon={<FaTrash />}
+                                onClick={() => {
+                                  setSelectedGuru(guru);
+                                  onOpen();
+                                }}
+                                aria-label="Hapus admin"
+                              />
+                            </Tooltip>
                           </Td>
                         </Tr>
-                      )}
-                    </Tbody>
-                  </Table>
+                      ))
+                    ) : (
+                      <Tr>
+                        <Td colSpan="4" textAlign="center">
+                          Tidak ada data guru.
+                        </Td>
+                      </Tr>
+                    )}
+                  </Tbody>
+                </Table>
                 <Flex justifyContent="flex-end" mt={4}>
                   <HStack>
                     <Button

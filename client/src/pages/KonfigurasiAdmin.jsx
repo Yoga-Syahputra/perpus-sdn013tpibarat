@@ -349,7 +349,6 @@ const KonfigurasiAdmin = () => {
                     <Box>entries per page</Box>
                   </HStack>
                 </Flex>
-                <Box overflowX="auto">
                   <Table variant="simple" size="sm">
                     <Thead>
                       <Tr>
@@ -399,7 +398,6 @@ const KonfigurasiAdmin = () => {
                       )}
                     </Tbody>
                   </Table>
-                </Box>
                 <Flex justifyContent="flex-end" mt={4}>
                   <HStack>
                     <Button

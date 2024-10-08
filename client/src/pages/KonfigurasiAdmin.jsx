@@ -350,7 +350,7 @@ const KonfigurasiAdmin = () => {
                   </HStack>
                 </Flex>
                 <Box overflowX="auto">
-                  <Table variant="simple">
+                  <Table variant="simple" size="sm">
                     <Thead>
                       <Tr>
                         <Th>Nama Guru</Th>

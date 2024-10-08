@@ -75,7 +75,7 @@ const UbahPassword = () => {
       return;
     }
 
-    setLoading
+    setLoading(true);
     try {
       await changePassword(oldPassword, newPassword);
       toast({

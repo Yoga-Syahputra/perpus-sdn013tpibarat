@@ -52,9 +52,9 @@ const App = () => {
           <Route
             path="/admin-config"
             element={
-              <PrivateRoute>
+            
                 <KonfigurasiAdmin />
-              </PrivateRoute>
+             
             }
           />
           <Route

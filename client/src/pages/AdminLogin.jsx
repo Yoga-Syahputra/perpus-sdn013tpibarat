@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
@@ -25,6 +25,10 @@ const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+
+    useEffect(() => {
+      document.title = "Login Admin";
+    }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

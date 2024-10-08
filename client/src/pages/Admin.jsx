@@ -25,6 +25,10 @@ const Admin = () => {
 
   const userRole = localStorage.getItem("role");
 
+    useEffect(() => {
+      document.title = "Dasbor DIGI-PenPus";
+    }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await getVisitors();

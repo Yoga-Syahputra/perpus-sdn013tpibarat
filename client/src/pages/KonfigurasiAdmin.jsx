@@ -32,6 +32,8 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Select,
+  Text,
 } from "@chakra-ui/react";
 import {
   ViewIcon,
@@ -56,19 +58,24 @@ const KonfigurasiAdmin = () => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [visiblePasswords, setVisiblePasswords] = useState({});
-  const [updatePassword, setUpdatePassword] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef();
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedGuru, setSelectedGuru] = useState(null);
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
   const [loading, setLoading] = useState(false);
+  const cancelRef = React.useRef();
   const toast = useToast();
 
   const userRole = localStorage.getItem("role");
+
+  useEffect(() => {
+    document.title = "Konfigurasi Admin";
+  }, []);
 
   useEffect(() => {
     fetchGurus();
@@ -102,10 +109,6 @@ const KonfigurasiAdmin = () => {
         username: newUsername,
         password: newPassword,
       });
-      setVisiblePasswords((prev) => ({
-        ...prev,
-        [response._id]: newPassword,
-      }));
       fetchGurus();
       setNewName("");
       setNewUsername("");
@@ -126,13 +129,6 @@ const KonfigurasiAdmin = () => {
         isClosable: true,
       });
     }
-  };
-
-  const togglePasswordVisibility = (guruId) => {
-    setVisiblePasswords((prev) => ({
-      ...prev,
-      [guruId]: !prev[guruId],
-    }));
   };
 
   const handleDeleteGuru = async (id) => {
@@ -171,56 +167,65 @@ const KonfigurasiAdmin = () => {
     return true;
   };
 
-    const handleCaptchaChange = (value) => {
-      setCaptchaValue(value);
-    };
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
 
- const handleChangePassword = async (id) => {
-   const isCaptchaVerified = await handleCaptcha();
-   if (!isCaptchaVerified) return;
+  const handleChangePassword = async (id) => {
+    const isCaptchaVerified = await handleCaptcha();
+    if (!isCaptchaVerified) return;
 
-   if (!updatePassword) {
-     // Use updatePassword instead of newPassword here
-     toast({
-       title: "Password kosong",
-       description: "Mohon masukkan password baru.",
-       status: "warning",
-       duration: 5000,
-       isClosable: true,
-     });
-     return;
-   }
+    if (!updatePassword) {
+      toast({
+        title: "Password kosong",
+        description: "Mohon masukkan password baru.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
 
-   setLoading(true); 
-   try {
-     await changePasswordGuru(id, updatePassword); 
-     setPasswordModalOpen(false);
-     setUpdatePassword(""); 
+    setLoading(true);
+    try {
+      await changePasswordGuru(id, updatePassword);
+      setPasswordModalOpen(false);
+      setUpdatePassword("");
 
-     toast({
-       title: "Password diperbarui",
-       description: "Password berhasil diperbarui.",
-       status: "success",
-       duration: 5000,
-       isClosable: true,
-     });
-   } catch (error) {
-     toast({
-       title: "Gagal memperbarui password",
-       description: "Tidak bisa memperbarui password. Coba lagi nanti.",
-       status: "error",
-       duration: 5000,
-       isClosable: true,
-     });
-   } finally {
-     setLoading(false); 
-   }
- };
-
+      toast({
+        title: "Password diperbarui",
+        description: "Password berhasil diperbarui.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: "Gagal memperbarui password",
+        description: "Tidak bisa memperbarui password. Coba lagi nanti.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
+
+  // Pagination logic
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  const currentEntries = gurus.slice(indexOfFirstEntry, indexOfLastEntry);
+  const totalPages = Math.ceil(gurus.length / entriesPerPage);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <Flex direction="column" h="100vh">
@@ -326,55 +331,37 @@ const KonfigurasiAdmin = () => {
                 <Heading size="md">Daftar Admin</Heading>
               </CardHeader>
               <CardBody>
+                {/* Pilihan jumlah entri per halaman */}
+                <Flex justifyContent="flex-end" mb={4}>
+                  <Select
+                    width="fit-content"
+                    value={entriesPerPage}
+                    onChange={(e) => {
+                      setEntriesPerPage(Number(e.target.value));
+                      setCurrentPage(1);
+                    }}
+                  >
+                    <option value={5}>5 entri per halaman</option>
+                    <option value={10}>10 entri per halaman</option>
+                    <option value={25}>25 entri per halaman</option>
+                    <option value={50}>50 entri per halaman</option>
+                  </Select>
+                </Flex>
                 <Box overflowX="auto">
                   <Table variant="simple">
                     <Thead>
                       <Tr>
                         <Th>Nama Guru</Th>
                         <Th>Username</Th>
-                        <Th>Password</Th>
                         <Th>Aksi</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {gurus.length > 0 ? (
-                        gurus.map((guru) => (
+                      {currentEntries.length > 0 ? (
+                        currentEntries.map((guru) => (
                           <Tr key={guru._id}>
                             <Td>{guru.nama}</Td>
                             <Td>{guru.username}</Td>
-                            <Td>
-                              <InputGroup size="md">
-                                <Input
-                                  type={
-                                    visiblePasswords[guru._id]
-                                      ? "text"
-                                      : "password"
-                                  }
-                                  value={guru.password}
-                                  isReadOnly
-                                />
-                                <InputRightElement>
-                                  <IconButton
-                                    icon={
-                                      visiblePasswords[guru._id] ? (
-                                        <ViewOffIcon />
-                                      ) : (
-                                        <ViewIcon />
-                                      )
-                                    }
-                                    onClick={() =>
-                                      togglePasswordVisibility(guru._id)
-                                    }
-                                    variant="ghost"
-                                    aria-label={
-                                      visiblePasswords[guru._id]
-                                        ? "Hide password"
-                                        : "Show password"
-                                    }
-                                  />
-                                </InputRightElement>
-                              </InputGroup>
-                            </Td>
                             <Td>
                               <Tooltip label="Ubah Password" placement="top">
                                 <IconButton
@@ -411,6 +398,37 @@ const KonfigurasiAdmin = () => {
                     </Tbody>
                   </Table>
                 </Box>
+                {/* Kontrol Pagination */}
+                <Flex justifyContent="center" alignItems="center" mt={4}>
+                  <Button
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    isDisabled={currentPage === 1}
+                    mr={2}
+                  >
+                    Previous
+                  </Button>
+                  {pageNumbers.map((number) => (
+                    <Button
+                      key={number}
+                      onClick={() => setCurrentPage(number)}
+                      variant={number === currentPage ? "solid" : "outline"}
+                      mx={1}
+                    >
+                      {number}
+                    </Button>
+                  ))}
+                  <Button
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    isDisabled={currentPage === totalPages}
+                    ml={2}
+                  >
+                    Next
+                  </Button>
+                </Flex>
               </CardBody>
             </Card>
           </VStack>
@@ -480,10 +498,10 @@ const KonfigurasiAdmin = () => {
                 </InputRightElement>
               </InputGroup>
               <Box mb={4}>
-              <ReCAPTCHA
-                sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
-                onChange={handleCaptchaChange}
-              />
+                <ReCAPTCHA
+                  sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
+                  onChange={handleCaptchaChange}
+                />
               </Box>
             </AlertDialogBody>
             <AlertDialogFooter>

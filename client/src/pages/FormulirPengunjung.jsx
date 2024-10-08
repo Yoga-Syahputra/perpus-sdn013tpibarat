@@ -39,6 +39,10 @@ const FormulirPengunjung = () => {
   const toast = useToast();
   const audioRef = useRef(null); 
 
+    useEffect(() => {
+      document.title = "Formulir Pengunjung";
+    }, []);
+
   useEffect(() => {
     loadVisitors();
     setCurrentDateTime();

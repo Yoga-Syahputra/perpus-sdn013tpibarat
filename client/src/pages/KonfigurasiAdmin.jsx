@@ -34,7 +34,13 @@ import {
   CardHeader,
   CardBody,
   Select,
-  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import {
   ViewIcon,
@@ -464,60 +470,55 @@ const KonfigurasiAdmin = () => {
         </AlertDialogOverlay>
       </AlertDialog>
 
-      <AlertDialog
+      <Modal
         isOpen={isPasswordModalOpen}
-        leastDestructiveRef={cancelRef}
         onClose={() => setPasswordModalOpen(false)}
       >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader fontSize="lg" fontWeight="bold">
+            Ubah Password
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <InputGroup>
+              <Input
+                type={showNewPassword ? "text" : "password"}
+                placeholder="Password Baru"
+                value={updatePassword}
+                onChange={(e) => setUpdatePassword(e.target.value)}
+              />
+              <InputRightElement>
+                <IconButton
+                  icon={showNewPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  variant="ghost"
+                  aria-label={
+                    showNewPassword ? "Hide password" : "Show password"
+                  }
+                />
+              </InputRightElement>
+            </InputGroup>
+            <Box mb={4}>
+              <ReCAPTCHA
+                sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
+                onChange={handleCaptchaChange}
+              />
+            </Box>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button onClick={() => setPasswordModalOpen(false)}>Batal</Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => handleChangePassword(selectedGuru._id)}
+              ml={3}
+            >
               Ubah Password
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              <InputGroup>
-                <Input
-                  type={showNewPassword ? "text" : "password"}
-                  placeholder="Password Baru"
-                  value={updatePassword}
-                  onChange={(e) => setUpdatePassword(e.target.value)}
-                />
-                <InputRightElement>
-                  <IconButton
-                    icon={showNewPassword ? <ViewOffIcon /> : <ViewIcon />}
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    variant="ghost"
-                    aria-label={
-                      showNewPassword ? "Hide password" : "Show password"
-                    }
-                  />
-                </InputRightElement>
-              </InputGroup>
-              <Box mb={4}>
-                <ReCAPTCHA
-                  sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
-                  onChange={handleCaptchaChange}
-                />
-              </Box>
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <Button
-                ref={cancelRef}
-                onClick={() => setPasswordModalOpen(false)}
-              >
-                Batal
-              </Button>
-              <Button
-                colorScheme="blue"
-                onClick={() => handleChangePassword(selectedGuru._id)}
-                ml={3}
-              >
-                Ubah Password
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };

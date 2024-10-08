@@ -22,6 +22,7 @@ import { FaHome } from "react-icons/fa";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { changePassword } from "../services/api";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const UbahPassword = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -31,6 +32,8 @@ const UbahPassword = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -40,7 +43,28 @@ const UbahPassword = () => {
     document.title = "Ubah Password";
   }, []);
 
+   const handleCaptcha = async () => {
+     if (!captchaValue) {
+       toast({
+         title: "Ubah password gagal",
+         description: "Harap selesaikan CAPTCHA.",
+         status: "error",
+         duration: 3000,
+         isClosable: true,
+       });
+       return false;
+     }
+     return true;
+   };
+
+   const handleCaptchaChange = (value) => {
+     setCaptchaValue(value);
+   };
+
   const handlePasswordChange = async () => {
+    const isCaptchaVerified = await handleCaptcha();
+    if (!isCaptchaVerified) return;
+
     if (newPassword !== confirmPassword) {
       toast({
         title: "Password baru dan konfirmasi tidak cocok.",
@@ -51,6 +75,7 @@ const UbahPassword = () => {
       return;
     }
 
+    setLoading
     try {
       await changePassword(oldPassword, newPassword);
       toast({
@@ -68,6 +93,8 @@ const UbahPassword = () => {
         duration: 5000,
         isClosable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -151,7 +178,6 @@ const UbahPassword = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-
             <FormControl mb={4}>
               <FormLabel>Password Baru</FormLabel>
               <InputGroup>
@@ -175,7 +201,6 @@ const UbahPassword = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-
             <FormControl mb={6}>
               <FormLabel>Konfirmasi Password Baru</FormLabel>
               <InputGroup>
@@ -199,7 +224,12 @@ const UbahPassword = () => {
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-
+            <Box mb={4}>
+              <ReCAPTCHA
+                sitekey="6Ld18y8qAAAAAP_3XVE3-ckUGIhhaVDEk7C3ylTd"
+                onChange={handleCaptchaChange}
+              />
+            </Box>
             <Button
               colorScheme="blue"
               width="full"

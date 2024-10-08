@@ -32,7 +32,6 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   Select,
-  Text,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
@@ -437,28 +436,32 @@ const DaftarPengunjung = () => {
             ))}
           </Tbody>
         </Table>
-        <Flex justifyContent="space-between" alignItems="center" mt={4}>
-  {/* Tombol Previous */}
-  <Button
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    isDisabled={currentPage === 1}
-    mr={2}
-  >
-    Previous
-  </Button>
-
-  <Text>
-    Showing {currentPage} of {totalPages} entries
-  </Text>
-
-  <Button
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    isDisabled={currentPage === totalPages}
-    ml={2}
-  >
-    Next
-  </Button>
-</Flex>
+        <Flex justifyContent="space-between" mt={4}>
+          <Box>
+            Showing {indexOfFirstEntry + 1} to{" "}
+            {Math.min(indexOfLastEntry, filteredVisitors.length)} of{" "}
+            {filteredVisitors.length} entries
+          </Box>
+          <HStack>
+            <Button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            <Box>
+              {currentPage} of {totalPages}
+            </Box>
+            <Button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </Button>
+          </HStack>
+        </Flex>
       </Box>
     );
   };

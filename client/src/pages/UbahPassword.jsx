@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -35,6 +35,10 @@ const UbahPassword = () => {
   const toast = useToast();
 
   const userRole = localStorage.getItem("role");
+
+  useEffect(() => {
+    document.title = "Ubah Password";
+  }, []);
 
   const handlePasswordChange = async () => {
     if (newPassword !== confirmPassword) {

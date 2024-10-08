@@ -96,6 +96,7 @@ const DaftarPengunjung = () => {
   };
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const data = await getVisitors();
@@ -343,6 +344,7 @@ const DaftarPengunjung = () => {
       indexOfLastEntry
     );
     const totalPages = Math.ceil(filteredVisitors.length / entriesPerPage);
+    
     return (
       <Box>
         <Flex justifyContent="space-between" mb={4}>

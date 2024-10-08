@@ -367,7 +367,6 @@ const KonfigurasiAdmin = () => {
                               <Tooltip label="Ubah Password" placement="top">
                                 <IconButton
                                   icon={<FaLock />}
-                                  mr={2}
                                   onClick={() => {
                                     setSelectedGuru(guru);
                                     setPasswordModalOpen(true);

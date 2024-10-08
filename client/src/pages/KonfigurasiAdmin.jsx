@@ -332,7 +332,7 @@ const KonfigurasiAdmin = () => {
                 <Heading size="md">Daftar Admin</Heading>
               </CardHeader>
               <CardBody>
-                <Flex justifyContent="flex-end" mb={4}>
+                <Flex justifyContent="space-between" mb={4}>
                   <HStack>
                     <Select
                       value={entriesPerPage}

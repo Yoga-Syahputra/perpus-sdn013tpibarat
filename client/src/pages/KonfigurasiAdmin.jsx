@@ -400,36 +400,30 @@ const KonfigurasiAdmin = () => {
                     </Tbody>
                   </Table>
                 </Box>
-                <Flex justifyContent="space-between" mt={4}>
-                  <Button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(prev - 1, 1))
-                    }
-                    isDisabled={currentPage === 1}
-                    mr={2}
-                  >
-                    Previous
-                  </Button>
-                  {pageNumbers.map((number) => (
+                <Flex justifyContent="flex-end" mt={4}>
+                  <HStack>
                     <Button
-                      key={number}
-                      onClick={() => setCurrentPage(number)}
-                      variant={number === currentPage ? "solid" : "outline"}
-                      mx={1}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                      }
+                      isDisabled={currentPage === 1}
+                      mr={2}
                     >
-                      {number}
+                      Previous
                     </Button>
-                  ))}
-                  {currentPage} of {totalPages}
-                  <Button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                    }
-                    isDisabled={currentPage === totalPages}
-                    ml={2}
-                  >
-                    Next
-                  </Button>
+                    <Box>
+                      {currentPage} of {totalPages}
+                    </Box>
+                    <Button
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                      isDisabled={currentPage === totalPages}
+                      ml={2}
+                    >
+                      Next
+                    </Button>
+                  </HStack>
                 </Flex>
               </CardBody>
             </Card>

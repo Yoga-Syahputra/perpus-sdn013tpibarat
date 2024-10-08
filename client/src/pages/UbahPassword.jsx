@@ -234,6 +234,7 @@ const UbahPassword = () => {
               colorScheme="blue"
               width="full"
               onClick={handlePasswordChange}
+              isLoading={loading}
               _hover={{ bg: "blue.600" }}
               transition="background-color 0.3s"
             >

@@ -512,6 +512,7 @@ const KonfigurasiAdmin = () => {
             <Button
               colorScheme="blue"
               onClick={() => handleChangePassword(selectedGuru._id)}
+              isLoading={loading}
               ml={3}
             >
               Ubah Password

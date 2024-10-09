@@ -79,7 +79,8 @@ const UbahPassword = () => {
     try {
       await changePassword(oldPassword, newPassword);
       toast({
-        title: "Password berhasil diubah.",
+        title: "Password berhasil perbarui.",
+        cription: "Password berhasil diperbarui.",
         status: "success",
         duration: 5000,
         isClosable: true,

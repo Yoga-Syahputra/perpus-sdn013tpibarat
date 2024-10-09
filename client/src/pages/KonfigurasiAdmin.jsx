@@ -508,7 +508,6 @@ const KonfigurasiAdmin = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => setPasswordModalOpen(false)}>Batal</Button>
             <Button
               colorScheme="blue"
               onClick={() => handleChangePassword(selectedGuru._id)}
@@ -517,6 +516,7 @@ const KonfigurasiAdmin = () => {
             >
               Simpan
             </Button>
+            <Button onClick={() => setPasswordModalOpen(false)}>Batal</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

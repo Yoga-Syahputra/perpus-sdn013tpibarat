@@ -515,7 +515,7 @@ const KonfigurasiAdmin = () => {
               isLoading={loading}
               ml={3}
             >
-              Ubah Password
+              Simpan
             </Button>
           </ModalFooter>
         </ModalContent>
